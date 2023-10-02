@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Title,
   BoardContainer,
@@ -19,32 +20,114 @@ import {
   RadioInputContainer,
   RadioInput,
   RegisterBtn,
+  RequiredError,
 } from "../styles/home";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+
+type CreateBoardInput = {
+  writer: string;
+  password: string;
+  title: string;
+  contents: string;
+  youtubeUrl?: string;
+  boardAddress?: BoardAddressInput;
+  images?: [string];
+};
+
+type BoardAddressInput = {
+  zipcode: string;
+  address: string;
+  addressDetail: string;
+};
+
+const CREATEBOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      _id
+      title
+      contents
+      likeCount
+      dislikeCount
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 export default function Home() {
+  const [registerContent, setRegisterContent] = useState<CreateBoardInput>({});
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateBoardInput>({
+    defaultValues: {},
+  });
+
+  const [createBoard] = useMutation(CREATEBOARD);
+
+  const onSubmit = async (data: any) => {
+    const { writer, password, title, contents } = data;
+
+    try {
+      const result = await createBoard({
+        variables: {
+          createBoardInput: {
+            writer: writer,
+            password: password,
+            title: title,
+            contents: contents,
+          },
+        },
+      });
+
+      console.log(result.data.createBoard._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <BoardContainer>
+      <BoardContainer onSubmit={handleSubmit(onSubmit)}>
         <Title>게시물 등록</Title>
         <UserInputContainer>
           <InputContainer>
             <Label>작성자</Label>
-            <WriterInput></WriterInput>
+            <WriterInput
+              type="email"
+              {...register("writer", { required: "Email is required" })}
+            />
+            <RequiredError>{errors.writer?.message}</RequiredError>
           </InputContainer>
           <InputContainer>
             <Label>비밀번호</Label>
-            <PasswordInput></PasswordInput>
+            <PasswordInput
+              type="password"
+              {...register("password", { required: "Password is required" })}
+            />
+            <RequiredError>{errors.password?.message}</RequiredError>
           </InputContainer>
         </UserInputContainer>
 
         <InputContainer>
           <Label>제목</Label>
-          <ContentTitleInput></ContentTitleInput>
+          <ContentTitleInput
+            type="text"
+            {...register("title", { required: "Title is required" })}
+          />
+          <RequiredError>{errors.title?.message}</RequiredError>
         </InputContainer>
 
         <InputContainer>
           <Label>내용</Label>
-          <ContentInput></ContentInput>
+          <ContentInput
+            type="type"
+            {...register("contents", { required: "Contents is required" })}
+          />
+          <RequiredError>{errors.contents?.message}</RequiredError>
         </InputContainer>
 
         <InputContainer>
@@ -81,7 +164,7 @@ export default function Home() {
           </RadioInputContainer>
         </InputContainer>
 
-        <RegisterBtn>등록하기</RegisterBtn>
+        <RegisterBtn type="submit">등록하기</RegisterBtn>
       </BoardContainer>
     </>
   );

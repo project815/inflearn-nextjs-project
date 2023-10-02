@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "emotion": "^11.0.0",
+    "graphql": "^16.8.1",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-hook-form": "^7.47.0"
   },
   "devDependencies": {
     "@types/node": "latest",

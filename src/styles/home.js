@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const BoardContainer = styled.div`
+export const BoardContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -22,7 +22,6 @@ export const InputContainer = styled.div`
   flex-direction: column;
   item-align: center;
   width: 100%;
-  margin-bottom: 15px;
 `;
 export const Label = styled.span`
   font-size: 16px;
@@ -85,4 +84,10 @@ export const RegisterBtn = styled.button`
   background-color: #ffd600;
   padding: 14px 60px;
   margin: 0px 180px;
+`;
+
+export const RequiredError = styled.p`
+  font-size: 5px;
+  color: red;
+  min-height: 15px;
 `;
