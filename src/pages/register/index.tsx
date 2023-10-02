@@ -24,6 +24,7 @@ import {
 } from "../../styles/home";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 type CreateBoardInput = {
   writer: string;
@@ -56,6 +57,7 @@ const CREATEBOARD = gql`
 `;
 
 export default function RegisterBoardPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -82,6 +84,7 @@ export default function RegisterBoardPage() {
       });
 
       console.log(result.data.createBoard._id);
+      router.push(`board/${result.data.createBoard._id}`);
     } catch (error) {
       console.log(error);
     }

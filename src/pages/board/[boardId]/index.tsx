@@ -12,6 +12,7 @@ import {
   CreateAt,
   Body,
   BoardTitle,
+  ContnetImage,
   BoardContents,
   BoardVideo,
   Footer,
@@ -21,6 +22,7 @@ import {
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
+  ImageDefalutImage,
   ImageDefaultAvator,
   ImageDislike,
   ImageFile,
@@ -29,8 +31,8 @@ import {
 } from "@/assets/images";
 
 const FETCHBOARD = gql`
-  query {
-    fetchBoard(boardId: "651ab4a9bfc0f900299a8493") {
+  query fetchBoard($boardId: ID!) {
+    fetchBoard(boardId: $boardId) {
       _id
       writer
       title
@@ -77,8 +79,9 @@ export default function BoardPage() {
           </Header>
           <Body>
             <BoardTitle>{data?.fetchBoard.title}</BoardTitle>
-            {/* <Image src={} alt="" /> */}
-
+            <ContnetImage>
+              <Image src={ImageDefalutImage} alt="" fill />
+            </ContnetImage>
             <BoardContents>{data?.fetchBoard.contents}</BoardContents>
             <BoardVideo></BoardVideo>
           </Body>

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Image from "next/image";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -52,10 +53,17 @@ export const CreateAt = styled.div`
 export const Body = styled.div`
   height: 80%;
   padding: 10px;
+  position: relative;
 `;
 export const BoardTitle = styled.div`
   font-size: 36px;
   font-weight: 700;
+`;
+export const ContnetImage = styled.div`
+  width: 100%;
+  height: 80px;
+  position: relative;
+  margin: 20px 0px;
 `;
 export const BoardContents = styled.div`
   font-size: 16px;
@@ -77,4 +85,5 @@ export const Button = styled.button`
   width: 180px;
   height: 50px;
   background-color: white;
+  border: 1px solid #bdbdbd;
 `;

@@ -3,6 +3,7 @@ import ImageLocation from "./logo_location.png";
 import ImageFile from "./img_file.png";
 import ImageLike from "./img_like.png";
 import ImageDislike from "./img_dislike.png";
+import ImageDefalutImage from "./img_defaultImage.png";
 
 export {
   ImageDefaultAvator,
@@ -10,4 +11,5 @@ export {
   ImageFile,
   ImageLike,
   ImageDislike,
+  ImageDefalutImage,
 };
