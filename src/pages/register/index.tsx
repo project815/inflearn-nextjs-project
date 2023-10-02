@@ -56,8 +56,6 @@ const CREATEBOARD = gql`
 `;
 
 export default function RegisterBoardPage() {
-  const [registerContent, setRegisterContent] = useState<CreateBoardInput>({});
-
   const {
     register,
     handleSubmit,

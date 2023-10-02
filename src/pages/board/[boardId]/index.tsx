@@ -1,8 +1,13 @@
 import { BoardContainer } from "@/styles/home";
 import Image from "next/image";
 import {
-  Warpper,
+  Wrapper,
+  Content,
   Header,
+  Avatar,
+  Info,
+  InfoText,
+  SubInfo,
   Writer,
   CreateAt,
   Body,
@@ -10,11 +15,18 @@ import {
   BoardContents,
   BoardVideo,
   Footer,
+  ButtonWarpper,
+  Button,
 } from "../../../styles/board";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { ImageUser } from "@/assets/images";
+import {
+  ImageDefaultAvator,
+  ImageDislike,
+  ImageFile,
+  ImageLike,
+  ImageLocation,
+} from "@/assets/images";
 
 const FETCHBOARD = gql`
   query {
@@ -43,26 +55,44 @@ export default function BoardPage() {
 
   return (
     <>
-      <Warpper>
-        <Header>
-          <Image src={ImageUser} alt="" />
-          <Writer>{data?.fetchBoard.writer}</Writer>
-          <CreateAt>{data?.fetchBoard.createdAt}</CreateAt>
-          {/* <Image src={} alt="" /> */}
-          {/* <Image src={} alt="" /> */}
-        </Header>
-        <Body>
-          <BoardTitle>{data?.fetchBoard.title}</BoardTitle>
-          {/* <Image src={} alt="" /> */}
+      <Wrapper>
+        <Content>
+          <Header>
+            <Avatar>
+              <Info>
+                <Image src={ImageDefaultAvator} alt="" width={40} height={40} />
+                <InfoText>
+                  <Writer>{data?.fetchBoard.writer}</Writer>
+                  <CreateAt>DATE : {data?.fetchBoard.createdAt}</CreateAt>
+                </InfoText>
+              </Info>
+              <SubInfo>
+                <Image src={ImageFile} alt="" width={25} height={25} />
+                <Image src={ImageLocation} alt="" width={25} height={25} />
+              </SubInfo>
+            </Avatar>
 
-          <BoardContents>{data?.fetchBoard.contents}</BoardContents>
-          <BoardVideo></BoardVideo>
-        </Body>
-        <Footer>
-          {/* <Image src={} alt="" /> */}
-          {/* <Image src={} alt="" /> */}
-        </Footer>
-      </Warpper>
+            {/* <Image src={} alt="" /> */}
+            {/* <Image src={} alt="" /> */}
+          </Header>
+          <Body>
+            <BoardTitle>{data?.fetchBoard.title}</BoardTitle>
+            {/* <Image src={} alt="" /> */}
+
+            <BoardContents>{data?.fetchBoard.contents}</BoardContents>
+            <BoardVideo></BoardVideo>
+          </Body>
+          <Footer>
+            <Image src={ImageLike} alt="" />
+            <Image src={ImageDislike} alt="" />
+          </Footer>
+        </Content>
+        <ButtonWarpper>
+          <Button>목록으로</Button>
+          <Button>수정하기</Button>
+          <Button>삭제하기</Button>
+        </ButtonWarpper>
+      </Wrapper>
     </>
   );
 }
