@@ -13,6 +13,8 @@ import {
   RowBetweenGroup,
   ImageUploadButton,
   ToggleInput,
+  AddressInput,
+  SubmitButton,
 } from "../../../src/styles/boardreview";
 
 export default function BoardPage() {
@@ -43,8 +45,8 @@ export default function BoardPage() {
           <ZipcodeInput />
           <ZipcodeButton>우편번호 검색</ZipcodeButton>
         </RowGroup>
-        <ContentInput />
-        <ContentInput />
+        <AddressInput />
+        <AddressInput />
       </InputGroup>
       <InputGroup>
         <Label>유튜브</Label>
@@ -68,18 +70,19 @@ export default function BoardPage() {
         </RowGroup>
       </InputGroup>
       <InputGroup>
-        <Label>매안 설정</Label>
+        <Label>매인 설정</Label>
         <RowGroup>
           <RowGroup>
-            <ToggleInput type="radio" />
+            <ToggleInput type="radio" name="uploaddtype" />
             <Label>유튜브</Label>
           </RowGroup>
           <RowGroup>
-            <ToggleInput type="radio" />
+            <ToggleInput type="radio" name="uploaddtype" />
             <Label>사진</Label>
           </RowGroup>
         </RowGroup>
       </InputGroup>
+      <SubmitButton>등록하기</SubmitButton>
     </ContentLayout>
   );
 }
