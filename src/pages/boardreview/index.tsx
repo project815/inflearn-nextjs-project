@@ -1,3 +1,4 @@
+import { useForm } from "react-hook-form";
 import {
   ContentTitle,
   ContentLayout,
@@ -15,20 +16,54 @@ import {
   ToggleInput,
   AddressInput,
   SubmitButton,
+  ErrorMessage,
 } from "../../../src/styles/boardreview";
 
 export default function BoardPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      writer: "",
+      password: "",
+      email: "",
+    },
+  });
+  console.log("errors : ", errors);
+
   return (
-    <ContentLayout>
+    <ContentLayout
+      onSubmit={handleSubmit((data) => {
+        console.log("data : ", data);
+      })}
+    >
       <ContentTitle>게시물 등록</ContentTitle>
       <RowBetweenGroup>
         <WriterInputGroup>
           <Label>작성자</Label>
-          <ContentInput placeholder="이름을 입력해주세요."></ContentInput>
+          <ContentInput
+            type="email"
+            {...register("writer", { required: "Writer is requried" })}
+            placeholder="이름을 입력해주세요."
+          />
+          <ErrorMessage>{errors.writer?.message}</ErrorMessage>
         </WriterInputGroup>
         <PasswordInputGroup>
           <Label>비밀번호</Label>
-          <ContentInput placeholder="비밀번호을 입력해주세요."></ContentInput>
+          <ContentInput
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
+            placeholder="비밀번호을 입력해주세요."
+          ></ContentInput>
+          <ErrorMessage>{errors.password?.message}</ErrorMessage>
         </PasswordInputGroup>
       </RowBetweenGroup>
       <InputGroup>
@@ -82,7 +117,7 @@ export default function BoardPage() {
           </RowGroup>
         </RowGroup>
       </InputGroup>
-      <SubmitButton>등록하기</SubmitButton>
+      <SubmitButton type="submit">등록하기</SubmitButton>
     </ContentLayout>
   );
 }

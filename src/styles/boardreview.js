@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ContentLayout = styled.div`
+export const ContentLayout = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,4 +137,9 @@ export const SubmitButton = styled.button`
   align-items: center;
   background-color: #ffd600;
   margin-top: 35px;
+`;
+
+export const ErrorMessage = styled.div`
+  font-size: 12px;
+  color: red;
 `;
