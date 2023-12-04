@@ -18,8 +18,23 @@ import {
   SubmitButton,
   ErrorMessage,
 } from "../../../src/styles/boardreview";
+import { useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+
+const CREATEBOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      _id
+      writer
+      title
+      contents
+    }
+  }
+`;
 
 export default function BoardPage() {
+  const [createBoard] = useMutation(CREATEBOARD);
+
   const {
     register,
     handleSubmit,
@@ -28,15 +43,39 @@ export default function BoardPage() {
     defaultValues: {
       writer: "",
       password: "",
-      email: "",
+      contentTitle: "",
+      contentText: "",
     },
   });
-  console.log("errors : ", errors);
+
+  const onSubmit = async (data: any) => {
+    console.log("data : ", data);
+    const { writer, password, contentTitle, contentText } = data;
+    const result = await createBoard({
+      variables: {
+        createBoardInput: {
+          writer: writer,
+          password: password,
+          title: contentTitle,
+          contents: contentText,
+          // youtubeUrl: "",
+          // boardAddress: {
+          //   zipcode: "",
+          //   address: "",
+          //   addressDetail: "",
+          // },
+          // images: "",
+        },
+      },
+    });
+
+    console.log("result : ", result);
+  };
 
   return (
     <ContentLayout
       onSubmit={handleSubmit((data) => {
-        console.log("data : ", data);
+        onSubmit(data);
       })}
     >
       <ContentTitle>게시물 등록</ContentTitle>
@@ -44,10 +83,17 @@ export default function BoardPage() {
         <WriterInputGroup>
           <Label>작성자</Label>
           <ContentInput
-            type="email"
-            {...register("writer", { required: "Writer is requried" })}
+            type="text"
+            {...register("writer", {
+              required: "Writer is requried",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
+                message: "이메일 형식이 아닙니다.",
+              },
+            })}
             placeholder="이름을 입력해주세요."
           />
+
           <ErrorMessage>{errors.writer?.message}</ErrorMessage>
         </WriterInputGroup>
         <PasswordInputGroup>
@@ -68,11 +114,23 @@ export default function BoardPage() {
       </RowBetweenGroup>
       <InputGroup>
         <Label>제목</Label>
-        <ContentInput placeholder="제목을 입력해주세요."></ContentInput>
+        <ContentInput
+          placeholder="제목을 입력해주세요."
+          {...register("contentTitle", {
+            required: "contentTitle is required",
+          })}
+          //   onChange={onChangeContentTitle}
+        ></ContentInput>
       </InputGroup>
       <InputGroup>
         <Label>내용</Label>
-        <ContentTextInput placeholder="제목을 입력해주세요."></ContentTextInput>
+        <ContentTextInput
+          placeholder="내용을 입력해주세요."
+          {...register("contentText", {
+            required: "contentText is required",
+          })}
+          //   onChange={onChangeContentText}
+        ></ContentTextInput>
       </InputGroup>
       <InputGroup>
         <Label>주소</Label>

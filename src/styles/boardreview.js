@@ -10,7 +10,7 @@ export const ContentLayout = styled.form`
   border: 1px solid black;
   box-sizing: border-box;
   min-width: 600px;
-  max-width: 1000px;
+  max-width: 700px;
 `;
 
 export const ContentTitle = styled.h2`
