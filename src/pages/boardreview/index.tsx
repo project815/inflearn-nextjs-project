@@ -18,7 +18,6 @@ import {
   SubmitButton,
   ErrorMessage,
 } from "../../../src/styles/boardreview";
-import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 const CREATEBOARD = gql`
@@ -43,21 +42,21 @@ export default function BoardPage() {
     defaultValues: {
       writer: "",
       password: "",
-      contentTitle: "",
-      contentText: "",
+      title: "",
+      contents: "",
     },
   });
 
   const onSubmit = async (data: any) => {
     console.log("data : ", data);
-    const { writer, password, contentTitle, contentText } = data;
+    const { writer, password, title, contents } = data;
     const result = await createBoard({
       variables: {
         createBoardInput: {
-          writer: writer,
-          password: password,
-          title: contentTitle,
-          contents: contentText,
+          writer,
+          password,
+          title,
+          contents,
           // youtubeUrl: "",
           // boardAddress: {
           //   zipcode: "",
@@ -85,7 +84,7 @@ export default function BoardPage() {
           <ContentInput
             type="text"
             {...register("writer", {
-              required: "Writer is requried",
+              required: "작성자의 이메일을 입력해주세요.",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
                 message: "이메일 형식이 아닙니다.",
@@ -101,7 +100,7 @@ export default function BoardPage() {
           <ContentInput
             type="password"
             {...register("password", {
-              required: "Password is required",
+              required: "비밀번호을 입력해주세요.",
               minLength: {
                 value: 8,
                 message: "Password must be at least 8 characters",
@@ -116,21 +115,23 @@ export default function BoardPage() {
         <Label>제목</Label>
         <ContentInput
           placeholder="제목을 입력해주세요."
-          {...register("contentTitle", {
-            required: "contentTitle is required",
+          {...register("title", {
+            required: "제목을 입력해주세요.",
           })}
           //   onChange={onChangeContentTitle}
         ></ContentInput>
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
       </InputGroup>
       <InputGroup>
         <Label>내용</Label>
         <ContentTextInput
           placeholder="내용을 입력해주세요."
-          {...register("contentText", {
-            required: "contentText is required",
+          {...register("contents", {
+            required: "내용을 입력해주세요.",
           })}
           //   onChange={onChangeContentText}
         ></ContentTextInput>
+        <ErrorMessage>{errors.contents?.message}</ErrorMessage>
       </InputGroup>
       <InputGroup>
         <Label>주소</Label>
