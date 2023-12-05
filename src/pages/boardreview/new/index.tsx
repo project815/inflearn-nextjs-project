@@ -17,8 +17,9 @@ import {
   AddressInput,
   SubmitButton,
   ErrorMessage,
-} from "../../../src/styles/boardreview";
+} from "../../../styles/boardreview";
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const CREATEBOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
@@ -32,6 +33,7 @@ const CREATEBOARD = gql`
 `;
 
 export default function BoardPage() {
+  const router = useRouter();
   const [createBoard] = useMutation(CREATEBOARD);
 
   const {
@@ -57,18 +59,12 @@ export default function BoardPage() {
           password,
           title,
           contents,
-          // youtubeUrl: "",
-          // boardAddress: {
-          //   zipcode: "",
-          //   address: "",
-          //   addressDetail: "",
-          // },
-          // images: "",
         },
       },
     });
 
     console.log("result : ", result);
+    router.push(`/boardreview/${result.data.createBoard._id}`);
   };
 
   return (
