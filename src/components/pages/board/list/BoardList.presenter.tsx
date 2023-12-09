@@ -1,5 +1,3 @@
-// import { BestBannerLayOut } from "./BoardList.style";
-
 import Image from "next/image";
 import * as S from "./BoardList.style";
 import { ImageBoard1 } from "@/assets/images";
@@ -9,6 +7,7 @@ import {
   IconSearch,
   IconThumb,
 } from "@/assets/icon/indext";
+import { Dispatch, SetStateAction, useState } from "react";
 
 type BestBannerType = {
   id: string;
@@ -35,7 +34,7 @@ const BANNERLIST: BestBannerType[] = [
     like: 356,
   },
   {
-    id: "1",
+    id: "2",
     image: "../../../assets/images/img_board1.png",
     title: "게시물 제목입니다.",
     name: "노원두",
@@ -43,7 +42,7 @@ const BANNERLIST: BestBannerType[] = [
     like: 356,
   },
   {
-    id: "1",
+    id: "3",
     image: "../../../assets/images/img_board1.png",
     title: "게시물 제목입니다.",
     name: "노원두",
@@ -51,7 +50,7 @@ const BANNERLIST: BestBannerType[] = [
     like: 356,
   },
   {
-    id: "1",
+    id: "4",
     image: "../../../assets/images/img_board1.png",
     title: "게시물 제목입니다.",
     name: "노원두",
@@ -61,6 +60,7 @@ const BANNERLIST: BestBannerType[] = [
 ];
 
 export default function BoardListUI() {
+  // const { startDate, endDate, setStartDate, setEndDate } = props;
   return (
     <S.Layout>
       <S.BestBannerLayOut>
@@ -99,7 +99,7 @@ export default function BoardListUI() {
           style={{ position: "absolute", left: "8px", top: "12px" }}
         />
         <S.SearchBoardInput placeholder="제목을 검색해주세요." />
-        <S.SearchDateInput placeholder="YYYY. MM.DD - YYYY. MM.DD" />
+
         <S.SearchButton>검색하기</S.SearchButton>
       </S.SearchInputGroup>
 
