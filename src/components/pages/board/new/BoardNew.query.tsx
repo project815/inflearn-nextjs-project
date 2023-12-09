@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import BoardNew from "./BoardNew.container";
 
 export const CREATEBOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
@@ -10,7 +11,3 @@ export const CREATEBOARD = gql`
     }
   }
 `;
-
-export default function BoardNewPage() {
-  return <BoardNew />;
-}
