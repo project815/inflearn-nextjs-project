@@ -149,5 +149,5 @@ export const BoardTableButton = styled.button`
   align-items: center;
 `;
 export const BoardTableButtonText = styled.span`
-  margin-left: 10px;
+  margin-left: 8px;
 `;
