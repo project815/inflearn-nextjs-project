@@ -7,7 +7,11 @@ import {
   IconSearch,
   IconThumb,
 } from "@/assets/icon/indext";
-import { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 type BestBannerType = {
   id: string;
@@ -58,9 +62,19 @@ const BANNERLIST: BestBannerType[] = [
     like: 356,
   },
 ];
+export type ValuePiece = Date | null;
 
-export default function BoardListUI() {
-  // const { startDate, endDate, setStartDate, setEndDate } = props;
+export type Value = [ValuePiece, ValuePiece];
+
+type PropsType = {
+  startDate: string;
+  endDate: string;
+  setStartDate: Dispatch<SetStateAction<string>>;
+  setEndDate: Dispatch<SetStateAction<string>>;
+};
+
+export default function BoardListUI(props: PropsType) {
+  const { setStartDate, startDate, endDate, setEndDate } = props;
   return (
     <S.Layout>
       <S.BestBannerLayOut>
@@ -100,6 +114,20 @@ export default function BoardListUI() {
         />
         <S.SearchBoardInput placeholder="제목을 검색해주세요." />
 
+        <div>
+          <input
+            type="date"
+            style={{ height: "46px" }}
+            defaultValue={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <input
+            type="date"
+            style={{ height: "46px" }}
+            defaultValue={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
         <S.SearchButton>검색하기</S.SearchButton>
       </S.SearchInputGroup>
 

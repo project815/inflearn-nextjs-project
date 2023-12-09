@@ -16,6 +16,7 @@
     "graphql": "^16.8.1",
     "next": "latest",
     "react": "latest",
+    "react-datepicker": "^4.24.0",
     "react-dom": "latest",
     "react-hook-form": "^7.48.2"
   },
