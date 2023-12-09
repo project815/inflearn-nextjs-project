@@ -1,3 +1,5 @@
+import BoardList from "@/components/pages/board/BoardList.container";
+
 export default function BoardListPage() {
-  return <div></div>;
+  return <BoardList />;
 }
