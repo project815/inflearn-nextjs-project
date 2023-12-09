@@ -16,10 +16,11 @@ type PropsType = {
   onSubmit: (data: any) => Promise<void>;
   register: UseFormRegister<ContentType>;
   errors: FieldErrors<ContentType>;
+  isActive: boolean;
 };
 
 export default function BoardNewUI(props: PropsType) {
-  const { handleSubmit, onSubmit, register, errors } = props;
+  const { handleSubmit, onSubmit, register, errors, isActive } = props;
   return (
     <S.ContentLayout
       onSubmit={handleSubmit((data) => {
@@ -125,7 +126,9 @@ export default function BoardNewUI(props: PropsType) {
           </S.RowGroup>
         </S.RowGroup>
       </S.InputGroup>
-      <S.SubmitButton type="submit">등록하기</S.SubmitButton>
+      <S.SubmitButton type="submit" isActive={isActive}>
+        등록하기
+      </S.SubmitButton>
     </S.ContentLayout>
   );
 }

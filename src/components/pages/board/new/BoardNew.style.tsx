@@ -129,13 +129,13 @@ export const ToggleInput = styled.input`
   }
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{ isActive: boolean }>`
   display: flex;
   width: 20%;
   height: 40px;
   justify-content: center;
   align-items: center;
-  background-color: #ffd600;
+  background-color: ${(props) => (props.isActive ? "green" : "red")};
   margin-top: 35px;
 `;
 
