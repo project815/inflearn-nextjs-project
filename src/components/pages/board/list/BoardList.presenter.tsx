@@ -12,6 +12,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { BoardList } from "./BoardList.container";
 
 type BestBannerType = {
   id: string;
@@ -69,12 +70,29 @@ export type Value = [ValuePiece, ValuePiece];
 type PropsType = {
   startDate: string;
   endDate: string;
-  setStartDate: Dispatch<SetStateAction<string>>;
-  setEndDate: Dispatch<SetStateAction<string>>;
+  onChangeEndDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeStartDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChnageSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClickPage: (page: number) => void;
+  boardList: Array<BoardList>;
+  currentPage: number;
+  totalPages: number;
+  page: number[];
 };
 
 export default function BoardListUI(props: PropsType) {
-  const { setStartDate, startDate, endDate, setEndDate } = props;
+  const {
+    startDate,
+    endDate,
+    onChangeEndDate,
+    onChangeStartDate,
+    onChnageSearch,
+    onClickPage,
+    boardList,
+    currentPage,
+    totalPages,
+    page,
+  } = props;
   return (
     <S.Layout>
       <S.BestBannerLayOut>
@@ -119,13 +137,13 @@ export default function BoardListUI(props: PropsType) {
             type="date"
             style={{ height: "46px" }}
             defaultValue={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            onChange={onChangeStartDate}
           />
           <input
             type="date"
             style={{ height: "46px" }}
             defaultValue={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            onChange={onChangeEndDate}
           />
         </div>
         <S.SearchButton>검색하기</S.SearchButton>
@@ -150,27 +168,46 @@ export default function BoardListUI(props: PropsType) {
               <th>날짜</th>
             </tr>
           </S.BoardTableHead>
-          <S.BoardTableBody>
-            <tr>
-              <td>10</td>
-              <td>게시물 제목입니다.</td>
-              <td>노원두.</td>
-              <td>2020.09.28.</td>
-            </tr>
-          </S.BoardTableBody>
-          <S.BoardTableBody>
-            <tr>
-              <td>10</td>
-              <td>게시물 제목입니다.</td>
-              <td>노원두.</td>
-              <td>2020.09.28.</td>
-            </tr>
-          </S.BoardTableBody>
+          {boardList &&
+            boardList.map((i) => (
+              <S.BoardTableBody key={i._id}>
+                <tr>
+                  <td>{i._id}</td>
+                  <td>{i.title}</td>
+                  <td>{i.writer}</td>
+                  <td>{i.createdAt}</td>
+                </tr>
+              </S.BoardTableBody>
+            ))}
         </table>
         <S.BoardTablePagination>
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
+          <button
+            onClick={() => onClickPage(currentPage - 5)}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          {page.map((page) => (
+            <span
+              key={page}
+              onClick={() => onClickPage(page)}
+              className={currentPage === page ? "active" : ""}
+              style={{
+                marginLeft: "10px",
+                marginRight: "10px",
+                fontWeight: currentPage === page ? "bold" : "normal",
+              }}
+            >
+              {page}
+            </span>
+          ))}
+
+          <button
+            onClick={() => onClickPage(currentPage + 5)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
         </S.BoardTablePagination>
         <S.BoardTableButton>
           <Image src={IconBtnBoardNew} alt="" />

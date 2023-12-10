@@ -1,17 +1,28 @@
 import { gql } from "@apollo/client";
 
 export const FETCHBOARDS = gql`
-  query {
+  query fetchBoards(
+    $endDate: DateTime
+    $startDate: DateTime
+    $search: String
+    $page: Int
+  ) {
     fetchBoards(
-      startDate: "2023-01-01"
-      endDate: "2023-01-31"
-      search: ""
-      page: 2
+      startDate: $startDate
+      endDate: $endDate
+      search: $search
+      page: $page
     ) {
       _id
       contents
       likeCount
       dislikeCount
     }
+  }
+`;
+
+export const FETCHBOARDSCOUNT = gql`
+  query {
+    fetchBoardsCount(startDate: "2023-01-01", endDate: "2023-12-08", search: "")
   }
 `;
