@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { BoardList } from "./BoardList.container";
+import { getToday } from "@/utility/common";
 
 type BestBannerType = {
   id: string;
@@ -78,6 +79,8 @@ type PropsType = {
   currentPage: number;
   totalPages: number;
   page: number[];
+  onClickMoveToBoard: (id: string) => void;
+  onClickMoveToBoardNew: () => void;
 };
 
 export default function BoardListUI(props: PropsType) {
@@ -92,6 +95,8 @@ export default function BoardListUI(props: PropsType) {
     currentPage,
     totalPages,
     page,
+    onClickMoveToBoard,
+    onClickMoveToBoardNew,
   } = props;
   return (
     <S.Layout>
@@ -165,17 +170,20 @@ export default function BoardListUI(props: PropsType) {
               <th>번호</th>
               <th style={{ width: "60%" }}>제목</th>
               <th>작성자</th>
-              <th>날짜</th>
+              <th style={{ width: "13%" }}>날짜</th>
             </tr>
           </S.BoardTableHead>
           {boardList &&
             boardList.map((i) => (
-              <S.BoardTableBody key={i._id}>
+              <S.BoardTableBody
+                key={i._id}
+                onClick={() => onClickMoveToBoard(i._id)}
+              >
                 <tr>
                   <td>{i._id}</td>
                   <td>{i.title}</td>
                   <td>{i.writer}</td>
-                  <td>{i.createdAt}</td>
+                  <td>{getToday(i.createdAt)}</td>
                 </tr>
               </S.BoardTableBody>
             ))}
@@ -209,7 +217,7 @@ export default function BoardListUI(props: PropsType) {
             Next
           </button>
         </S.BoardTablePagination>
-        <S.BoardTableButton>
+        <S.BoardTableButton onClick={onClickMoveToBoardNew}>
           <Image src={IconBtnBoardNew} alt="" />
           <S.BoardTableButtonText>게시물 등록하기</S.BoardTableButtonText>
         </S.BoardTableButton>

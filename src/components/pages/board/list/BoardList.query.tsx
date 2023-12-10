@@ -14,9 +14,9 @@ export const FETCHBOARDS = gql`
       page: $page
     ) {
       _id
-      contents
-      likeCount
-      dislikeCount
+      title
+      writer
+      createdAt
     }
   }
 `;

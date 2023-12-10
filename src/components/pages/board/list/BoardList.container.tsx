@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { FETCHBOARDS, FETCHBOARDSCOUNT } from "./BoardList.query";
 import BoardListUI from "./BoardList.presenter";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 type SearchBoard = {
   $endDate: string;
   $startDate: string;
@@ -49,6 +50,8 @@ export default function BoardList() {
 
   const { data: pageCount } = useQuery(FETCHBOARDSCOUNT);
 
+  const router = useRouter();
+
   const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(e.target.value);
   };
@@ -60,6 +63,12 @@ export default function BoardList() {
   };
   const onClickPage = (page: number) => {
     setPage(page);
+  };
+  const onClickMoveToBoard = (id: string) => {
+    router.push(`/board/${id}`);
+  };
+  const onClickMoveToBoardNew = () => {
+    router.push("/board/new");
   };
   // const onChangePage = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setPage(Number(e.target.value));
@@ -79,8 +88,6 @@ export default function BoardList() {
     return pages;
   };
 
-  console.log("i : ", pageCount);
-
   return (
     <BoardListUI
       startDate={startDate}
@@ -93,6 +100,8 @@ export default function BoardList() {
       currentPage={page}
       totalPages={pageCount?.fetchBoardsCount}
       page={generatePageNumbers(page, pageCount?.fetchBoardsCount)}
+      onClickMoveToBoard={onClickMoveToBoard}
+      onClickMoveToBoardNew={onClickMoveToBoardNew}
     />
   );
 }

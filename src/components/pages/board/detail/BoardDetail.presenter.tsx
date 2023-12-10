@@ -33,7 +33,7 @@ export default function BoardDetailUI(props: any) {
             {/* <Image src={} alt="" /> */}
           </S.Header>
           <S.Body>
-            <S.BoardTitle>{data?.fetchBoard?.title}</S.BoardTitle>
+            <S.BoardTitle>{data?.fetchBoard.title}</S.BoardTitle>
             <S.ContnetImage>
               <Image src={ImageDefalutImage} alt="" fill />
             </S.ContnetImage>
