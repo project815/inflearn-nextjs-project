@@ -8,6 +8,7 @@ import {
   ImageLike,
   ImageLocation,
 } from "@/assets/images";
+import { getToday } from "@/utility/common";
 export default function BoardDetailUI(props: any) {
   const { data } = props;
   return (
@@ -20,7 +21,9 @@ export default function BoardDetailUI(props: any) {
                 <Image src={ImageDefaultAvator} alt="" width={40} height={40} />
                 <S.InfoText>
                   <S.Writer>{data?.fetchBoard?.writer}</S.Writer>
-                  <S.CreateAt>DATE : {data?.fetchBoard?.createdAt}</S.CreateAt>
+                  <S.CreateAt>
+                    DATE : {getToday(data?.fetchBoard?.createdAt)}
+                  </S.CreateAt>
                 </S.InfoText>
               </S.Info>
               <S.SubInfo>

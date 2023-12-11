@@ -131,6 +131,10 @@ export const BoardTableBody = styled.tbody`
   height: 50px;
   border-bottom: 1px solid #bdbdbd;
   border-top: 1px solid #bdbdbd;
+  cursor: pointer;
+  :hover {
+    color: blue;
+  }
 `;
 
 export const BoardTablePagination = styled.div`
