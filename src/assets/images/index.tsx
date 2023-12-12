@@ -9,6 +9,8 @@ import ImageBoard1 from "./img_board1.png";
 import ImageBoard2 from "./img_board2.png";
 import ImageBoard3 from "./img_board3.png";
 import ImageBoard4 from "./img_board4.png";
+import ImageBoardDetail from "./img_boarddetail.png";
+
 export {
   ImageDefaultAvator,
   ImageLocation,
@@ -20,4 +22,5 @@ export {
   ImageBoard2,
   ImageBoard3,
   ImageBoard4,
+  ImageBoardDetail,
 };

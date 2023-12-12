@@ -9,8 +9,8 @@ export const ContentLayout = styled.form`
   padding: 30px;
   border: 1px solid black;
   box-sizing: border-box;
-  min-width: 600px;
-  max-width: 700px;
+  min-width: 950px;
+  max-width: 1000px;
 `;
 
 export const ContentTitle = styled.h2`

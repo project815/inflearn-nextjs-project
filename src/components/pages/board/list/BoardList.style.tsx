@@ -4,7 +4,7 @@ export const Layout = styled.div`
   min-width: 950px;
   max-width: 1000px;
   height: 100%;
-  padding: 70px;
+  padding: 40px;
 
   border: 1px solid black;
 `;

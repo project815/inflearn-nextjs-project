@@ -1,6 +1,7 @@
 import Image from "next/image";
 import * as S from "./BoardDetail.style";
 import {
+  ImageBoardDetail,
   ImageDefalutImage,
   ImageDefaultAvator,
   ImageDislike,
@@ -38,7 +39,7 @@ export default function BoardDetailUI(props: any) {
           <S.Body>
             <S.BoardTitle>{data?.fetchBoard.title}</S.BoardTitle>
             <S.ContnetImage>
-              <Image src={ImageDefalutImage} alt="" fill />
+              <Image src={ImageBoardDetail} alt="" width={920} />
             </S.ContnetImage>
             <S.BoardContents>{data?.fetchBoard?.contents}</S.BoardContents>
             <S.BoardVideo></S.BoardVideo>

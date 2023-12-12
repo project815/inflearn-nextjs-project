@@ -4,17 +4,20 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 950px;
+  max-width: 1000px;
+  height: 100%;
+  box-sizing: border-box;
 `;
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 600px;
-  height: 850px;
   padding: 30px;
   border: 1px solid black;
   box-sizing: border-box;
   margin-bottom: 50px;
+  width: 100%;
 `;
 
 export const Header = styled.div`
@@ -60,13 +63,19 @@ export const BoardTitle = styled.div`
 `;
 export const ContnetImage = styled.div`
   width: 100%;
-  height: 80px;
+  height: 100%;
   position: relative;
   margin: 20px 0px;
 `;
 export const BoardContents = styled.div`
   font-size: 16px;
   font-weight: 400;
+  min-height: 500px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  word-wrap: break-word;
 `;
 export const BoardVideo = styled.div``;
 export const Footer = styled.div`
