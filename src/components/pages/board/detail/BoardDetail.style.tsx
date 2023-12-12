@@ -89,9 +89,23 @@ export const ButtonWarpper = styled.div`
   flex-direction: row;
 `;
 export const Button = styled.button`
-  margin: 0px 6px;
   width: 180px;
   height: 50px;
   background-color: white;
   border: 1px solid #bdbdbd;
+  margin: 10px;
+
+  background-color: #bdbdbd;
+  border: 2px solid #f2f2f2;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffd600;
+  }
 `;

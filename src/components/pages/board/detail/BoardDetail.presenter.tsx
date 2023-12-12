@@ -11,7 +11,7 @@ import {
 } from "@/assets/images";
 import { getToday } from "@/utility/common";
 export default function BoardDetailUI(props: any) {
-  const { data } = props;
+  const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
   return (
     <div>
       <S.Wrapper>
@@ -50,8 +50,8 @@ export default function BoardDetailUI(props: any) {
           </S.Footer>
         </S.Content>
         <S.ButtonWarpper>
-          <S.Button>목록으로</S.Button>
-          <S.Button>수정하기</S.Button>
+          <S.Button onClick={onClickMoveToBoardList}>목록으로</S.Button>
+          <S.Button onClick={onClickMoveToBoardEdit}>수정하기</S.Button>
           <S.Button>삭제하기</S.Button>
         </S.ButtonWarpper>
       </S.Wrapper>
