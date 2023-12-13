@@ -36,7 +36,7 @@ export default function BoardNewUI(props: PropsType) {
   return (
     <S.ContentLayout
       onSubmit={handleSubmit((data) => {
-        console.log("Data: ", data);
+        console.log("Data: ", data.title);
         onSubmit(data);
       })}
     >
@@ -47,7 +47,7 @@ export default function BoardNewUI(props: PropsType) {
           <S.ContentInput
             type="text"
             {...register("writer", {
-              required: "작성자의 이메일을 입력해주세요.",
+              ...(isEdit ? {} : { required: "작성자를 입력해주세요." }),
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
                 message: "이메일 형식이 아닙니다.",
@@ -56,7 +56,6 @@ export default function BoardNewUI(props: PropsType) {
             placeholder="이름을 입력해주세요."
             defaultValue={defaultValue?.writer}
             disabled={isEdit}
-            shouldValidate={false} // 이 부분 추가
           />
 
           <S.ErrorMessage>{errors.writer?.message}</S.ErrorMessage>
@@ -84,7 +83,7 @@ export default function BoardNewUI(props: PropsType) {
           placeholder="제목을 입력해주세요."
           defaultValue={defaultValue?.title}
           {...register("title", {
-            required: "제목을 입력해주세요.",
+            ...(isEdit ? {} : { required: "제목을 입력해주세요." }),
           })}
           //   onChange={onChangeContentTitle}
         ></S.ContentInput>
@@ -96,7 +95,7 @@ export default function BoardNewUI(props: PropsType) {
           placeholder="내용을 입력해주세요."
           defaultValue={defaultValue?.contents}
           {...register("contents", {
-            required: "내용을 입력해주세요.",
+            ...(isEdit ? {} : { required: "내용을 입력해주세요." }),
           })}
           //   onChange={onChangeContentText}
         ></S.ContentTextInput>

@@ -26,8 +26,6 @@ export default function BoardWrite(props: PropsType) {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    setError,
     watch,
   } = useForm<ContentType>({
     defaultValues: {
@@ -37,6 +35,7 @@ export default function BoardWrite(props: PropsType) {
       contents: defaultValue?.contents,
     },
   });
+
   const isEmailValid = /\S+@\S+\.\S+/;
   const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
@@ -57,6 +56,14 @@ export default function BoardWrite(props: PropsType) {
     );
   };
 
+  // useEffect(() => {
+  //   if (isEdit) {
+  //     setValue("title", defaultValue?.title);
+  //     setValue("contents", defaultValue?.contents);
+  //     console.log("랜더링");
+  //   }
+  // }, [defaultValue?.title, defaultValue?.contents]);
+
   const onSubmit = async (data: any) => {
     console.log("data : ", data);
     const { writer, password, title, contents } = data;
@@ -76,33 +83,37 @@ export default function BoardWrite(props: PropsType) {
   };
 
   const onUpdateBoard = async (data: any) => {
-    console.log("data : ", data);
-    if (!data.writer) {
-      setValue("writer", ""); // writer 필드를 비워줍니다.
-      setError("writer", {
-        type: "manual",
-        message: "작성자의 이메일을 입력해주세요.",
-      });
+    const { password, title, contents } = data;
+    if (!title) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!contents) {
+      alert("제목을 입력해주세요.");
       return;
     }
 
-    const { password, title, contents } = data;
+    const newVariables: {
+      updateBoardInput: {
+        title?: string;
+        contents?: string;
+      };
+      password: string;
+      boardId: any;
+    } = {
+      updateBoardInput: {},
+      password: password,
+      boardId: router.query.boardId,
+    };
+    if (title) newVariables.updateBoardInput.title = title;
+    if (contents) newVariables.updateBoardInput.contents = contents;
+
     try {
       const result = await updateBoard({
-        variables: {
-          updateBoardInput: {
-            title,
-            contents,
-
-            // youtubeUrl: String
-            // boardAddress: BoardAddressInput
-            // images: [String!]
-          },
-          password: password,
-          boardId: router.query.boardId,
-        },
+        variables: newVariables,
       });
-      console.log("result : ", result);
+
+      router.push(`/board/${result?.data?.updateBoard?._id}`);
     } catch (error) {
       console.log("error : ", error);
     }
