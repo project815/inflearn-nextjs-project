@@ -12,7 +12,7 @@ type ContentType = {
 };
 type PropsType = {
   isEdit: boolean;
-  defaultValue: any;
+  defaultValue?: any;
 };
 
 export default function BoardWrite(props: PropsType) {
