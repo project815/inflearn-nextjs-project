@@ -32,7 +32,11 @@ export default function BoardList() {
   const [startDate, setStartDate] = useState<string>(
     new Date(now.setMonth(now.getMonth() - 1)).toISOString().slice(0, 10)
   );
-  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10)
+  );
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
 

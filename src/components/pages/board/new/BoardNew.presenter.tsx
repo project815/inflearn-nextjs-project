@@ -12,6 +12,9 @@ type ContentType = {
   contents: string;
 };
 type PropsType = {
+  isEdit: boolean;
+  defaultValue: any;
+
   handleSubmit: UseFormHandleSubmit<ContentType>;
   onSubmit: (data: any) => Promise<void>;
   register: UseFormRegister<ContentType>;
@@ -20,14 +23,24 @@ type PropsType = {
 };
 
 export default function BoardNewUI(props: PropsType) {
-  const { handleSubmit, onSubmit, register, errors, isActive } = props;
+  const {
+    isEdit,
+    handleSubmit,
+    onSubmit,
+    register,
+    errors,
+    isActive,
+    defaultValue,
+  } = props;
+
   return (
     <S.ContentLayout
       onSubmit={handleSubmit((data) => {
+        console.log("Data: ", data);
         onSubmit(data);
       })}
     >
-      <S.ContentTitle>게시물 등록</S.ContentTitle>
+      <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
       <S.RowBetweenGroup>
         <S.WriterInputGroup>
           <S.Label>작성자</S.Label>
@@ -41,6 +54,9 @@ export default function BoardNewUI(props: PropsType) {
               },
             })}
             placeholder="이름을 입력해주세요."
+            defaultValue={defaultValue?.writer}
+            disabled={isEdit}
+            shouldValidate={false} // 이 부분 추가
           />
 
           <S.ErrorMessage>{errors.writer?.message}</S.ErrorMessage>
@@ -57,6 +73,7 @@ export default function BoardNewUI(props: PropsType) {
               },
             })}
             placeholder="비밀번호을 입력해주세요."
+            defaultValue={defaultValue?.password}
           ></S.ContentInput>
           <S.ErrorMessage>{errors.password?.message}</S.ErrorMessage>
         </S.PasswordInputGroup>
@@ -65,6 +82,7 @@ export default function BoardNewUI(props: PropsType) {
         <S.Label>제목</S.Label>
         <S.ContentInput
           placeholder="제목을 입력해주세요."
+          defaultValue={defaultValue?.title}
           {...register("title", {
             required: "제목을 입력해주세요.",
           })}
@@ -76,6 +94,7 @@ export default function BoardNewUI(props: PropsType) {
         <S.Label>내용</S.Label>
         <S.ContentTextInput
           placeholder="내용을 입력해주세요."
+          defaultValue={defaultValue?.contents}
           {...register("contents", {
             required: "내용을 입력해주세요.",
           })}
@@ -127,7 +146,7 @@ export default function BoardNewUI(props: PropsType) {
         </S.RowGroup>
       </S.InputGroup>
       <S.SubmitButton type="submit" isActive={isActive}>
-        등록하기
+        {isEdit ? "수정" : "등록"}하기
       </S.SubmitButton>
     </S.ContentLayout>
   );

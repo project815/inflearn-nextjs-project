@@ -135,8 +135,26 @@ export const SubmitButton = styled.button<{ isActive: boolean }>`
   height: 40px;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.isActive ? "green" : "red")};
+  background-color: ${(props) => (props.isActive ? "#ffd600" : "#bdbdbd")};
   margin-top: 35px;
+
+  width: 180px;
+  height: 50px;
+  border: 1px solid #bdbdbd;
+  margin: 10px;
+
+  border: 2px solid #f2f2f2;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffd600;
+  }
 `;
 
 export const ErrorMessage = styled.div`

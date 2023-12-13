@@ -1,5 +1,5 @@
-import BoardNew from "@/components/pages/board/new/BoardNew.container";
+import BoardWrite from "@/components/pages/board/new/BoardNew.container";
 
 export default function BoardNewPage() {
-  return <BoardNew />;
+  return <BoardWrite isEdit={false} />;
 }

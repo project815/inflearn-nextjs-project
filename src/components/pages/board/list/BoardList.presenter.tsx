@@ -203,7 +203,8 @@ export default function BoardListUI(props: PropsType) {
               style={{
                 marginLeft: "10px",
                 marginRight: "10px",
-                fontWeight: currentPage === page ? "bold" : "normal",
+                fontWeight: currentPage === page ? "800" : "normal",
+                fontSize: currentPage === page ? "14px" : "12px",
               }}
             >
               {page}
