@@ -36,7 +36,6 @@ export default function BoardNewUI(props: PropsType) {
   return (
     <S.ContentLayout
       onSubmit={handleSubmit((data) => {
-        console.log("Data: ", data.title);
         onSubmit(data);
       })}
     >

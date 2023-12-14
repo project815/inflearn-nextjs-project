@@ -6,7 +6,7 @@ import {
   IconDefaultUser,
   IconSearch,
   IconThumb,
-} from "@/assets/icon/indext";
+} from "@/assets/icon";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 import "react-datepicker/dist/react-datepicker.css";

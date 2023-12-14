@@ -5,6 +5,8 @@ import IconBtnBoardNew from "./icon_btn_boardnew.png";
 import IconComment from "./icon_commentl.png";
 import IconStarOn from "./icon_staron.png";
 import IconStarOff from "./icon_staroff.png";
+import IconClear from "./icon_clear.png";
+import IconUpdate from "./icon_update.png";
 
 export {
   IconThumb,
@@ -14,4 +16,6 @@ export {
   IconComment,
   IconStarOff,
   IconStarOn,
+  IconClear,
+  IconUpdate,
 };

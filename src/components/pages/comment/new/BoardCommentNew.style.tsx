@@ -42,3 +42,34 @@ export const CommentBody = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+//commentList
+
+export const CommentUserInfoGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const CommenterWriper = styled.span`
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
+export const CommentContent = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  width: 95%;
+  position: relative;
+  left: 30px;
+`;
+
+export const CommentDate = styled.div`
+  margin-bottom: 10px;
+  color: #bdbdbd;
+`;
+export const Comment = styled.div`
+  border-bottom: 1px solid #bdbdbd;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
