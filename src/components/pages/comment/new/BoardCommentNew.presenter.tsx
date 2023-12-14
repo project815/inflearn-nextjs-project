@@ -6,74 +6,36 @@ import {
   IconDefaultUser,
   IconUpdate,
 } from "@/assets/icon";
-import { useMutation, useQuery } from "@apollo/client";
-import {
-  CREATEBOARDCOMMENT,
-  FETCHBOARDCOMMENTS,
-} from "./BoardCommentNew.query";
-import { useState } from "react";
-import { useRouter } from "next/router";
+
 import { Button, Rate } from "antd";
 import { getToday } from "@/utility/common";
 
-type CreateBoardCommentInput = {
+type PropsType = {
+  rating: number;
   writer: string;
   password: string;
   contents: string;
-  rating: number;
+  setRating: (value: number) => void;
+  onChangeWriter: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onClickCreateBoardComment: () => void;
+  data: any;
 };
 
-export default function BoardCommentUI() {
-  const router = useRouter();
-
-  const [writer, setWriter] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [contents, setContents] = useState<string>("");
-  const [rating, setRating] = useState<number>(3);
-
-  const [createBoardComment] = useMutation(CREATEBOARDCOMMENT);
-
-  const { data } = useQuery(FETCHBOARDCOMMENTS, {
-    variables: {
-      boardId: router.query.boardId,
-    },
-  });
-  const onClickCreateBoardComment = async () => {
-    try {
-      const result = await createBoardComment({
-        variables: {
-          createBoardCommentInput: {
-            writer: writer,
-            password: password,
-            contents: contents,
-            rating: rating,
-          },
-          boardId: router.query.boardId,
-        },
-        refetchQueries: [FETCHBOARDCOMMENTS],
-      });
-      setWriter("");
-      setPassword("");
-      setContents("");
-      setRating(3);
-      alert("댓글이 등록되었습니다.");
-    } catch (err) {
-      console.log("error : ", err);
-      alert("댓글이 실패했습니다." + err);
-    }
-  };
-
-  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWriter(e.target.value);
-  };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(e.target.value);
-  };
-  console.log("data : ", data?.fetchBoardComments);
+export default function BoardCommentUI(props: PropsType) {
+  const {
+    rating,
+    writer,
+    password,
+    contents,
+    setRating,
+    onChangeWriter,
+    onChangePassword,
+    onChangeContents,
+    onClickCreateBoardComment,
+    data,
+  } = props;
   return (
     <div>
       <S.Wrapper>
