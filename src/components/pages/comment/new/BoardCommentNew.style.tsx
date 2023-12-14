@@ -19,3 +19,26 @@ export const Content = styled.div`
   margin-bottom: 50px;
   width: 100%;
 `;
+
+export const CommentHeader = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Title = styled.div`
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+export const WriterInput = styled.input``;
+export const PasswordInput = styled.input``;
+
+export const CommentTextBox = styled.textarea`
+  resize: none;
+
+  height: 120px;
+`;
+export const CommentBody = styled.div`
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+`;
