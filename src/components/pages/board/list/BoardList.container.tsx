@@ -3,6 +3,11 @@ import { FETCHBOARDS, FETCHBOARDSCOUNT } from "./BoardList.query";
 import BoardListUI from "./BoardList.presenter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import {
+  IQuery,
+  IQueryFetchBoardsArgs,
+  IQueryFetchBoardsCountArgs,
+} from "@/types/graphql/types";
 type SearchBoard = {
   $endDate: string;
   $startDate: string;
@@ -32,7 +37,7 @@ export default function BoardList() {
   const [startDate, setStartDate] = useState<string>(
     new Date(now.setMonth(now.getMonth() - 1)).toISOString().slice(0, 10)
   );
-  const [endDate, setEndDate] = useState(
+  const [endDate, setEndDate] = useState<string>(
     new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
       .toISOString()
       .slice(0, 10)
@@ -43,7 +48,10 @@ export default function BoardList() {
   // const [boardList, setBoardList] = useState<BoardList[]>();
   // const [boardCount, setBoardCount] = useState<number>(0);
 
-  const { data: boardList } = useQuery(FETCHBOARDS, {
+  const { data: boardList } = useQuery<
+    Pick<IQuery, "fetchBoards">,
+    IQueryFetchBoardsArgs
+  >(FETCHBOARDS, {
     variables: {
       startDate,
       endDate,
@@ -51,16 +59,37 @@ export default function BoardList() {
       page,
     },
   });
+  console.log("@@@@@page : ", page);
 
-  const { data: pageCount } = useQuery(FETCHBOARDSCOUNT);
+  const { data: pageCount } = useQuery<
+    Pick<IQuery, "fetchBoardsCount">,
+    IQueryFetchBoardsCountArgs
+  >(FETCHBOARDSCOUNT, {
+    variables: {
+      endDate,
+      startDate,
+      search,
+    },
+  });
 
+  console.log("pageCount : ", pageCount);
+
+  console.log(
+    `startDate : ${startDate}, endDate : ${endDate} totalDate: ${Math.ceil(
+      pageCount?.fetchBoardsCount! / 10
+    )}`
+  );
+
+  // console.log("endDate : ", Math.floor(pageCount?.fetchBoardsCount! / 10));
   const router = useRouter();
 
   const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(e.target.value);
+    setPage(1);
   };
   const onChangeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStartDate(e.target.value);
+    setPage(1);
   };
   const onChnageSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -78,12 +107,14 @@ export default function BoardList() {
   //   setPage(Number(e.target.value));
   // };
 
-  const generatePageNumbers = (currentPage: number, totalPages: number) => {
+  const generatePageNumbers = (
+    currentPage: number,
+    totalPages: number | undefined
+  ): number[] => {
+    if (!totalPages) return [];
     const pages = [];
     const startPage = Math.max(1, currentPage - 5);
-    const endPage = Math.min(totalPages, startPage + 9);
-
-    console.log(`startPage: ${startPage}, endPage: ${endPage}`);
+    const endPage = Math.min(Math.ceil(totalPages / 10), startPage + 9);
 
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
@@ -102,7 +133,7 @@ export default function BoardList() {
       onClickPage={onClickPage}
       boardList={boardList?.fetchBoards}
       currentPage={page}
-      totalPages={pageCount?.fetchBoardsCount}
+      totalPages={Math.ceil(pageCount?.fetchBoardsCount! / 10)}
       page={generatePageNumbers(page, pageCount?.fetchBoardsCount)}
       onClickMoveToBoard={onClickMoveToBoard}
       onClickMoveToBoardNew={onClickMoveToBoardNew}

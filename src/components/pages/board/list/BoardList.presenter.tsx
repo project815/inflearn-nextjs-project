@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { BoardList } from "./BoardList.container";
 import { getToday } from "@/utility/common";
+import { IBoard } from "@/types/graphql/types";
 
 type BestBannerType = {
   id: string;
@@ -75,9 +76,9 @@ type PropsType = {
   onChangeStartDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChnageSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickPage: (page: number) => void;
-  boardList: Array<BoardList>;
+  boardList: IBoard[] | undefined;
   currentPage: number;
-  totalPages: number;
+  totalPages: number | undefined;
   page: number[];
   onClickMoveToBoard: (id: string) => void;
   onClickMoveToBoardNew: () => void;
@@ -190,7 +191,7 @@ export default function BoardListUI(props: PropsType) {
         </table>
         <S.BoardTablePagination>
           <button
-            onClick={() => onClickPage(currentPage - 5)}
+            onClick={() => onClickPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
             Prev
@@ -212,8 +213,8 @@ export default function BoardListUI(props: PropsType) {
           ))}
 
           <button
-            onClick={() => onClickPage(currentPage + 5)}
-            disabled={currentPage === totalPages}
+            onClick={() => onClickPage(currentPage + 1)}
+            disabled={currentPage >= totalPages!}
           >
             Next
           </button>

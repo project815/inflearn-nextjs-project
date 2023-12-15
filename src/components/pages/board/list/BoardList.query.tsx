@@ -8,8 +8,8 @@ export const FETCHBOARDS = gql`
     $page: Int
   ) {
     fetchBoards(
-      startDate: $startDate
       endDate: $endDate
+      startDate: $startDate
       search: $search
       page: $page
     ) {
@@ -22,7 +22,11 @@ export const FETCHBOARDS = gql`
 `;
 
 export const FETCHBOARDSCOUNT = gql`
-  query {
-    fetchBoardsCount(startDate: "2023-01-01", endDate: "2023-12-08", search: "")
+  query fetchBoardsCount(
+    $endDate: DateTime
+    $startDate: DateTime
+    $search: String
+  ) {
+    fetchBoardsCount(endDate: $endDate, startDate: $startDate, search: $search)
   }
 `;
