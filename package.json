@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "graphql-codegen"
   },
   "dependencies": {
     "@apollo/client": "^3.8.4",
@@ -19,9 +20,12 @@
     "react": "latest",
     "react-datepicker": "^4.24.0",
     "react-dom": "latest",
-    "react-hook-form": "^7.48.2"
+    "react-hook-form": "^7.48.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
