@@ -6,6 +6,11 @@ import {
 } from "./BoardCommentNew.query";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import {
+  IMutation,
+  IQuery,
+  IQueryFetchBoardCommentsArgs,
+} from "@/types/graphql/types";
 
 type CreateBoardCommentInput = {
   writer: string;
@@ -22,13 +27,18 @@ export default function BoardComment() {
   const [contents, setContents] = useState<string>("");
   const [rating, setRating] = useState<number>(3);
 
-  const [createBoardComment] = useMutation(CREATEBOARDCOMMENT);
+  const [createBoardComment] =
+    useMutation<Pick<IMutation, "createBoardComment">>(CREATEBOARDCOMMENT);
 
-  const { data } = useQuery(FETCHBOARDCOMMENTS, {
+  const { data } = useQuery<
+    Pick<IQuery, "fetchBoardComments">,
+    IQueryFetchBoardCommentsArgs
+  >(FETCHBOARDCOMMENTS, {
     variables: {
-      boardId: router.query.boardId,
+      boardId: router.query.boardId as string,
     },
   });
+
   const onClickCreateBoardComment = async () => {
     try {
       const result = await createBoardComment({

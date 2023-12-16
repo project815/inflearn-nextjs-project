@@ -4,6 +4,12 @@ import { useForm } from "react-hook-form";
 import BoardNewUI from "./BoardNew.presenter";
 import { CREATEBOARD, UPDATEBOARD } from "./BoardNew.query";
 import { useEffect } from "react";
+import {
+  IBoard,
+  IMutation,
+  IMutationCreateBoardArgs,
+  IMutationUpdateBoardArgs,
+} from "@/types/graphql/types";
 type ContentType = {
   writer: string;
   password: string;
@@ -19,8 +25,14 @@ export default function BoardWrite(props: PropsType) {
   const { isEdit, defaultValue } = props;
 
   const router = useRouter();
-  const [createBoard] = useMutation(CREATEBOARD);
-  const [updateBoard] = useMutation(UPDATEBOARD);
+  const [createBoard] = useMutation<
+    Pick<IMutation, "createBoard">,
+    IMutationCreateBoardArgs
+  >(CREATEBOARD);
+  const [updateBoard] = useMutation<
+    Pick<IMutation, "updateBoard">,
+    IMutationUpdateBoardArgs
+  >(UPDATEBOARD);
 
   const {
     register,
@@ -55,14 +67,6 @@ export default function BoardWrite(props: PropsType) {
       contents?.length > 0
     );
   };
-
-  // useEffect(() => {
-  //   if (isEdit) {
-  //     setValue("title", defaultValue?.title);
-  //     setValue("contents", defaultValue?.contents);
-  //     console.log("랜더링");
-  //   }
-  // }, [defaultValue?.title, defaultValue?.contents]);
 
   const onSubmit = async (data: any) => {
     console.log("data : ", data);
