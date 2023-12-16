@@ -1,39 +1,18 @@
 import { useQuery } from "@apollo/client";
 import { FETCHBOARDS, FETCHBOARDSCOUNT } from "./BoardList.query";
 import BoardListUI from "./BoardList.presenter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "@/types/graphql/types";
-type SearchBoard = {
-  $endDate: string;
-  $startDate: string;
-  $search: string;
-  $page: number;
-};
-
-export type BoardList = {
-  _id: string;
-  writer: string;
-  title: string;
-  contents: string;
-  youtubeUrl: string;
-  likeCount: number;
-  dislikeCount: number;
-  images: string[];
-  // boardAddress: BoardAddress
-  // user: User
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
-};
 
 export default function BoardList() {
-  const now = new Date();
+  const router = useRouter();
 
+  const now = new Date();
   const [startDate, setStartDate] = useState<string>(
     new Date(now.setMonth(now.getMonth() - 1)).toISOString().slice(0, 10)
   );
@@ -44,9 +23,6 @@ export default function BoardList() {
   );
   const [search, setSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-
-  // const [boardList, setBoardList] = useState<BoardList[]>();
-  // const [boardCount, setBoardCount] = useState<number>(0);
 
   const { data: boardList } = useQuery<
     Pick<IQuery, "fetchBoards">,
@@ -59,7 +35,6 @@ export default function BoardList() {
       page,
     },
   });
-  console.log("@@@@@page : ", page);
 
   const { data: pageCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
@@ -71,17 +46,6 @@ export default function BoardList() {
       search,
     },
   });
-
-  console.log("pageCount : ", pageCount);
-
-  console.log(
-    `startDate : ${startDate}, endDate : ${endDate} totalDate: ${Math.ceil(
-      pageCount?.fetchBoardsCount! / 10
-    )}`
-  );
-
-  // console.log("endDate : ", Math.floor(pageCount?.fetchBoardsCount! / 10));
-  const router = useRouter();
 
   const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(e.target.value);
@@ -103,9 +67,6 @@ export default function BoardList() {
   const onClickMoveToBoardNew = () => {
     router.push("/board/new");
   };
-  // const onChangePage = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPage(Number(e.target.value));
-  // };
 
   const generatePageNumbers = (
     currentPage: number,

@@ -51,8 +51,6 @@ export default function BoardWrite(props: IBoardWritePropsType) {
   const isEmailValid = /\S+@\S+\.\S+/;
   const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-  const onErrorCheck = () => {};
-
   const onCreateBoard = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

@@ -9,8 +9,9 @@ import {
 
 import { Button, Rate } from "antd";
 import { getToday } from "@/utility/common";
+import { IBoardComment } from "@/types/graphql/types";
 
-type PropsType = {
+export interface IBoardCommentUIPropsType {
   rating: number;
   writer: string;
   password: string;
@@ -20,10 +21,10 @@ type PropsType = {
   onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onClickCreateBoardComment: () => void;
-  data: any;
-};
+  data: IBoardComment[] | undefined;
+}
 
-export default function BoardCommentUI(props: PropsType) {
+export default function BoardCommentUI(props: IBoardCommentUIPropsType) {
   const {
     rating,
     writer,
@@ -76,7 +77,7 @@ export default function BoardCommentUI(props: PropsType) {
       <S.Wrapper>
         <S.Content>
           {data &&
-            data?.fetchBoardComments.map((data: any) => (
+            data.map((data: any) => (
               <S.Comment key={data._id}>
                 <S.CommentUserInfoGroup>
                   <S.CommentUserInfoGroup>

@@ -1,22 +1,8 @@
 import { IBoard } from "@/types/graphql/types";
 import * as S from "./BoardNew.style";
+import { IBoardNewUIPropsType } from "./BoardNew.type";
 
-type PropsType = {
-  isEdit: boolean;
-  defaultValue?: IBoard;
-  onChangeWriter: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  writerError: string;
-  passwordError: string;
-  titleError: string;
-  contentsError: string;
-  onSubmitBoard: (e: React.FormEvent<HTMLFormElement>) => void;
-  isActive: boolean;
-};
-
-export default function BoardNewUI(props: PropsType) {
+export default function BoardNewUI(props: IBoardNewUIPropsType) {
   const {
     isEdit,
     onChangeWriter,

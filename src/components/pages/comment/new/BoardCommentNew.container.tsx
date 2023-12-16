@@ -12,13 +12,6 @@ import {
   IQueryFetchBoardCommentsArgs,
 } from "@/types/graphql/types";
 
-type CreateBoardCommentInput = {
-  writer: string;
-  password: string;
-  contents: string;
-  rating: number;
-};
-
 export default function BoardComment() {
   const router = useRouter();
 
@@ -73,6 +66,8 @@ export default function BoardComment() {
   const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
   };
+
+  console.log(" data?.fetchBoardComments: ", data?.fetchBoardComments);
   return (
     <BoardCommentUI
       rating={rating}
@@ -84,7 +79,7 @@ export default function BoardComment() {
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       onClickCreateBoardComment={onClickCreateBoardComment}
-      data={data}
+      data={data?.fetchBoardComments}
     />
   );
 }
