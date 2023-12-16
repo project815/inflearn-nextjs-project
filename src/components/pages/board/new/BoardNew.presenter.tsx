@@ -1,79 +1,61 @@
-import {
-  FieldErrors,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import { IBoard } from "@/types/graphql/types";
 import * as S from "./BoardNew.style";
 
-type ContentType = {
-  writer: string;
-  password: string;
-  title: string;
-  contents: string;
-};
 type PropsType = {
   isEdit: boolean;
-  defaultValue: any;
-
-  handleSubmit: UseFormHandleSubmit<ContentType>;
-  onSubmit: (data: any) => Promise<void>;
-  register: UseFormRegister<ContentType>;
-  errors: FieldErrors<ContentType>;
+  defaultValue?: IBoard;
+  onChangeWriter: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  writerError: string;
+  passwordError: string;
+  titleError: string;
+  contentsError: string;
+  onSubmitBoard: (e: React.FormEvent<HTMLFormElement>) => void;
   isActive: boolean;
 };
 
 export default function BoardNewUI(props: PropsType) {
   const {
     isEdit,
-    handleSubmit,
-    onSubmit,
-    register,
-    errors,
+    onChangeWriter,
+    onChangePassword,
+    onChangeTitle,
+    onChangeContents,
+    onSubmitBoard,
+    writerError,
+    passwordError,
+    titleError,
+    contentsError,
     isActive,
     defaultValue,
   } = props;
 
   return (
-    <S.ContentLayout
-      onSubmit={handleSubmit((data) => {
-        onSubmit(data);
-      })}
-    >
+    <S.ContentLayout onSubmit={onSubmitBoard}>
       <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
       <S.RowBetweenGroup>
         <S.WriterInputGroup>
           <S.Label>작성자</S.Label>
           <S.ContentInput
             type="text"
-            {...register("writer", {
-              ...(isEdit ? {} : { required: "작성자를 입력해주세요." }),
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-                message: "이메일 형식이 아닙니다.",
-              },
-            })}
             placeholder="이름을 입력해주세요."
-            defaultValue={defaultValue?.writer}
+            defaultValue={defaultValue?.writer ? defaultValue?.writer : ""}
             disabled={isEdit}
+            onChange={onChangeWriter}
           />
 
-          <S.ErrorMessage>{errors.writer?.message}</S.ErrorMessage>
+          <S.ErrorMessage>{writerError}</S.ErrorMessage>
         </S.WriterInputGroup>
         <S.PasswordInputGroup>
           <S.Label>비밀번호</S.Label>
           <S.ContentInput
             type="password"
-            {...register("password", {
-              required: "비밀번호을 입력해주세요.",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-            })}
             placeholder="비밀번호을 입력해주세요."
-            defaultValue={defaultValue?.password}
+            onChange={onChangePassword}
           ></S.ContentInput>
-          <S.ErrorMessage>{errors.password?.message}</S.ErrorMessage>
+          <S.ErrorMessage>{passwordError}</S.ErrorMessage>
         </S.PasswordInputGroup>
       </S.RowBetweenGroup>
       <S.InputGroup>
@@ -81,24 +63,18 @@ export default function BoardNewUI(props: PropsType) {
         <S.ContentInput
           placeholder="제목을 입력해주세요."
           defaultValue={defaultValue?.title}
-          {...register("title", {
-            ...(isEdit ? {} : { required: "제목을 입력해주세요." }),
-          })}
-          //   onChange={onChangeContentTitle}
+          onChange={onChangeTitle}
         ></S.ContentInput>
-        <S.ErrorMessage>{errors.title?.message}</S.ErrorMessage>
+        <S.ErrorMessage>{titleError}</S.ErrorMessage>
       </S.InputGroup>
       <S.InputGroup>
         <S.Label>내용</S.Label>
         <S.ContentTextInput
           placeholder="내용을 입력해주세요."
           defaultValue={defaultValue?.contents}
-          {...register("contents", {
-            ...(isEdit ? {} : { required: "내용을 입력해주세요." }),
-          })}
-          //   onChange={onChangeContentText}
+          onChange={onChangeContents}
         ></S.ContentTextInput>
-        <S.ErrorMessage>{errors.contents?.message}</S.ErrorMessage>
+        <S.ErrorMessage>{contentsError}</S.ErrorMessage>
       </S.InputGroup>
       <S.InputGroup>
         <S.Label>주소</S.Label>

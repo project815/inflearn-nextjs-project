@@ -7,30 +7,22 @@ import {
   IconSearch,
   IconThumb,
 } from "@/assets/icon";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { BoardList } from "./BoardList.container";
 import { getToday } from "@/utility/common";
-import { IBoard } from "@/types/graphql/types";
+import { IBoardListUIPropsType } from "./BoardList.type";
 
-type BestBannerType = {
+interface BestBannerType {
   id: string;
   image: string;
   title: string;
   name: string;
   date: string;
   like: number;
-};
-type BoardType = {
-  number: string;
-  writer: string;
-  title: string;
-  date: string;
-};
-
+}
 const BANNERLIST: BestBannerType[] = [
   {
     id: "1",
@@ -42,7 +34,7 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "2",
-    image: "../../../assets/images/img_board1.png",
+    image: "../../../assets/images/img_board2.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -50,7 +42,7 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "3",
-    image: "../../../assets/images/img_board1.png",
+    image: "../../../assets/images/img_board3.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -58,39 +50,20 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "4",
-    image: "../../../assets/images/img_board1.png",
+    image: "../../../assets/images/img_board4.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
     like: 356,
   },
 ];
-export type ValuePiece = Date | null;
 
-export type Value = [ValuePiece, ValuePiece];
-
-type PropsType = {
-  startDate: string;
-  endDate: string;
-  onChangeEndDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeStartDate: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChnageSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickPage: (page: number) => void;
-  boardList: IBoard[] | undefined;
-  currentPage: number;
-  totalPages: number | undefined;
-  page: number[];
-  onClickMoveToBoard: (id: string) => void;
-  onClickMoveToBoardNew: () => void;
-};
-
-export default function BoardListUI(props: PropsType) {
+export default function BoardListUI(props: IBoardListUIPropsType) {
   const {
     startDate,
     endDate,
     onChangeEndDate,
     onChangeStartDate,
-    onChnageSearch,
     onClickPage,
     boardList,
     currentPage,

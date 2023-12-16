@@ -2,7 +2,6 @@ import Image from "next/image";
 import * as S from "./BoardDetail.style";
 import {
   ImageBoardDetail,
-  ImageDefalutImage,
   ImageDefaultAvator,
   ImageDislike,
   ImageFile,
@@ -10,7 +9,9 @@ import {
   ImageLocation,
 } from "@/assets/images";
 import { getToday } from "@/utility/common";
-export default function BoardDetailUI(props: any) {
+import { IBoardDetailUIPropstype } from "./BoardDetail.type";
+
+export default function BoardDetailUI(props: IBoardDetailUIPropstype) {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
   return (
     <div>
@@ -32,9 +33,6 @@ export default function BoardDetailUI(props: any) {
                 <Image src={ImageLocation} alt="" width={25} height={25} />
               </S.SubInfo>
             </S.Avatar>
-
-            {/* <Image src={} alt="" /> */}
-            {/* <Image src={} alt="" /> */}
           </S.Header>
           <S.Body>
             <S.BoardTitle>{data?.fetchBoard.title}</S.BoardTitle>
