@@ -6,6 +6,7 @@ import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IUpdateBoardInput,
 } from "@/types/graphql/types";
 import { IBoardWritePropsType } from "./BoardNew.type";
 import { useState } from "react";
@@ -107,36 +108,32 @@ export default function BoardWrite(props: IBoardWritePropsType) {
 
     setPasswordErorr("");
 
-    const newVariables: {
-      updateBoardInput: {
-        title?: string;
-        contents?: string;
-      };
-      password: string;
-      boardId: any;
-    } = {
-      updateBoardInput: {},
-      password: password,
-      boardId: router.query.boardId,
-    };
-    if (title) newVariables.updateBoardInput.title = title;
-    if (contents) newVariables.updateBoardInput.contents = contents;
+    const updateBoardInput: IUpdateBoardInput = {};
+    if (title) updateBoardInput.title = title;
+    if (contents) updateBoardInput.contents = contents;
 
     try {
+      if (typeof router.query.board === "string") {
+        alert("시스템에 문제가 있습니다.");
+        return;
+      }
       const result = await updateBoard({
-        variables: newVariables,
+        variables: {
+          boardId: router.query.boardId as string,
+          password,
+          updateBoardInput,
+        },
       });
 
       router.push(`/board/${result?.data?.updateBoard?._id}`);
     } catch (error) {
-      alert("비밀 번호를 입력해주세요.");
-      console.log("error : ", error);
+      if (error instanceof Error) alert(error.message);
+      // console.log(const date = new Date());
+      // console.log(date.getFullYear());
+      // console.log(date.getMonth());
+      // console.log(date instanceof Date);
     }
   };
-  console.log(
-    "writer && password && title && contents: ",
-    writer && password && title && contents ? true : false
-  );
 
   return (
     <BoardNewUI
@@ -151,7 +148,9 @@ export default function BoardWrite(props: IBoardWritePropsType) {
       titleError={titleError}
       contentsError={contentsError}
       onSubmitBoard={isEdit ? onUpdateBoard : onCreateBoard}
-      isActive={writer && password && title && contents ? true : false}
+      isActive={
+        isEdit ? true : writer && password && title && contents ? true : false
+      }
     />
   );
 }
