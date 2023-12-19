@@ -23,15 +23,6 @@ export default function BoardComment() {
   const [createBoardComment] =
     useMutation<Pick<IMutation, "createBoardComment">>(CREATEBOARDCOMMENT);
 
-  const { data } = useQuery<
-    Pick<IQuery, "fetchBoardComments">,
-    IQueryFetchBoardCommentsArgs
-  >(FETCHBOARDCOMMENTS, {
-    variables: {
-      boardId: router.query.boardId as string,
-    },
-  });
-
   const onClickCreateBoardComment = async () => {
     try {
       const result = await createBoardComment({
@@ -67,7 +58,7 @@ export default function BoardComment() {
     setContents(e.target.value);
   };
 
-  console.log(" data?.fetchBoardComments: ", data?.fetchBoardComments);
+  console.log(" data?.fetchBoardComments: ");
   return (
     <BoardCommentUI
       rating={rating}
@@ -79,7 +70,6 @@ export default function BoardComment() {
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       onClickCreateBoardComment={onClickCreateBoardComment}
-      data={data?.fetchBoardComments}
     />
   );
 }

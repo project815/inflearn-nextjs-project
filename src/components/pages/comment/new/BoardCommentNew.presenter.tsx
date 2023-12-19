@@ -21,7 +21,6 @@ export interface IBoardCommentUIPropsType {
   onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onClickCreateBoardComment: () => void;
-  data: IBoardComment[] | undefined;
 }
 
 export default function BoardCommentUI(props: IBoardCommentUIPropsType) {
@@ -35,7 +34,6 @@ export default function BoardCommentUI(props: IBoardCommentUIPropsType) {
     onChangePassword,
     onChangeContents,
     onClickCreateBoardComment,
-    data,
   } = props;
   return (
     <div>
@@ -72,32 +70,6 @@ export default function BoardCommentUI(props: IBoardCommentUIPropsType) {
             <span style={{}}>{contents.length} / 100</span>
             <button onClick={onClickCreateBoardComment}> 등록하기</button>
           </S.CommentBody>
-        </S.Content>
-      </S.Wrapper>
-      <S.Wrapper>
-        <S.Content>
-          {data &&
-            data.map((data: any) => (
-              <S.Comment key={data._id}>
-                <S.CommentUserInfoGroup>
-                  <S.CommentUserInfoGroup>
-                    <Image src={IconDefaultUser} alt="" />
-                    <S.CommenterWriper>{data.writer}</S.CommenterWriper>
-                    <Rate defaultValue={data.rating} disabled />
-                  </S.CommentUserInfoGroup>
-                  <span>
-                    <Button type="text">
-                      <Image src={IconUpdate} alt="" />
-                    </Button>
-                    <Button type="text">
-                      <Image alt="" src={IconClear} />
-                    </Button>
-                  </span>
-                </S.CommentUserInfoGroup>
-                <S.CommentContent>{data.contents}</S.CommentContent>
-                <S.CommentDate>{getToday(data.createdAt)}</S.CommentDate>
-              </S.Comment>
-            ))}
         </S.Content>
       </S.Wrapper>
     </div>
