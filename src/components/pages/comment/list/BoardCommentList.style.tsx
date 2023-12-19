@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-//commentList
+// commentList
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

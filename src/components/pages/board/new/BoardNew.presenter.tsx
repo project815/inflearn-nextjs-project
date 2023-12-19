@@ -1,8 +1,7 @@
-import { IBoard } from "@/types/graphql/types";
 import * as S from "./BoardNew.style";
 import { IBoardNewUIPropsType } from "./BoardNew.type";
 
-export default function BoardNewUI(props: IBoardNewUIPropsType) {
+export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
   const {
     isEdit,
     onChangeWriter,
@@ -28,9 +27,9 @@ export default function BoardNewUI(props: IBoardNewUIPropsType) {
             type="text"
             placeholder="이름을 입력해주세요."
             defaultValue={defaultValue?.writer ?? ""}
-            //등록하기에는 없는 수정하기에는 있음.
-            //?? "" : 타입스크립트 상 null을 넣을 수 없음
-            //null이나 undefined면 빈문자열을 넣겠다는 의미, 타입스크립트 상의 요구사항.
+            // 등록하기에는 없는 수정하기에는 있음.
+            // ?? "" : 타입스크립트 상 null을 넣을 수 없음
+            // null이나 undefined면 빈문자열을 넣겠다는 의미, 타입스크립트 상의 요구사항.
             disabled={isEdit}
             onChange={onChangeWriter}
           />

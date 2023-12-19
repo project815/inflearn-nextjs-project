@@ -4,7 +4,7 @@ import { IQuery, IQueryFetchBoardArgs } from "@/types/graphql/types";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 
-export default function BoardUpdatePage() {
+export default function BoardUpdatePage(): JSX.Element {
   const router = useRouter();
   const { data: defaultValue } = useQuery<
     Pick<IQuery, "fetchBoard">,

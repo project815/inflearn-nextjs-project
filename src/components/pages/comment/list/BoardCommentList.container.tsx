@@ -4,7 +4,7 @@ import { IQuery, IQueryFetchBoardCommentsArgs } from "@/types/graphql/types";
 import { FETCHBOARDCOMMENTS } from "../new/BoardCommentNew.query";
 import { useRouter } from "next/router";
 
-export default function BoardCommentList() {
+export default function BoardCommentList(): JSX.Element {
   const router = useRouter();
 
   const { data } = useQuery<

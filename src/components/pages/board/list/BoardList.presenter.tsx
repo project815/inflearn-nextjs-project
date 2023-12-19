@@ -10,8 +10,6 @@ import {
 import React from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
-
-import "react-datepicker/dist/react-datepicker.css";
 import { getToday } from "@/utility/common";
 import { IBoardListUIPropsType } from "./BoardList.type";
 
@@ -58,7 +56,7 @@ const BANNERLIST: BestBannerType[] = [
   },
 ];
 
-export default function BoardListUI(props: IBoardListUIPropsType) {
+export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
   const {
     startDate,
     endDate,
@@ -147,24 +145,27 @@ export default function BoardListUI(props: IBoardListUIPropsType) {
               <th style={{ width: "13%" }}>날짜</th>
             </tr>
           </S.BoardTableHead>
-          {boardList &&
-            boardList.map((i) => (
-              <S.BoardTableBody
-                key={i._id}
-                onClick={() => onClickMoveToBoard(i._id)}
-              >
-                <tr>
-                  <td>{i._id}</td>
-                  <td>{i.title}</td>
-                  <td>{i.writer}</td>
-                  <td>{getToday(i.createdAt)}</td>
-                </tr>
-              </S.BoardTableBody>
-            ))}
+          {boardList?.map((i) => (
+            <S.BoardTableBody
+              key={i._id}
+              onClick={() => {
+                onClickMoveToBoard(i._id);
+              }}
+            >
+              <tr>
+                <td>{i._id}</td>
+                <td>{i.title}</td>
+                <td>{i.writer}</td>
+                <td>{getToday(String(i.createdAt))}</td>
+              </tr>
+            </S.BoardTableBody>
+          ))}
         </table>
         <S.BoardTablePagination>
           <button
-            onClick={() => onClickPage(currentPage - 1)}
+            onClick={() => {
+              onClickPage(currentPage - 1);
+            }}
             disabled={currentPage === 1}
           >
             Prev
@@ -172,7 +173,9 @@ export default function BoardListUI(props: IBoardListUIPropsType) {
           {page.map((page) => (
             <span
               key={page}
-              onClick={() => onClickPage(page)}
+              onClick={() => {
+                onClickPage(page);
+              }}
               className={currentPage === page ? "active" : ""}
               style={{
                 marginLeft: "10px",
@@ -186,8 +189,12 @@ export default function BoardListUI(props: IBoardListUIPropsType) {
           ))}
 
           <button
-            onClick={() => onClickPage(currentPage + 1)}
-            disabled={currentPage >= totalPages!}
+            onClick={() => {
+              onClickPage(currentPage + 1);
+            }}
+            disabled={
+              totalPages !== undefined ? currentPage >= totalPages : false
+            }
           >
             Next
           </button>

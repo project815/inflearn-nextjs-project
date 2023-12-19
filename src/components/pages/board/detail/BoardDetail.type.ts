@@ -1,7 +1,7 @@
-import { IQuery } from "@/types/graphql/types";
+import type { IQuery } from "@/types/graphql/types";
 
 export interface IBoardDetailUIPropstype {
   data?: Pick<IQuery, "fetchBoard">;
-  onClickMoveToBoardList: () => void;
+  onClickMoveToBoardList: () => Promise<void>;
   onClickMoveToBoardEdit: () => void;
 }

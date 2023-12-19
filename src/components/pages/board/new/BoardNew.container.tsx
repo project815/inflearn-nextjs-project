@@ -11,7 +11,7 @@ import {
 import { IBoardWritePropsType } from "./BoardNew.type";
 import { useState } from "react";
 
-export default function BoardWrite(props: IBoardWritePropsType) {
+export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const { isEdit, defaultValue } = props;
 
   console.log("default value : ", defaultValue);
@@ -36,47 +36,54 @@ export default function BoardWrite(props: IBoardWritePropsType) {
   const [titleError, setTitleError] = useState<string>("");
   const [contentsError, setContentsError] = useState<string>("");
 
-  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setWriter(e.target.value);
   };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
   };
-  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.target.value);
   };
-  const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContents = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
     setContents(e.target.value);
   };
 
   const isEmailValid = /\S+@\S+\.\S+/;
   const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-  const onCreateBoard = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onCreateBoard = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
+    setWriter(writer ?? "");
     if (
-      !writer ||
+      writer === "" ||
       !isEmailValid.test(writer) ||
-      !password ||
+      password === "" ||
       !isPasswordValid.test(password) ||
-      !title ||
-      !contents
+      title === "" ||
+      contents === ""
     ) {
-      !writer ? setWriterError("이름을 입력해주세요") : setWriterError("");
+      writer === ""
+        ? setWriterError("이름을 입력해주세요")
+        : setWriterError("");
 
       !isEmailValid.test(writer)
         ? setWriterError("이메일 형식을 확인해주세요")
         : setWriterError("");
-      !password
+      password === ""
         ? setPasswordErorr("비밀번호를 입력해주세요.")
         : setPasswordErorr("");
 
       !isPasswordValid.test(password)
         ? setPasswordErorr("비밀번호 형식을 맞춰주세요.")
         : setPasswordErorr("");
-      !title ? setTitleError("제목을 입력해주세요.") : setTitleError("");
-      !contents
+      title === "" ? setTitleError("제목을 입력해주세요.") : setTitleError("");
+      contents === ""
         ? setContentsError("내용을 입력해주새요,")
         : setContentsError("");
 
@@ -96,12 +103,14 @@ export default function BoardWrite(props: IBoardWritePropsType) {
 
     console.log("result:", result);
 
-    router.push(`/board/`);
+    await router.push(`/board/`);
   };
 
-  const onUpdateBoard = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onUpdateBoard = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    if (!password) {
+    if (password === "") {
       setPasswordErorr("비밀번호를 입력해주세요.");
       return;
     }
@@ -109,8 +118,8 @@ export default function BoardWrite(props: IBoardWritePropsType) {
     setPasswordErorr("");
 
     const updateBoardInput: IUpdateBoardInput = {};
-    if (title) updateBoardInput.title = title;
-    if (contents) updateBoardInput.contents = contents;
+    if (title !== "") updateBoardInput.title = title;
+    if (contents !== "") updateBoardInput.contents = contents;
 
     try {
       if (typeof router.query.board === "string") {
@@ -125,7 +134,7 @@ export default function BoardWrite(props: IBoardWritePropsType) {
         },
       });
 
-      router.push(`/board/${result?.data?.updateBoard?._id}`);
+      await router.push(`/board/${result?.data?.updateBoard?._id}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
       // console.log(const date = new Date());
@@ -149,7 +158,8 @@ export default function BoardWrite(props: IBoardWritePropsType) {
       contentsError={contentsError}
       onSubmitBoard={isEdit ? onUpdateBoard : onCreateBoard}
       isActive={
-        isEdit ? true : writer && password && title && contents ? true : false
+        isEdit ||
+        (writer !== "" && password !== "" && title !== "" && contents !== "")
       }
     />
   );

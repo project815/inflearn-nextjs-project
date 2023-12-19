@@ -9,7 +9,7 @@ export const Layout = styled.div`
   border: 1px solid black;
 `;
 
-//-베스트 게시글---------------------------------------------------------------
+// -베스트 게시글---------------------------------------------------------------
 
 export const BestBannerLayOut = styled.div`
   display: flex;
@@ -76,7 +76,7 @@ export const BestBannerLikeCount = styled.div`
 
 export const Test = styled.div``;
 
-//-입력창---------------------------------------------------------------
+// -입력창---------------------------------------------------------------
 
 export const SearchInputGroup = styled.div`
   margin-top: 20px;

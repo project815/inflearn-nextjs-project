@@ -1,15 +1,8 @@
+import { IconComment } from "@/assets/icon";
 import Image from "next/image";
 import * as S from "./BoardCommentNew.style";
-import {
-  IconClear,
-  IconComment,
-  IconDefaultUser,
-  IconUpdate,
-} from "@/assets/icon";
 
-import { Button, Rate } from "antd";
-import { getToday } from "@/utility/common";
-import { IBoardComment } from "@/types/graphql/types";
+import { Rate } from "antd";
 
 export interface IBoardCommentUIPropsType {
   rating: number;
@@ -23,7 +16,9 @@ export interface IBoardCommentUIPropsType {
   onClickCreateBoardComment: () => void;
 }
 
-export default function BoardCommentUI(props: IBoardCommentUIPropsType) {
+export default function BoardCommentUI(
+  props: IBoardCommentUIPropsType
+): JSX.Element {
   const {
     rating,
     writer,

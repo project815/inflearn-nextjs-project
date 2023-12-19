@@ -1,18 +1,14 @@
+import { IMutation } from "@/types/graphql/types";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import BoardCommentUI from "./BoardCommentNew.presenter";
-import { useMutation, useQuery } from "@apollo/client";
 import {
   CREATEBOARDCOMMENT,
   FETCHBOARDCOMMENTS,
 } from "./BoardCommentNew.query";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import {
-  IMutation,
-  IQuery,
-  IQueryFetchBoardCommentsArgs,
-} from "@/types/graphql/types";
 
-export default function BoardComment() {
+export default function BoardComment(): JSX.Element {
   const router = useRouter();
 
   const [writer, setWriter] = useState<string>("");
@@ -23,15 +19,15 @@ export default function BoardComment() {
   const [createBoardComment] =
     useMutation<Pick<IMutation, "createBoardComment">>(CREATEBOARDCOMMENT);
 
-  const onClickCreateBoardComment = async () => {
+  const onClickCreateBoardComment = async (): Promise<void> => {
     try {
-      const result = await createBoardComment({
+      await createBoardComment({
         variables: {
           createBoardCommentInput: {
-            writer: writer,
-            password: password,
-            contents: contents,
-            rating: rating,
+            writer,
+            password,
+            contents,
+            rating,
           },
           boardId: router.query.boardId,
         },
@@ -44,17 +40,18 @@ export default function BoardComment() {
       alert("댓글이 등록되었습니다.");
     } catch (err) {
       console.log("error : ", err);
-      alert("댓글이 실패했습니다." + err);
     }
   };
 
-  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setWriter(e.target.value);
   };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setPassword(e.target.value);
   };
-  const onChangeContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContents = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
     setContents(e.target.value);
   };
 

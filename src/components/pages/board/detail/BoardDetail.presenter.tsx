@@ -11,7 +11,9 @@ import {
 import { getToday } from "@/utility/common";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
-export default function BoardDetailUI(props: IBoardDetailUIPropstype) {
+export default function BoardDetailUI(
+  props: IBoardDetailUIPropstype
+): JSX.Element {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
   return (
     <div>
@@ -24,7 +26,7 @@ export default function BoardDetailUI(props: IBoardDetailUIPropstype) {
                 <S.InfoText>
                   <S.Writer>{data?.fetchBoard?.writer}</S.Writer>
                   <S.CreateAt>
-                    DATE : {getToday(data?.fetchBoard?.createdAt)}
+                    DATE : {getToday(String(data?.fetchBoard?.createdAt))}
                   </S.CreateAt>
                 </S.InfoText>
               </S.Info>

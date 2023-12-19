@@ -9,7 +9,7 @@ import {
   IQueryFetchBoardsCountArgs,
 } from "@/types/graphql/types";
 
-export default function BoardList() {
+export default function BoardList(): JSX.Element {
   const router = useRouter();
 
   const now = new Date();
@@ -47,32 +47,32 @@ export default function BoardList() {
     },
   });
 
-  const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEndDate(e.target.value);
     setPage(1);
   };
-  const onChangeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeStartDate = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setStartDate(e.target.value);
     setPage(1);
   };
-  const onChnageSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChnageSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
   };
-  const onClickPage = (page: number) => {
+  const onClickPage = (page: number): void => {
     setPage(page);
   };
-  const onClickMoveToBoard = (id: string) => {
-    router.push(`/board/${id}`);
+  const onClickMoveToBoard = async (id: string): Promise<void> => {
+    await router.push(`/board/${id}`);
   };
-  const onClickMoveToBoardNew = () => {
-    router.push("/board/new");
+  const onClickMoveToBoardNew = async (): Promise<void> => {
+    await router.push("/board/new");
   };
 
   const generatePageNumbers = (
     currentPage: number,
     totalPages: number | undefined
   ): number[] => {
-    if (!totalPages) return [];
+    if (totalPages === undefined) return [];
     const pages = [];
     const startPage = Math.max(1, currentPage - 5);
     const endPage = Math.min(Math.ceil(totalPages / 10), startPage + 9);
@@ -94,7 +94,11 @@ export default function BoardList() {
       onClickPage={onClickPage}
       boardList={boardList?.fetchBoards}
       currentPage={page}
-      totalPages={Math.ceil(pageCount?.fetchBoardsCount! / 10)}
+      totalPages={
+        pageCount?.fetchBoardsCount !== undefined
+          ? Math.ceil(pageCount?.fetchBoardsCount / 10)
+          : 0
+      }
       page={generatePageNumbers(page, pageCount?.fetchBoardsCount)}
       onClickMoveToBoard={onClickMoveToBoard}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
