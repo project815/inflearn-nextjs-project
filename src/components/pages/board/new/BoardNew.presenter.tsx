@@ -8,6 +8,9 @@ export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
     onChangePassword,
     onChangeTitle,
     onChangeContents,
+    onChangeYoutubeUrl,
+    onChangeBoardAddress,
+    onClickAddressModal,
     onSubmitBoard,
     writerError,
     passwordError,
@@ -15,10 +18,14 @@ export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
     contentsError,
     isActive,
     defaultValue,
+    boardAddress,
   } = props;
 
+  console.log(
+    `${boardAddress?.zipcode} - ${boardAddress?.address} - ${boardAddress?.addressDetail}`
+  );
   return (
-    <S.ContentLayout onSubmit={onSubmitBoard}>
+    <S.ContentLayout>
       <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
       <S.RowBetweenGroup>
         <S.WriterInputGroup>
@@ -67,15 +74,30 @@ export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
       <S.InputGroup>
         <S.Label>주소</S.Label>
         <S.RowGroup>
-          <S.ZipcodeInput />
-          <S.ZipcodeButton>우편번호 검색</S.ZipcodeButton>
+          <S.ZipcodeInput
+            disabled
+            value={String(
+              defaultValue?.boardAddress?.zipcode ?? boardAddress?.zipcode ?? ""
+            )}
+          />
+          <S.ZipcodeButton onClick={onClickAddressModal}>
+            우편번호 검색
+          </S.ZipcodeButton>
         </S.RowGroup>
-        <S.AddressInput />
-        <S.AddressInput />
+        <S.AddressInput
+          disabled
+          value={String(
+            defaultValue?.boardAddress?.address ?? boardAddress?.address ?? ""
+          )}
+        />
+        <S.AddressInput onChange={onChangeBoardAddress} disabled={false} />
       </S.InputGroup>
       <S.InputGroup>
         <S.Label>유튜브</S.Label>
-        <S.ContentInput placeholder="제목을 입력해주세요."></S.ContentInput>
+        <S.ContentInput
+          onChange={onChangeYoutubeUrl}
+          placeholder="제목을 입력해주세요."
+        ></S.ContentInput>
       </S.InputGroup>
       <S.InputGroup>
         <S.Label>사진첨부</S.Label>
@@ -107,7 +129,7 @@ export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
           </S.RowGroup>
         </S.RowGroup>
       </S.InputGroup>
-      <S.SubmitButton type="submit" isActive={isActive}>
+      <S.SubmitButton type="submit" isActive={isActive} onClick={onSubmitBoard}>
         {isEdit ? "수정" : "등록"}하기
       </S.SubmitButton>
     </S.ContentLayout>

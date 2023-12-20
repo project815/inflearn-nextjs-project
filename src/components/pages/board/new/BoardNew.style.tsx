@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ContentLayout = styled.form`
+export const ContentLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

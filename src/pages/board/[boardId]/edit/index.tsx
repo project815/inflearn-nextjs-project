@@ -1,5 +1,5 @@
-import { FETCHBOARD } from "@/components/pages/board/detail/BoardDetail.query";
 import BoardWrite from "@/components/pages/board/new/BoardNew.container";
+import { FETCHBOARD } from "@/components/pages/board/new/BoardNew.query";
 import { IQuery, IQueryFetchBoardArgs } from "@/types/graphql/types";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ export default function BoardUpdatePage(): JSX.Element {
   >(FETCHBOARD, {
     variables: { boardId: router.query.boardId as string },
   });
+  console.log("?? : ", defaultValue);
 
   return <BoardWrite isEdit={true} defaultValue={defaultValue?.fetchBoard} />;
 }

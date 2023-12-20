@@ -16,8 +16,13 @@ export const FETCHBOARD = gql`
     fetchBoard(boardId: $boardId) {
       writer
       title
-      password
       contents
+      boardAddress {
+        zipcode
+        address
+        addressDetail
+      }
+      youtubeUrl
     }
   }
 `;

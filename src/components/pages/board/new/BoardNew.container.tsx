@@ -1,20 +1,21 @@
-import { useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
-import BoardNewUI from "./BoardNew.presenter";
-import { CREATEBOARD, UPDATEBOARD } from "./BoardNew.query";
 import {
+  IBoardAddressInput,
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
   IUpdateBoardInput,
 } from "@/types/graphql/types";
-import { IBoardWritePropsType } from "./BoardNew.type";
+import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { Address, useDaumPostcodePopup } from "react-daum-postcode";
+import BoardNewUI from "./BoardNew.presenter";
+import { CREATEBOARD, UPDATEBOARD } from "./BoardNew.query";
+import { IBoardWritePropsType } from "./BoardNew.type";
 
 export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const { isEdit, defaultValue } = props;
 
-  console.log("default value : ", defaultValue);
   const router = useRouter();
 
   const [createBoard] = useMutation<
@@ -31,6 +32,8 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const [password, setPassword] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [contents, setContents] = useState<string>("");
+  const [youtubeUrl, setYouTubeUrl] = useState<string>();
+  const [boardAddress, setBoardAddress] = useState<IBoardAddressInput>({});
   const [writerError, setWriterError] = useState<string>("");
   const [passwordError, setPasswordErorr] = useState<string>("");
   const [titleError, setTitleError] = useState<string>("");
@@ -50,12 +53,58 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   ): void => {
     setContents(e.target.value);
   };
+  const onChangeYoutubeUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    console.log(e.target.value);
+    setYouTubeUrl(e.target.value);
+  };
+
+  const open = useDaumPostcodePopup(
+    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+  );
+
+  const onClickAddressModal = async (): Promise<void> => {
+    await open({ onComplete: handleComplete });
+  };
+
+  const handleComplete = (data: Address): void => {
+    let fullAddress = data.address;
+
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setBoardAddress({
+      address: data.address,
+      addressDetail: "",
+      zipcode: data.zonecode,
+    });
+
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+  };
+  const onChangeBoardAddress = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setBoardAddress((prev) => ({
+      ...prev,
+      addressDetail: e.target.value,
+    }));
+  };
 
   const isEmailValid = /\S+@\S+\.\S+/;
   const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   const onCreateBoard = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     e.preventDefault();
 
@@ -89,6 +138,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
 
       return;
     }
+    console.log("boardAddress : ", boardAddress);
 
     const result = await createBoard({
       variables: {
@@ -97,6 +147,8 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
           password,
           title,
           contents,
+          youtubeUrl,
+          boardAddress,
         },
       },
     });
@@ -107,7 +159,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   };
 
   const onUpdateBoard = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     e.preventDefault();
     if (password === "") {
@@ -120,6 +172,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
     const updateBoardInput: IUpdateBoardInput = {};
     if (title !== "") updateBoardInput.title = title;
     if (contents !== "") updateBoardInput.contents = contents;
+    // if (boardAddress !== "") updateBoardInput.boardAddress = boardAddress;
 
     try {
       if (typeof router.query.board === "string") {
@@ -137,30 +190,32 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
       await router.push(`/board/${result?.data?.updateBoard?._id}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
-      // console.log(const date = new Date());
-      // console.log(date.getFullYear());
-      // console.log(date.getMonth());
-      // console.log(date instanceof Date);
     }
   };
 
   return (
-    <BoardNewUI
-      isEdit={isEdit}
-      defaultValue={defaultValue}
-      onChangeWriter={onChangeWriter}
-      onChangePassword={onChangePassword}
-      onChangeTitle={onChangeTitle}
-      onChangeContents={onChangeContents}
-      writerError={writerError}
-      passwordError={passwordError}
-      titleError={titleError}
-      contentsError={contentsError}
-      onSubmitBoard={isEdit ? onUpdateBoard : onCreateBoard}
-      isActive={
-        isEdit ||
-        (writer !== "" && password !== "" && title !== "" && contents !== "")
-      }
-    />
+    <>
+      <BoardNewUI
+        isEdit={isEdit}
+        defaultValue={defaultValue}
+        boardAddress={boardAddress}
+        onChangeWriter={onChangeWriter}
+        onChangePassword={onChangePassword}
+        onChangeTitle={onChangeTitle}
+        onChangeContents={onChangeContents}
+        onChangeYoutubeUrl={onChangeYoutubeUrl}
+        onChangeBoardAddress={onChangeBoardAddress}
+        onClickAddressModal={onClickAddressModal}
+        writerError={writerError}
+        passwordError={passwordError}
+        titleError={titleError}
+        contentsError={contentsError}
+        onSubmitBoard={isEdit ? onUpdateBoard : onCreateBoard}
+        isActive={
+          isEdit ||
+          (writer !== "" && password !== "" && title !== "" && contents !== "")
+        }
+      />
+    </>
   );
 }
