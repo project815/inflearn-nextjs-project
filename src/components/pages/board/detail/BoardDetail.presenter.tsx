@@ -1,5 +1,4 @@
 import {
-  ImageBoardDetail,
   ImageDefaultAvator,
   ImageDislike,
   ImageFile,
@@ -7,7 +6,9 @@ import {
   ImageLocation,
 } from "@/assets/images";
 import { getToday } from "@/utility/common";
+import { Tooltip } from "antd";
 import Image from "next/image";
+import { useMemo, useState } from "react";
 import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
@@ -15,6 +16,22 @@ export default function BoardDetailUI(
   props: IBoardDetailUIPropstype
 ): JSX.Element {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
+
+  const [arrow, setArrow] = useState("Show");
+
+  const mergedArrow = useMemo(() => {
+    if (arrow === "Hide") {
+      return false;
+    }
+
+    if (arrow === "Show") {
+      return true;
+    }
+
+    return {
+      pointAtCenter: true,
+    };
+  }, [arrow]);
   return (
     <div>
       <S.Wrapper>
@@ -32,14 +49,28 @@ export default function BoardDetailUI(
               </S.Info>
               <S.SubInfo>
                 <Image src={ImageFile} alt="" width={25} height={25} />
-                <Image src={ImageLocation} alt="" width={25} height={25} />
+
+                <Tooltip
+                  placement="leftTop"
+                  title={data?.fetchBoard.boardAddress?.address}
+                  arrow={mergedArrow}
+                >
+                  <Image src={ImageLocation} alt="" width={25} height={25} />
+                  {/* <Button>LT</Button> */}
+                </Tooltip>
               </S.SubInfo>
             </S.Avatar>
           </S.Header>
           <S.Body>
             <S.BoardTitle>{data?.fetchBoard.title}</S.BoardTitle>
             <S.ContnetImage>
-              <Image src={ImageBoardDetail} alt="" width={920} />
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/watch?v=gudwFBgQdYY"
+              />
+
+              {/* <Image src={ImageBoardDetail} alt="" width={920} /> */}
             </S.ContnetImage>
             <S.BoardContents>{data?.fetchBoard?.contents}</S.BoardContents>
             <S.BoardVideo></S.BoardVideo>
