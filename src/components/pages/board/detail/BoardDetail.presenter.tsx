@@ -8,7 +8,6 @@ import {
 import { getToday } from "@/utility/common";
 import { Tooltip } from "antd";
 import Image from "next/image";
-import { useMemo, useState } from "react";
 import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
@@ -17,21 +16,6 @@ export default function BoardDetailUI(
 ): JSX.Element {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
 
-  const [arrow, setArrow] = useState("Show");
-
-  const mergedArrow = useMemo(() => {
-    if (arrow === "Hide") {
-      return false;
-    }
-
-    if (arrow === "Show") {
-      return true;
-    }
-
-    return {
-      pointAtCenter: true,
-    };
-  }, [arrow]);
   return (
     <div>
       <S.Wrapper>
@@ -51,9 +35,8 @@ export default function BoardDetailUI(
                 <Image src={ImageFile} alt="" width={25} height={25} />
 
                 <Tooltip
-                  placement="leftTop"
+                  placement="left"
                   title={data?.fetchBoard.boardAddress?.address}
-                  arrow={mergedArrow}
                 >
                   <Image src={ImageLocation} alt="" width={25} height={25} />
                   {/* <Button>LT</Button> */}

@@ -1,18 +1,19 @@
 import { IconClear, IconDefaultUser, IconUpdate } from "@/assets/icon";
-import * as S from "./BoardCommentList.style";
-import Image from "next/image";
-import { Button, Rate } from "antd";
-import { getToday } from "@/utility/common";
 import { IBoardComment } from "@/types/graphql/types";
+import { getToday } from "@/utility/common";
+import { Button, Rate } from "antd";
+import Image from "next/image";
+import * as S from "./BoardCommentList.style";
 
 interface IBoardCommentListUIPropsType {
   data: IBoardComment[] | undefined;
+  onClickDeleteBoardComment: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function BoardCommentListUI(
   props: IBoardCommentListUIPropsType
 ): JSX.Element {
-  const { data } = props;
+  const { data, onClickDeleteBoardComment } = props;
 
   return (
     <>
@@ -30,7 +31,11 @@ export default function BoardCommentListUI(
                   <Button type="text">
                     <Image src={IconUpdate} alt="" />
                   </Button>
-                  <Button type="text">
+                  <Button
+                    type="text"
+                    id={data._id}
+                    onClick={onClickDeleteBoardComment}
+                  >
                     <Image alt="" src={IconClear} />
                   </Button>
                 </span>

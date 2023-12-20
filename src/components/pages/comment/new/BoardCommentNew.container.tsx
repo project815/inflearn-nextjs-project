@@ -1,15 +1,16 @@
 import { IMutation } from "@/types/graphql/types";
+import { CheckCircleOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FETCHBOARDCOMMENTS } from "../list/BoardCommentList.query";
 import BoardCommentUI from "./BoardCommentNew.presenter";
-import {
-  CREATEBOARDCOMMENT,
-  FETCHBOARDCOMMENTS,
-} from "./BoardCommentNew.query";
+import { CREATEBOARDCOMMENT } from "./BoardCommentNew.query";
 
 export default function BoardComment(): JSX.Element {
   const router = useRouter();
+  const { confirm } = Modal;
 
   const [writer, setWriter] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -20,6 +21,11 @@ export default function BoardComment(): JSX.Element {
     useMutation<Pick<IMutation, "createBoardComment">>(CREATEBOARDCOMMENT);
 
   const onClickCreateBoardComment = async (): Promise<void> => {
+    if (writer === "" || password === "" || contents === "") {
+      alert("빈칸을 모두 채워주세요.");
+      return;
+    }
+
     try {
       await createBoardComment({
         variables: {
@@ -37,7 +43,13 @@ export default function BoardComment(): JSX.Element {
       setPassword("");
       setContents("");
       setRating(3);
-      alert("댓글이 등록되었습니다.");
+
+      confirm({
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+        content: "댓글이 등록되었습니다.",
+        onOk() {},
+      });
+      // alert("댓글이 등록되었습니다.");
     } catch (err) {
       console.log("error : ", err);
     }

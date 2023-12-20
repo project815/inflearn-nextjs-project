@@ -12,6 +12,7 @@ export const FETCHBOARD = gql`
         addressDetail
       }
       youtubeUrl
+      createdAt
     }
   }
 `;

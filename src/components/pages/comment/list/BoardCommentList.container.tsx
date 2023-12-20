@@ -1,8 +1,11 @@
-import { useQuery } from "@apollo/client";
-import BoardCommentListUI from "./BoardCommentList.presenter";
 import { IQuery, IQueryFetchBoardCommentsArgs } from "@/types/graphql/types";
-import { FETCHBOARDCOMMENTS } from "../new/BoardCommentNew.query";
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import BoardCommentListUI from "./BoardCommentList.presenter";
+import {
+  DELETEBOARDCOMMENT,
+  FETCHBOARDCOMMENTS,
+} from "./BoardCommentList.query";
 
 export default function BoardCommentList(): JSX.Element {
   const router = useRouter();
@@ -16,5 +19,36 @@ export default function BoardCommentList(): JSX.Element {
     },
   });
 
-  return <BoardCommentListUI data={data?.fetchBoardComments} />;
+  const [deleteBoardComment] = useMutation(DELETEBOARDCOMMENT);
+
+  const onClickDeleteBoardComment = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    const boardCommentId = e.currentTarget.id;
+
+    console.log(boardCommentId);
+    const password = prompt("비밀번호를 입력해주세요.");
+
+    try {
+      await deleteBoardComment({
+        variables: {
+          password,
+          boardCommentId,
+        },
+        refetchQueries: [FETCHBOARDCOMMENTS],
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      }
+      console.log(err);
+    }
+  };
+
+  return (
+    <BoardCommentListUI
+      data={data?.fetchBoardComments}
+      onClickDeleteBoardComment={onClickDeleteBoardComment}
+    />
+  );
 }

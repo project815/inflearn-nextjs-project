@@ -196,6 +196,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
           updateBoardInput,
         },
       });
+
       confirm({
         icon: <CheckCircleOutlined style={{ color: "green" }} />,
         content: "게시물이 수정되었습니다..",
