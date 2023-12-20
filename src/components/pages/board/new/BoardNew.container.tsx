@@ -5,7 +5,9 @@ import {
   IMutationUpdateBoardArgs,
   IUpdateBoardInput,
 } from "@/types/graphql/types";
+import { CheckCircleOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
@@ -15,6 +17,7 @@ import { IBoardWritePropsType } from "./BoardNew.type";
 
 export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const { isEdit, defaultValue } = props;
+  const { confirm } = Modal;
 
   const router = useRouter();
 
@@ -140,7 +143,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
     }
     console.log("boardAddress : ", boardAddress);
 
-    const result = await createBoard({
+    await createBoard({
       variables: {
         createBoardInput: {
           writer,
@@ -153,9 +156,16 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
       },
     });
 
-    console.log("result:", result);
-
-    await router.push(`/board/`);
+    confirm({
+      icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      content: "게시물이 등록되었습니다.",
+      onOk() {
+        router.push(`/board/`);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
 
   const onUpdateBoard = async (
@@ -186,8 +196,16 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
           updateBoardInput,
         },
       });
-
-      await router.push(`/board/${result?.data?.updateBoard?._id}`);
+      confirm({
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+        content: "게시물이 수정되었습니다..",
+        onOk() {
+          router.push(`/board/${result?.data?.updateBoard?._id}`);
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }

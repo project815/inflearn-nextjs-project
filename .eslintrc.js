@@ -28,5 +28,6 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
+    "@typescript-eslint/no-floating-promises": "off",
   },
 };
