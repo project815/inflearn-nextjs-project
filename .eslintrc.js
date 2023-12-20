@@ -29,5 +29,7 @@ module.exports = {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-indexed-object-style": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/no-confusing-void-expression": "off",
   },
 };

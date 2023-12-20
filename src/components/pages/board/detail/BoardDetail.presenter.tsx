@@ -1,5 +1,3 @@
-import Image from "next/image";
-import * as S from "./BoardDetail.style";
 import {
   ImageBoardDetail,
   ImageDefaultAvator,
@@ -9,6 +7,8 @@ import {
   ImageLocation,
 } from "@/assets/images";
 import { getToday } from "@/utility/common";
+import Image from "next/image";
+import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
 export default function BoardDetailUI(
@@ -53,6 +53,7 @@ export default function BoardDetailUI(
           <S.Button onClick={onClickMoveToBoardList}>목록으로</S.Button>
           <S.Button onClick={onClickMoveToBoardEdit}>수정하기</S.Button>
           <S.Button>삭제하기</S.Button>
+          {/* <Quiz03_02 /> */}
         </S.ButtonWarpper>
       </S.Wrapper>
     </div>

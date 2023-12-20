@@ -2,6 +2,7 @@ import { IconComment } from "@/assets/icon";
 import Image from "next/image";
 import * as S from "./BoardCommentNew.style";
 
+import StarRating from "@/components/custom/RateStar";
 import { Rate } from "antd";
 
 export interface IBoardCommentUIPropsType {
@@ -34,6 +35,8 @@ export default function BoardCommentUI(
     <div>
       <S.Wrapper>
         <S.Content>
+          <StarRating />
+
           <S.CommentHeader>
             <Image src={IconComment} alt="" />
             <S.Title>댓글</S.Title>
