@@ -1,16 +1,15 @@
 import Image from "next/image";
-import * as S from "./BoardList.style";
-import { ImageBoard1 } from "@/assets/images";
 import {
   IconBtnBoardNew,
   IconDefaultUser,
   IconSearch,
   IconThumb,
-} from "@/assets/icon";
-import React from "react";
+} from "../../../../../public/assets/icon";
+import { ImageBoard1 } from "../../../../../public/assets/images";
+import * as S from "./BoardList.style";
 
-import "react-datepicker/dist/react-datepicker.css";
 import { getToday } from "@/utility/common";
+import "react-datepicker/dist/react-datepicker.css";
 import { IBoardListUIPropsType } from "./BoardList.type";
 
 interface BestBannerType {

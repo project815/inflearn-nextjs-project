@@ -1,8 +1,12 @@
-import { IconClear, IconDefaultUser, IconUpdate } from "@/assets/icon";
 import { IBoardComment } from "@/types/graphql/types";
 import { getToday } from "@/utility/common";
 import { Button, Rate } from "antd";
 import Image from "next/image";
+import {
+  IconClear,
+  IconDefaultUser,
+  IconUpdate,
+} from "../../../../../public/assets/icon";
 import * as S from "./BoardCommentList.style";
 
 interface IBoardCommentListUIPropsType {

@@ -1,13 +1,13 @@
+import { getToday } from "@/utility/common";
+import { Tooltip } from "antd";
+import Image from "next/image";
 import {
   ImageDefaultAvator,
   ImageDislike,
   ImageFile,
   ImageLike,
   ImageLocation,
-} from "@/assets/images";
-import { getToday } from "@/utility/common";
-import { Tooltip } from "antd";
-import Image from "next/image";
+} from "../../../../../public/assets/images";
 import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 

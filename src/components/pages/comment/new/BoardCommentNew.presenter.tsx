@@ -1,5 +1,5 @@
-import { IconComment } from "@/assets/icon";
 import Image from "next/image";
+import { IconComment } from "../../../../../public/assets/icon";
 import * as S from "./BoardCommentNew.style";
 
 import StarRating from "@/components/custom/RateStar";

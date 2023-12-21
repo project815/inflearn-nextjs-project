@@ -24,17 +24,3 @@ export const CREATEBOARDCOMMENT = gql`
     }
   }
 `;
-
-export const FETCHBOARDCOMMENTS = gql`
-  query fetchBoardComments($boardId: ID!) {
-    fetchBoardComments(boardId: $boardId) {
-      _id
-      writer
-      contents
-      rating
-      createdAt
-      updatedAt
-      deletedAt
-    }
-  }
-`;
