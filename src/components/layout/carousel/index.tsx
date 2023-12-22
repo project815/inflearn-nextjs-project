@@ -26,7 +26,15 @@ export default function Carousel(): JSX.Element {
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
-      <Slider dots={true}>{renderSlides()}</Slider>
+      <Slider
+        dots={true}
+        prevArrow={<></>}
+        nextArrow={<></>}
+        autoplay={true}
+        autoplaySpeed={2000}
+      >
+        {renderSlides()}
+      </Slider>
     </div>
   );
 }

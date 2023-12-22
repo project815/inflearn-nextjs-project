@@ -79,10 +79,8 @@
 
 .slick-prev {
   left: 25px;
-  width: "90px";
-  height: "90px";
-  background-color: "white";
 }
+
 [dir="rtl"] .slick-prev {
   right: -25px;
   left: auto;

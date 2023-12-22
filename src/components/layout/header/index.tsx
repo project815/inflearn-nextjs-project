@@ -32,5 +32,5 @@ const LoginButton = styled(Button)`
 `;
 const SignInButton = styled(Button)`
   background-color: #ffd600;
-  margin-left: 20px;
+  margin-left: 10px;
 `;
