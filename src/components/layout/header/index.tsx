@@ -22,7 +22,7 @@ const HeaderGroup = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 120px;
-  width: 1000px;
+  width: 900px;
 `;
 
 const ButtonGroup = styled.div``;

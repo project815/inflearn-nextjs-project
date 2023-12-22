@@ -19,13 +19,13 @@ export default function Carousel(): JSX.Element {
     BannerList.map((i) => (
       <div key={i.id}>
         <div>
-          <Image src={i.src} alt="" width={2000} />
+          <Image src={i.src} alt="" style={{ width: "100%", height: "100%" }} />
         </div>
       </div>
     ));
 
   return (
-    <div style={{ width: "2000px" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <Slider dots={true}>{renderSlides()}</Slider>
     </div>
   );

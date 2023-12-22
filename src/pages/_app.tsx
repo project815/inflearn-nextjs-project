@@ -4,8 +4,8 @@ import { GlobalStyles } from "@/styles/globalscss";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Global } from "@emotion/react";
 import type { AppProps } from "next/app";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+import "../styles/slick-theme.css";
+import "../styles/slick.css";
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const client = new ApolloClient({
