@@ -19,14 +19,18 @@ export default function Carousel(): JSX.Element {
     BannerList.map((i) => (
       <div key={i.id}>
         <div>
-          <Image src={i.src} alt="" />
+          <Image src={i.src} alt="" width={2000} />
         </div>
       </div>
     ));
 
   return (
-    <div className="App">
+    <div style={{ width: "2000px" }}>
       <Slider dots={true}>{renderSlides()}</Slider>
     </div>
   );
 }
+
+// 배너 반응형 적용?
+// 배너 움직이는 버튼 이동
+// 배너 갯수 페이지네이션
