@@ -1,6 +1,5 @@
 import { IBoardComment } from "@/types/graphql/types";
 import { getToday } from "@/utility/common";
-import { Button, Rate } from "antd";
 import Image from "next/image";
 import {
   IconClear,
@@ -20,36 +19,37 @@ export default function BoardCommentListUI(
   const { data, onClickDeleteBoardComment } = props;
 
   return (
-    <>
-      <S.Wrapper>
-        <S.Content>
-          {data?.map((data: any) => (
-            <S.Comment key={data._id}>
-              <S.CommentUserInfoGroup>
-                <S.CommentUserInfoGroup>
-                  <Image src={IconDefaultUser} alt="" />
-                  <S.CommenterWriper>{data.writer}</S.CommenterWriper>
-                  <Rate defaultValue={data.rating} disabled />
-                </S.CommentUserInfoGroup>
-                <span>
-                  <Button type="text">
-                    <Image src={IconUpdate} alt="" />
-                  </Button>
-                  <Button
-                    type="text"
-                    id={data._id}
-                    onClick={onClickDeleteBoardComment}
-                  >
-                    <Image alt="" src={IconClear} />
-                  </Button>
-                </span>
-              </S.CommentUserInfoGroup>
+    <S.Wrapper>
+      <S.Content>
+        {data?.map((data: any) => (
+          <S.Comment key={data._id}>
+            <S.AvatorImage src={IconDefaultUser} alt="" width={40} />
+
+            <S.CommentGroup>
+              <S.CommentUserInfoAndRateGroup>
+                <S.CommenterWriper>{data.writer}</S.CommenterWriper>
+                <S.CommentRate defaultValue={data.rating} disabled />
+              </S.CommentUserInfoAndRateGroup>
+
               <S.CommentContent>{data.contents}</S.CommentContent>
               <S.CommentDate>{getToday(String(data.createdAt))}</S.CommentDate>
-            </S.Comment>
-          ))}
-        </S.Content>
-      </S.Wrapper>
-    </>
+            </S.CommentGroup>
+
+            <S.CommentModifyButtonGroup>
+              <S.CommentModifyButton type="text">
+                <Image src={IconUpdate} alt="" />
+              </S.CommentModifyButton>
+              <S.CommentModifyButton
+                type="text"
+                id={data._id}
+                onClick={onClickDeleteBoardComment}
+              >
+                <Image alt="" src={IconClear} />
+              </S.CommentModifyButton>
+            </S.CommentModifyButtonGroup>
+          </S.Comment>
+        ))}
+      </S.Content>
+    </S.Wrapper>
   );
 }
