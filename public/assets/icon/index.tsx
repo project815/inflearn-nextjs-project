@@ -11,12 +11,18 @@ import IconStarOn from "./icon_staron.png";
 import IconThumb from "./icon_thumb.png";
 import IconUpdate from "./icon_update.png";
 
+import IconFaceBook from "./icon_facebook.png";
+import IconInstargram from "./icon_instagram.png";
+import IconYoutube from "./icon_youtube.png";
+
 export {
   IconBtnBoardNew,
   IconClear,
   IconCodeCampLogo,
   IconComment,
   IconDefaultUser,
+  IconFaceBook,
+  IconInstargram,
   IconNavNext,
   IconNavPrev,
   IconSearch,
@@ -24,4 +30,5 @@ export {
   IconStarOn,
   IconThumb,
   IconUpdate,
+  IconYoutube,
 };

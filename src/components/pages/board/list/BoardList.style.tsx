@@ -6,7 +6,8 @@ export const Layout = styled.div`
   height: 100%;
   padding: 40px;
 
-  border: 1px solid black;
+  margin-bottom: 100px;
+  /* border: 1px solid black; */
 `;
 
 // -베스트 게시글---------------------------------------------------------------
@@ -16,13 +17,15 @@ export const BestBannerLayOut = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 20px;
+  margin-bottom: 80px;
 `;
 
 export const BestBannerTitle = styled.h2``;
 
 export const BestBannerGroup = styled.span`
   display: flex;
-  width: 220px;
+  width: 205px;
   height: 200px;
   border: 1px solid black;
   border-radius: 20px;
@@ -30,15 +33,17 @@ export const BestBannerGroup = styled.span`
   overflow: hidden;
   position: relative;
   flex-direction: column;
+
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
 `;
 
 export const BestBannerInfoGroup = styled.div`
   padding: 12px;
-  boxsizing: border-box;
+  box-sizing: border-box;
 `;
 
 export const BestBannerSubTitle = styled.div`
-  margin-top: 10px;
+  /* margin-top: 5px; */
   font-size: 15px;
   font-weight: bold;
 `;
@@ -46,7 +51,7 @@ export const BestBannerSubTitle = styled.div`
 export const BestBannerUserInfo = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 10px;
 `;
 
 export const BestBannerName = styled.span`
@@ -56,8 +61,11 @@ export const BestBannerName = styled.span`
 
 export const BestBannerDate = styled.div`
   color: #828282;
-  font-size: 12px;
+  font-size: 10px;
   margin-top: 4px;
+  opacity: 0.6;
+  left: 3px;
+  position: relative;
 `;
 
 export const BestBannerLikeGroup = styled.div`
@@ -70,8 +78,8 @@ export const BestBannerLikeGroup = styled.div`
 `;
 
 export const BestBannerLikeCount = styled.div`
-  margin-top: 8px;
-  font-size: 14px;
+  /* margin-top: px; */
+  font-size: 13px;
 `;
 
 export const Test = styled.div``;
@@ -79,7 +87,6 @@ export const Test = styled.div``;
 // -입력창---------------------------------------------------------------
 
 export const SearchInputGroup = styled.div`
-  margin-top: 20px;
   margin-bottom: 20px;
   height: 50px;
   width: 100%;

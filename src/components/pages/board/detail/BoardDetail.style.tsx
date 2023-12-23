@@ -14,7 +14,7 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: start;
   padding: 30px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   box-sizing: border-box;
   margin-bottom: 50px;
   width: 100%;

@@ -5,7 +5,6 @@ import {
   IconSearch,
   IconThumb,
 } from "../../../../../public/assets/icon";
-import { ImageBoard1 } from "../../../../../public/assets/images";
 import * as S from "./BoardList.style";
 
 import { getToday } from "@/utility/common";
@@ -23,7 +22,7 @@ interface BestBannerType {
 const BANNERLIST: BestBannerType[] = [
   {
     id: "1",
-    image: "../../../assets/images/img_board1.png",
+    image: "/assets/images/img_board1.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -31,7 +30,7 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "2",
-    image: "../../../assets/images/img_board2.png",
+    image: "/assets/images/img_board2.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -39,7 +38,7 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "3",
-    image: "../../../assets/images/img_board3.png",
+    image: "/assets/images/img_board3.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -47,7 +46,7 @@ const BANNERLIST: BestBannerType[] = [
   },
   {
     id: "4",
-    image: "../../../assets/images/img_board4.png",
+    image: "/assets/images/img_board4.png",
     title: "게시물 제목입니다.",
     name: "노원두",
     date: "2021.02.18",
@@ -78,11 +77,12 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
             display: "flex",
             width: "100%",
             justifyContent: "space-between",
+            marginTop: "20px",
           }}
         >
           {BANNERLIST.map((i) => (
             <S.BestBannerGroup key={i.id}>
-              <Image src={ImageBoard1} alt="" width={220} />
+              <Image src={i.image} alt="" width={220} height={199} />
               <S.BestBannerInfoGroup>
                 <S.BestBannerSubTitle>{i.title}</S.BestBannerSubTitle>
                 <S.BestBannerUserInfo>
@@ -92,7 +92,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
                 <S.BestBannerDate>Data : {i.date}</S.BestBannerDate>
               </S.BestBannerInfoGroup>
               <S.BestBannerLikeGroup style={{}}>
-                <Image src={IconThumb} alt="" />
+                <Image src={IconThumb} alt="" width={24} />
                 <S.BestBannerLikeCount>{i.like}</S.BestBannerLikeCount>
               </S.BestBannerLikeGroup>
             </S.BestBannerGroup>
@@ -181,6 +181,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
                 marginRight: "10px",
                 fontWeight: currentPage === page ? "800" : "normal",
                 fontSize: currentPage === page ? "14px" : "12px",
+                color: currentPage === page ? "#FFD600" : "black",
               }}
             >
               {page}

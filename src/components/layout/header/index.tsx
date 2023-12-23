@@ -1,13 +1,24 @@
 import styled from "@emotion/styled";
 import { Button } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { IconCodeCampLogo } from "../../../../public/assets/icon";
 
 export default function Header(): JSX.Element {
+  const router = useRouter();
+
+  const onClickMoveToMainPage = (): void => {
+    router.push(`/board`);
+  };
+
   return (
     <>
       <HeaderGroup>
-        <Image src={IconCodeCampLogo} alt="tmp" />
+        <Logo
+          src={IconCodeCampLogo}
+          alt="tmp"
+          onClick={onClickMoveToMainPage}
+        />
         <ButtonGroup>
           <LoginButton>로그인</LoginButton>
           <SignInButton>회원가입</SignInButton>
@@ -16,6 +27,10 @@ export default function Header(): JSX.Element {
     </>
   );
 }
+
+const Logo = styled(Image)`
+  cursor: pointer;
+`;
 
 const HeaderGroup = styled.div`
   display: flex;
