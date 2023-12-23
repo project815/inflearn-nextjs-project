@@ -82,7 +82,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
         >
           {BANNERLIST.map((i) => (
             <S.BestBannerGroup key={i.id}>
-              <Image src={i.image} alt="" width={220} height={199} />
+              <Image src={i.image} alt="" width={220} height={150} />
               <S.BestBannerInfoGroup>
                 <S.BestBannerSubTitle>{i.title}</S.BestBannerSubTitle>
                 <S.BestBannerUserInfo>
@@ -104,20 +104,20 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
         <Image
           src={IconSearch}
           alt=""
-          style={{ position: "absolute", left: "8px", top: "12px" }}
+          style={{ position: "absolute", left: "10px", top: "14px" }}
         />
         <S.SearchBoardInput placeholder="제목을 검색해주세요." />
 
         <div>
           <input
             type="date"
-            style={{ height: "46px" }}
+            style={{ height: "48px" }}
             defaultValue={startDate}
             onChange={onChangeStartDate}
           />
           <input
             type="date"
-            style={{ height: "46px" }}
+            style={{ height: "48px" }}
             defaultValue={endDate}
             onChange={onChangeEndDate}
           />

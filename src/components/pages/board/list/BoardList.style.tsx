@@ -28,7 +28,6 @@ export const BestBannerGroup = styled.span`
   display: flex;
   width: 205px;
   height: 200px;
-  border: 1px solid black;
   border-radius: 20px;
   justify-content: start;
   overflow: hidden;
@@ -101,6 +100,9 @@ export const SearchBoardInput = styled.input`
   font-size: 16px;
   padding-left: 37px;
   box-sizing: border-box;
+  border-radius: 10px;
+  background: var(--Gray-6, #f2f2f2);
+  border: 0px;
 `;
 export const SearchDateInput = styled.input`
   height: 100%;
