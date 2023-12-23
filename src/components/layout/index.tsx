@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import Carousel from "./carousel";
 import Footer from "./footer";
 import Header from "./header";
@@ -18,8 +19,17 @@ export default function Layout(props: ILayoutPropsType): JSX.Element {
       <Header></Header>
       <Carousel></Carousel>
       <Nav></Nav>
-      {props.children}
+
+      <Body> {props.children}</Body>
       <Footer></Footer>
     </div>
   );
 }
+
+const Body = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+`;

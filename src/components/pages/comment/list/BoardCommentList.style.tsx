@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   align-items: center;
   min-width: 950px;
   max-width: 1000px;
-  height: 100%;
+  /* height: 100%; */
   box-sizing: border-box;
 `;
 export const Content = styled.div`

@@ -4,13 +4,12 @@ export const ContentLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   height: 100%;
   padding: 30px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   box-sizing: border-box;
-  min-width: 950px;
-  max-width: 1000px;
+  width: 70%;
+  margin-top: 30px;
 `;
 
 export const ContentTitle = styled.h2`
@@ -19,6 +18,7 @@ export const ContentTitle = styled.h2`
   justify-content: center;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 50px;
 `;
 
 export const InputGroup = styled.div`
@@ -50,15 +50,22 @@ export const Label = styled.div`
 export const ContentInput = styled.input`
   display: flex;
   width: 100%;
-  height: 24px;
   border: 1px solid var(--Gray-4, #bdbdbd);
   background: var(--White, #fff);
+  padding: 10px;
+  margin-top: 10px;
+
+  ::placeholder {
+    color: var(--Gray-4, #bdbdbd);
+    font-size: 13px;
+    font-weight: 300;
+  }
 `;
 
-export const PasswordInput = styled.input`
-  display: flex;
-  width: 100%;
-`;
+// export const PasswordInput = styled.input`
+//   display: flex;
+//   width: 100%;
+// `;
 
 export const RowBetweenGroup = styled.div`
   display: flex;
@@ -71,25 +78,41 @@ export const RowGroup = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-right: 10px;
+  position: relative;
 `;
 
 export const ContentTextInput = styled.textarea`
   height: 100%;
-  width: 100%;
   min-height: 200px;
   border: 1px solid var(--Gray-4, #bdbdbd);
   background: var(--White, #fff);
   text-align: start;
   resize: none;
+
+  padding: 10px;
+  margin-top: 10px;
+
+  ::placeholder {
+    color: var(--Gray-4, #bdbdbd);
+    font-size: 13px;
+    font-weight: 300;
+  }
 `;
 
 export const ZipcodeInput = styled.input`
   display: flex;
-  height: 24px;
   border: 1px solid var(--Gray-4, #bdbdbd);
   background: var(--White, #fff);
   max-width: 100px;
   min-width: 50px;
+
+  padding: 10px;
+  margin-top: 10px;
+
+  color: #bdbdbd;
+  font-size: 13px;
+  font-weight: 300;
 `;
 export const ZipcodeButton = styled.button`
   display: inline-flex;
@@ -105,22 +128,36 @@ export const ZipcodeButton = styled.button`
 export const ImageUploadButton = styled.button`
   width: 70px;
   height: 70px;
-  displey: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 15px;
+  margin-top: 10px;
 `;
 
 export const AddressInput = styled.input`
   display: flex;
   width: 100%;
-  height: 24px;
   border: 1px solid var(--Gray-4, #bdbdbd);
   background: var(--White, #fff);
   margin-top: 25px;
+
+  padding: 10px;
+  margin-top: 10px;
+
+  ::placeholder {
+    color: var(--Gray-4, #bdbdbd);
+    font-size: 13px;
+    font-weight: 300;
+  }
+  /*   
+  color: #bdbdbd;
+  font-size: 13px;
+  font-weight: 300; */
 `;
 
 export const ToggleInput = styled.input`
+  margin-right: 2px;
   color: var(--Gray-4, #ffd600);
 
   &:checked {

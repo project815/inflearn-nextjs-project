@@ -75,6 +75,7 @@ export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
         <S.Label>주소</S.Label>
         <S.RowGroup>
           <S.ZipcodeInput
+            placeholder="07250"
             disabled
             value={String(
               defaultValue?.boardAddress?.zipcode ?? boardAddress?.zipcode ?? ""

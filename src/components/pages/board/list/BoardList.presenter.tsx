@@ -161,14 +161,14 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
           ))}
         </table>
         <S.BoardTablePagination>
-          <button
+          <S.PaginationButton
             onClick={() => {
               onClickPage(currentPage - 1);
             }}
             disabled={currentPage === 1}
           >
             Prev
-          </button>
+          </S.PaginationButton>
           {page.map((page) => (
             <span
               key={page}
@@ -188,7 +188,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
             </span>
           ))}
 
-          <button
+          <S.PaginationButton
             onClick={() => {
               onClickPage(currentPage + 1);
             }}
@@ -197,7 +197,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
             }
           >
             Next
-          </button>
+          </S.PaginationButton>
         </S.BoardTablePagination>
         <S.BoardTableButton onClick={onClickMoveToBoardNew}>
           <Image src={IconBtnBoardNew} alt="" />

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Button } from "antd";
 
 export const Layout = styled.div`
   min-width: 950px;
@@ -148,14 +149,16 @@ export const BoardTablePagination = styled.div`
   margin-top: 40px;
 `;
 
-export const BoardTableButton = styled.button`
+export const PaginationButton = styled(Button)``;
+
+export const BoardTableButton = styled(Button)`
   position: absolute;
   bottom: -20px;
   right: 10px;
   background-color: white;
   border: 2px solid #f2f2f2;
   border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   align-items: center;
 `;
