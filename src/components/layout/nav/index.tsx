@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { Fragment } from "react";
 
 const NAVLIST = [
   {
@@ -15,7 +16,7 @@ const NAVLIST = [
   {
     id: 3,
     title: "마이페이지",
-    url: "/mypage",
+    url: "/",
   },
 ];
 
@@ -39,7 +40,7 @@ export default function Nav(): JSX.Element {
       >
         <NavGroup>
           {NAVLIST?.map((data, index) => (
-            <div key={data.id}>
+            <Fragment key={data.id}>
               <NavTap
                 id={data.url}
                 isActive={router.route.includes(data.url)}
@@ -49,7 +50,7 @@ export default function Nav(): JSX.Element {
               </NavTap>
 
               {index === NAVLIST.length - 1 ? <></> : <Boundary>|</Boundary>}
-            </div>
+            </Fragment>
           ))}
         </NavGroup>
       </div>
