@@ -16,7 +16,7 @@ export const ContentTitle = styled.h2`
   display: flex;
   width: 100%;
   justify-content: center;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
   margin-bottom: 50px;
 `;
