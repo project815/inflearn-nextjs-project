@@ -144,7 +144,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
               <th style={{ width: "13%" }}>날짜</th>
             </tr>
           </S.BoardTableHead>
-          {boardList?.map((i) => (
+          {boardList?.map((i, index) => (
             <S.BoardTableBody
               key={i._id}
               onClick={() => {
@@ -152,7 +152,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
               }}
             >
               <tr>
-                <td>{i._id}</td>
+                <td>{(currentPage - 1) * 10 + index + 1}</td>
                 <td>{i.title}</td>
                 <td>{i.writer}</td>
                 <td>{getToday(String(i.createdAt))}</td>
