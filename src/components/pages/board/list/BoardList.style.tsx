@@ -147,12 +147,6 @@ export const BoardTableBody = styled.tbody`
   }
 `;
 
-export const BoardTablePagination = styled.div`
-  margin-top: 40px;
-`;
-
-export const PaginationButton = styled(Button)``;
-
 export const BoardTableButton = styled(Button)`
   position: absolute;
   bottom: -20px;
