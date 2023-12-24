@@ -7,7 +7,7 @@ import {
 } from "../../../../../public/assets/icon";
 import * as S from "./BoardList.style";
 
-import Pagination from "@/components/units/Pagination";
+import Pagination from "@/components/units/Pagination/Pagination.style";
 import { getToday } from "@/utility/common";
 import "react-datepicker/dist/react-datepicker.css";
 import { IBoardListUIPropsType } from "./BoardList.type";
@@ -61,11 +61,8 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
     endDate,
     onChangeEndDate,
     onChangeStartDate,
-    onClickPage,
     boardList,
     currentPage,
-    totalPages,
-    page,
     onClickMoveToBoard,
     onClickMoveToBoardNew,
   } = props;
