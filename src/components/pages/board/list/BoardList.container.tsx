@@ -1,17 +1,19 @@
-import { useQuery } from "@apollo/client";
-import { FETCHBOARDS, FETCHBOARDSCOUNT } from "./BoardList.query";
-import BoardListUI from "./BoardList.presenter";
-import { useState } from "react";
-import { useRouter } from "next/router";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "@/types/graphql/types";
+import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import BoardListUI from "./BoardList.presenter";
+import { FETCHBOARDS, FETCHBOARDSCOUNT } from "./BoardList.query";
 
 export default function BoardList(): JSX.Element {
+  // 페이지 이동
   const router = useRouter();
 
+  // 페이지 네이션 날짜 지정.
   const now = new Date();
   const [startDate, setStartDate] = useState<string>(
     new Date(now.setMonth(now.getMonth() - 1)).toISOString().slice(0, 10)
@@ -21,22 +23,12 @@ export default function BoardList(): JSX.Element {
       .toISOString()
       .slice(0, 10)
   );
+  // 페이지 네이션 검색
   const [search, setSearch] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+  // 현재 페이지
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const { data: boardList } = useQuery<
-    Pick<IQuery, "fetchBoards">,
-    IQueryFetchBoardsArgs
-  >(FETCHBOARDS, {
-    variables: {
-      startDate,
-      endDate,
-      search,
-      page,
-    },
-  });
-
-  const { data: pageCount } = useQuery<
+  const { data: pageTotalCount } = useQuery<
     Pick<IQuery, "fetchBoardsCount">,
     IQueryFetchBoardsCountArgs
   >(FETCHBOARDSCOUNT, {
@@ -46,20 +38,22 @@ export default function BoardList(): JSX.Element {
       search,
     },
   });
+  const totalCount =
+    pageTotalCount?.fetchBoardsCount !== undefined
+      ? Math.ceil(pageTotalCount?.fetchBoardsCount / 10)
+      : 0;
 
   const onChangeEndDate = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEndDate(e.target.value);
-    setPage(1);
+    // setPage(1);
   };
   const onChangeStartDate = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setStartDate(e.target.value);
-    setPage(1);
+    // setPage(1);
   };
+
   const onChnageSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearch(e.target.value);
-  };
-  const onClickPage = (page: number): void => {
-    setPage(page);
   };
   const onClickMoveToBoard = async (id: string): Promise<void> => {
     await router.push(`/board/${id}`);
@@ -68,21 +62,17 @@ export default function BoardList(): JSX.Element {
     await router.push("/board/new");
   };
 
-  const generatePageNumbers = (
-    currentPage: number,
-    totalPages: number | undefined
-  ): number[] => {
-    if (totalPages === undefined) return [];
-    const pages = [];
-    const startPage = Math.max(1, currentPage - 5);
-    const endPage = Math.min(Math.ceil(totalPages / 10), startPage + 9);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
-
-    return pages;
-  };
+  // 페이지네이션 검색 결과.
+  const { data: boardList, refetch } = useQuery<
+    Pick<IQuery, "fetchBoards">,
+    IQueryFetchBoardsArgs
+  >(FETCHBOARDS, {
+    variables: {
+      startDate,
+      endDate,
+      search,
+    },
+  });
 
   return (
     <BoardListUI
@@ -91,17 +81,13 @@ export default function BoardList(): JSX.Element {
       onChangeEndDate={onChangeEndDate}
       onChangeStartDate={onChangeStartDate}
       onChnageSearch={onChnageSearch}
-      onClickPage={onClickPage}
       boardList={boardList?.fetchBoards}
-      currentPage={page}
-      totalPages={
-        pageCount?.fetchBoardsCount !== undefined
-          ? Math.ceil(pageCount?.fetchBoardsCount / 10)
-          : 0
-      }
-      page={generatePageNumbers(page, pageCount?.fetchBoardsCount)}
       onClickMoveToBoard={onClickMoveToBoard}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      totalCount={totalCount}
+      refetch={refetch}
     />
   );
 }

@@ -7,7 +7,7 @@ import {
 } from "../../../../../public/assets/icon";
 import * as S from "./BoardList.style";
 
-import Pagination from "@/components/units/Pagination/Pagination.style";
+import Pagination from "@/components/units/Pagination/Pagination.container";
 import { getToday } from "@/utility/common";
 import "react-datepicker/dist/react-datepicker.css";
 import { IBoardListUIPropsType } from "./BoardList.type";
@@ -59,13 +59,17 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
   const {
     startDate,
     endDate,
-    onChangeEndDate,
     onChangeStartDate,
+    onChangeEndDate,
     boardList,
-    currentPage,
     onClickMoveToBoard,
     onClickMoveToBoardNew,
+    currentPage,
+    setCurrentPage,
+    totalCount,
+    refetch,
   } = props;
+
   return (
     <S.Layout>
       <S.BestBannerLayOut>
@@ -158,7 +162,12 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
             </S.BoardTableBody>
           ))}
         </table>
-        <Pagination />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalCount={totalCount}
+          refetch={refetch}
+        />
         <S.BoardTableButton onClick={onClickMoveToBoardNew}>
           <Image src={IconBtnBoardNew} alt="" />
           <S.BoardTableButtonText>게시물 등록하기</S.BoardTableButtonText>
