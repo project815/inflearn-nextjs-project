@@ -16,6 +16,10 @@ export default function BoardDetailUI(
 ): JSX.Element {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
 
+  console.log(
+    "data?.fetchBoard.boardAddress?.address: ",
+    data?.fetchBoard.boardAddress?.address
+  );
   return (
     <S.Wrapper>
       <S.Content>

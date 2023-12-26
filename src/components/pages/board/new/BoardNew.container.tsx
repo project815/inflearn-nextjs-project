@@ -51,6 +51,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.target.value);
   };
+
   const onChangeContents = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
@@ -58,7 +59,6 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   };
   const onChangeYoutubeUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    console.log(e.target.value);
     setYouTubeUrl(e.target.value);
   };
 
@@ -71,29 +71,13 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   };
 
   const handleComplete = (data: Address): void => {
-    let fullAddress = data.address;
-
-    let extraAddress = "";
-
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
-
     setBoardAddress({
       address: data.address,
       addressDetail: "",
       zipcode: data.zonecode,
     });
-
-    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
   };
+
   const onChangeBoardAddress = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -141,7 +125,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
 
       return;
     }
-    console.log("boardAddress : ", boardAddress);
+    console.log("??boardAddress :", boardAddress);
 
     await createBoard({
       variables: {
@@ -182,7 +166,12 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
     const updateBoardInput: IUpdateBoardInput = {};
     if (title !== "") updateBoardInput.title = title;
     if (contents !== "") updateBoardInput.contents = contents;
-    // if (boardAddress !== "") updateBoardInput.boardAddress = boardAddress;
+    if (
+      boardAddress.address !== "" ||
+      boardAddress.addressDetail !== "" ||
+      boardAddress.zipcode !== ""
+    )
+      updateBoardInput.boardAddress = { ...boardAddress };
 
     try {
       if (typeof router.query.board === "string") {

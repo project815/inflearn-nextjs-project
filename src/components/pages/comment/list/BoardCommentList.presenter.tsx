@@ -21,7 +21,7 @@ export default function BoardCommentListUI(
   return (
     <S.Wrapper>
       <S.Content>
-        {data?.map((data: any) => (
+        {data?.map((data: any, index) => (
           <S.Comment key={data._id}>
             <S.AvatorImage src={IconDefaultUser} alt="" width={40} />
 
@@ -32,6 +32,7 @@ export default function BoardCommentListUI(
               </S.CommentUserInfoAndRateGroup>
 
               <S.CommentContent>{data.contents}</S.CommentContent>
+              <S.CommentModifyInput />
               <S.CommentDate>{getToday(String(data.createdAt))}</S.CommentDate>
             </S.CommentGroup>
 
