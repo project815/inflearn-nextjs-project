@@ -1,54 +1,21 @@
-import { IBoardComment } from "@/types/graphql/types";
-import { getToday } from "@/utility/common";
-import Image from "next/image";
-import {
-  IconClear,
-  IconDefaultUser,
-  IconUpdate,
-} from "../../../../../public/assets/icon";
+import CommentItem from "@/components/units/CommentItem/CommentItem.container";
+import type { IQuery } from "@/types/graphql/types";
 import * as S from "./BoardCommentList.style";
 
-interface IBoardCommentListUIPropsType {
-  data: IBoardComment[] | undefined;
-  onClickDeleteBoardComment: (e: React.MouseEvent<HTMLButtonElement>) => void;
+export interface IBoardCommentListUIPropsType {
+  data: Pick<IQuery, "fetchBoardComments"> | undefined;
 }
 
 export default function BoardCommentListUI(
   props: IBoardCommentListUIPropsType
 ): JSX.Element {
-  const { data, onClickDeleteBoardComment } = props;
+  const { data } = props;
 
   return (
     <S.Wrapper>
       <S.Content>
-        {data?.map((data: any, index) => (
-          <S.Comment key={data._id}>
-            <S.AvatorImage src={IconDefaultUser} alt="" width={40} />
-
-            <S.CommentGroup>
-              <S.CommentUserInfoAndRateGroup>
-                <S.CommenterWriper>{data.writer}</S.CommenterWriper>
-                <S.CommentRate defaultValue={data.rating} disabled />
-              </S.CommentUserInfoAndRateGroup>
-
-              <S.CommentContent>{data.contents}</S.CommentContent>
-              <S.CommentModifyInput />
-              <S.CommentDate>{getToday(String(data.createdAt))}</S.CommentDate>
-            </S.CommentGroup>
-
-            <S.CommentModifyButtonGroup>
-              <S.CommentModifyButton type="text">
-                <Image src={IconUpdate} alt="" />
-              </S.CommentModifyButton>
-              <S.CommentModifyButton
-                type="text"
-                id={data._id}
-                onClick={onClickDeleteBoardComment}
-              >
-                <Image alt="" src={IconClear} />
-              </S.CommentModifyButton>
-            </S.CommentModifyButtonGroup>
-          </S.Comment>
+        {data?.fetchBoardComments.map((i, index) => (
+          <CommentItem key={i._id} data={i} />
         ))}
       </S.Content>
     </S.Wrapper>

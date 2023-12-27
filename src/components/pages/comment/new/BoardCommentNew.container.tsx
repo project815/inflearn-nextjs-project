@@ -34,6 +34,10 @@ export default function BoardComment(): JSX.Element {
       alert("빈칸을 모두 채워주세요.");
       return;
     }
+    setCommentInput((prev) => ({
+      ...prev,
+      rating,
+    }));
 
     try {
       await createBoardComment({
@@ -69,7 +73,7 @@ export default function BoardComment(): JSX.Element {
       | React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
     setCommentInput((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
+      return { ...prev, [e.target.id]: e.target.value };
     });
   };
 
