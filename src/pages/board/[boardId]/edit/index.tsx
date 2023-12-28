@@ -1,5 +1,5 @@
-import BoardWrite from "@/components/pages/board/new/BoardNew.container";
-import { FETCHBOARD } from "@/components/pages/board/new/BoardNew.query";
+import BoardWrite from "@/components/board/boardmutaion/BoardNew.container";
+import { FETCHBOARD } from "@/components/board/boardmutaion/BoardNew.query";
 import { IQuery, IQueryFetchBoardArgs } from "@/types/graphql/types";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";

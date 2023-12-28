@@ -1,4 +1,4 @@
-import BoardList from "@/components/pages/board/list/BoardList.container";
+import BoardList from "@/components/board/boardlist/BoardList.container";
 
 export default function BoardListPage(): JSX.Element {
   return <BoardList />;

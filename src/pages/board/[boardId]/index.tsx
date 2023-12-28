@@ -1,4 +1,4 @@
-import BoardDetail from "@/components/pages/board/detail/BoardDetail.container";
+import BoardDetail from "@/components/board/boarddetail/BoardDetail.container";
 
 export default function BoardDetailPage(): JSX.Element {
   return (

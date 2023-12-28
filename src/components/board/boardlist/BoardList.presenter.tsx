@@ -4,7 +4,7 @@ import {
   IconDefaultUser,
   IconSearch,
   IconThumb,
-} from "../../../../../public/assets/icon";
+} from "../../../../public/assets/icon";
 import * as S from "./BoardList.style";
 
 import Pagination from "@/components/units/Pagination/Pagination.container";

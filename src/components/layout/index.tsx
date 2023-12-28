@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Carousel from "./carousel";
+import Carousel from "./banner";
 import Footer from "./footer";
 import Header from "./header";
 import Nav from "./nav";
