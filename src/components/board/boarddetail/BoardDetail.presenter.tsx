@@ -7,7 +7,7 @@ import {
   ImageFile,
   ImageLike,
   ImageLocation,
-} from "../../../../../public/assets/images";
+} from "../../../../public/assets/images";
 import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
@@ -16,6 +16,10 @@ export default function BoardDetailUI(
 ): JSX.Element {
   const { data, onClickMoveToBoardList, onClickMoveToBoardEdit } = props;
 
+  console.log(
+    "data?.fetchBoard.boardAddress?.address: ",
+    data?.fetchBoard.boardAddress?.address
+  );
   return (
     <S.Wrapper>
       <S.Content>

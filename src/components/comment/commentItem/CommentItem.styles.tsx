@@ -1,23 +1,6 @@
 import styled from "@emotion/styled";
 import { Button, Rate } from "antd";
 import Image from "next/image";
-// commentList
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* height: 100%; */
-  width: 80%;
-  box-sizing: border-box;
-`;
-export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  box-sizing: border-box;
-  margin-bottom: 50px;
-  width: 100%;
-`;
 export const Comment = styled.div`
   border-bottom: 1px solid #bdbdbd;
   margin-top: 10px;
@@ -29,6 +12,8 @@ export const Comment = styled.div`
 `;
 export const CommentGroup = styled.div`
   margin-left: 10px;
+  width: 85%;
+  height: 100%;
 `;
 
 export const CommentUserInfoGroup = styled.div`
@@ -63,6 +48,24 @@ export const CommentContent = styled.div`
   color: #4f4f4f;
   font-weight: 400;
   font-size: 16px;
+  width: 100%;
+`;
+
+export const CommentModifyInput = styled.textarea`
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--Gray-4, #bdbdbd);
+  background: var(--White, #fff);
+  padding: 10px;
+  margin-top: 10px;
+  height: 100px;
+  resize: none;
+
+  ::placeholder {
+    color: var(--Gray-4, #bdbdbd);
+    font-size: 13px;
+    font-weight: 300;
+  }
 `;
 
 export const CommentDate = styled.div`
