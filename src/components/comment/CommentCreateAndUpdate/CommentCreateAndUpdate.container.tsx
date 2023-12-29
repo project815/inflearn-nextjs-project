@@ -69,6 +69,7 @@ export default function CommentCreateAndUpdate(): JSX.Element {
           createBoardCommentInput,
           boardId: String(router.query.boardId),
         },
+        refetchQueries: ["fetchBoardComments"],
       });
 
       setCreateBoardCommentInput({
