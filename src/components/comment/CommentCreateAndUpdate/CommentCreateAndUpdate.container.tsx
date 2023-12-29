@@ -1,17 +1,26 @@
 import {
+  IBoardComment,
   ICreateBoardCommentInput,
   IMutation,
   IMutationCreateBoardCommentArgs,
 } from "@/types/graphql/types";
 import { useMutation } from "@apollo/client";
-import { Alert } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CommentCreateAndUpdateUI from "./CommentCreateAndUpdate.presenter";
 import { CREATEBOARDCOMMENT } from "./CommentCreateAndUpdate.query";
 
-export default function CommentCreateAndUpdate(): JSX.Element {
+interface ICommentCreateAndUpdatePropsType {
+  isEdit?: boolean;
+  onClickIsEdit?: () => void;
+  comment?: IBoardComment;
+}
+export default function CommentCreateAndUpdate(
+  props: ICommentCreateAndUpdatePropsType
+): JSX.Element {
+  const { isEdit, onClickIsEdit, comment } = props;
+
   const router = useRouter();
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
@@ -84,23 +93,24 @@ export default function CommentCreateAndUpdate(): JSX.Element {
     }
   };
 
+  const onClickUpdateComment = (): void => {
+    if (onClickIsEdit !== undefined) {
+      onClickIsEdit();
+    }
+  };
+
   return (
     <>
       <CommentCreateAndUpdateUI
         createBoardCommentInput={createBoardCommentInput}
         onChangeCommentInput={onChangeCommentInput}
         onChangeRate={onChangeRate}
-        onClickCreateComment={onClickCreateComment}
-      />
-      <Alert
-        message="Warning Text"
-        type="warning"
-        style={{
-          position: "fixed",
-          bottom: "10px",
-          right: "10px",
-          zIndex: 1000,
-        }}
+        onClickSubmit={
+          isEdit ?? false ? onClickUpdateComment : onClickCreateComment
+        }
+        isEdit={isEdit}
+        // onClickIsEdit={onClickIsEdit}
+        comment={comment}
       />
     </>
   );

@@ -4,6 +4,8 @@ import {
   IMutationDeleteBoardCommentArgs,
 } from "@/types/graphql/types";
 import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import CommentCreateAndUpdate from "../CommentCreateAndUpdate/CommentCreateAndUpdate.container";
 import CommentItemUI from "./CommentItem.presenter";
 import { DELETEBOARDCOMMENT } from "./CommentItem.query";
 
@@ -16,39 +18,16 @@ export default function CommentItem(
 ): JSX.Element {
   const { comment } = props;
 
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  const onClickIsEdit = (): void => {
+    setIsEdit((prev) => !prev);
+  };
+
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
   >(DELETEBOARDCOMMENT);
-
-  //   const onClickDeleteModal = (): void => {
-  //     confirm({
-  //       icon: <CheckCircleOutlined style={{ color: "green" }} />,
-  //       content: (
-  //         <div>
-  //           <div>비밀번호를 입력해주세요</div>
-  //           <input
-  //             style={{
-  //               display: "flex",
-  //               border: "1px solid var(--Gray-4, #bdbdbd)",
-  //               background: "var(--White, #fff)",
-  //               padding: "10px",
-  //               marginTop: "10px",
-  //               marginRight: "10px",
-  //             }}
-  //             onChange={(e) => {
-  //               setPassword(e.target.value);
-  //             }}
-  //           />
-  //         </div>
-  //       ),
-
-  //       onOk() {
-  //         deleteComment(password);
-  //       },
-  //       onCancel() {},
-  //     });
-  //   };
 
   const onClickDeleteBoardComment = async (): Promise<void> => {
     const password = prompt("비밀번호를 입력해주세요.");
@@ -67,10 +46,19 @@ export default function CommentItem(
 
   return (
     <>
-      <CommentItemUI
-        comment={comment}
-        onClickDeleteBoardComment={onClickDeleteBoardComment}
-      />
+      {isEdit ? (
+        <CommentCreateAndUpdate
+          isEdit={isEdit}
+          onClickIsEdit={onClickIsEdit}
+          comment={comment}
+        />
+      ) : (
+        <CommentItemUI
+          comment={comment}
+          onClickIsEdit={onClickIsEdit}
+          onClickDeleteBoardComment={onClickDeleteBoardComment}
+        />
+      )}
     </>
   );
 }

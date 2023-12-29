@@ -8,12 +8,13 @@ import * as S from "./CommentItem.styles";
 export interface IBoardCommentListUIPropsType {
   comment: IBoardComment;
   onClickDeleteBoardComment: () => Promise<void>;
+  onClickIsEdit: () => void;
 }
 
 export default function CommentItemUI(
   props: IBoardCommentListUIPropsType
 ): JSX.Element {
-  const { comment, onClickDeleteBoardComment } = props;
+  const { comment, onClickIsEdit, onClickDeleteBoardComment } = props;
 
   return (
     <>
@@ -30,7 +31,7 @@ export default function CommentItemUI(
           <S.CommentDate>{getToday(String(comment.createdAt))}</S.CommentDate>
         </S.InfoGroup>
         <S.UpdateButtonGroup>
-          <S.UpdateButton>
+          <S.UpdateButton onClick={onClickIsEdit}>
             <Image src={IconUpdate} alt="" />
           </S.UpdateButton>
           <S.UpdateButton onClick={onClickDeleteBoardComment}>

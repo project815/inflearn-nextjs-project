@@ -1,4 +1,4 @@
-import { ICreateBoardCommentInput } from "@/types/graphql/types";
+import { IBoardComment, ICreateBoardCommentInput } from "@/types/graphql/types";
 import Image from "next/image";
 import { IconComment } from "../../../../public/assets/icon";
 import * as S from "./CommentCreateAndUpdate.styles";
@@ -10,7 +10,11 @@ interface ICommentCreateAndUpdatePropsType {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
   onChangeRate: (e: number) => void;
-  onClickCreateComment: () => void;
+  onClickSubmit: () => void;
+
+  isEdit?: boolean;
+  // onClickIsEdit?: () => void;
+  comment?: IBoardComment;
 }
 
 export default function CommentCreateAndUpdateUI(
@@ -20,7 +24,9 @@ export default function CommentCreateAndUpdateUI(
     createBoardCommentInput,
     onChangeCommentInput,
     onChangeRate,
-    onClickCreateComment,
+    onClickSubmit,
+    isEdit,
+    comment,
   } = props;
   return (
     <>
@@ -34,27 +40,32 @@ export default function CommentCreateAndUpdateUI(
             id="writer"
             type="text"
             onChange={onChangeCommentInput}
-            value={createBoardCommentInput.writer ?? ""}
+            value={comment?.writer ?? createBoardCommentInput.writer ?? ""}
           />
-          <S.CommentInput
-            id="password"
-            type="password"
-            onChange={onChangeCommentInput}
-            value={createBoardCommentInput.password ?? ""}
-          />
+          {isEdit ?? false ? (
+            <></>
+          ) : (
+            <S.CommentInput
+              id="password"
+              type="password"
+              onChange={onChangeCommentInput}
+              value={createBoardCommentInput.password ?? ""}
+            />
+          )}
+
           <S.CommentRate
             onChange={onChangeRate}
-            value={createBoardCommentInput.rating ?? 3}
+            value={comment?.rating ?? createBoardCommentInput.rating ?? 3}
           />
         </S.RowGroup>
         <S.CommentTextarea
           id="contents"
           onChange={onChangeCommentInput}
-          value={createBoardCommentInput.contents ?? ""}
+          value={comment?.contents ?? createBoardCommentInput.contents ?? ""}
         />
         <S.Border>
-          <S.SubmitButton onClick={onClickCreateComment}>
-            등록하기
+          <S.SubmitButton onClick={onClickSubmit}>
+            {isEdit ?? false ? "수정하기" : "등록하기"}
           </S.SubmitButton>
         </S.Border>
       </S.CommentWrapper>
