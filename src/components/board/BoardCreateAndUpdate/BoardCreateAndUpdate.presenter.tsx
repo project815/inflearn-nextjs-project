@@ -1,7 +1,9 @@
 import * as S from "./BoardCreateAndUpdate.style";
 import { IBoardNewUIPropsType } from "./BoardCreateAndUpdate.type";
 
-export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
+export default function BoardCreateAndUpdateUI(
+  props: IBoardNewUIPropsType
+): JSX.Element {
   const {
     isEdit,
     onChangeWriter,

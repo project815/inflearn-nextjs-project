@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { IconComment } from "../../../../public/assets/icon";
-import * as S from "./CommentMutation.styles";
+import * as S from "./CommentCreateAndUpdate.styles";
 
-export default function CommentMutationUI(): JSX.Element {
+export default function CommentCreateAndUpdate(): JSX.Element {
   return (
     <>
       <S.CommentWrapper>

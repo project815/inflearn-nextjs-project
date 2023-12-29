@@ -11,7 +11,7 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
-import BoardNewUI from "./BoardCreateAndUpdate.presenter";
+import BoardCreateAndUpdateUI from "./BoardCreateAndUpdate.presenter";
 import { CREATEBOARD, UPDATEBOARD } from "./BoardCreateAndUpdate.query";
 import { IBoardWritePropsType } from "./BoardCreateAndUpdate.type";
 
@@ -203,7 +203,7 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
 
   return (
     <>
-      <BoardNewUI
+      <BoardCreateAndUpdateUI
         isEdit={isEdit}
         defaultValue={defaultValue}
         boardAddress={boardAddress}
