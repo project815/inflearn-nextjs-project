@@ -1,21 +1,25 @@
 import {
   IBoardComment,
-  ICreateBoardCommentInput,
   IMutation,
   IMutationCreateBoardCommentArgs,
+  IMutationUpdateBoardCommentArgs,
 } from "@/types/graphql/types";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CommentCreateAndUpdateUI from "./CommentCreateAndUpdate.presenter";
-import { CREATEBOARDCOMMENT } from "./CommentCreateAndUpdate.query";
+import {
+  CREATEBOARDCOMMENT,
+  UPDATEBOARDCOMMENT,
+} from "./CommentCreateAndUpdate.query";
 
 interface ICommentCreateAndUpdatePropsType {
   isEdit?: boolean;
   onClickIsEdit?: () => void;
   comment?: IBoardComment;
 }
+
 export default function CommentCreateAndUpdate(
   props: ICommentCreateAndUpdatePropsType
 ): JSX.Element {
@@ -26,14 +30,22 @@ export default function CommentCreateAndUpdate(
     Pick<IMutation, "createBoardComment">,
     IMutationCreateBoardCommentArgs
   >(CREATEBOARDCOMMENT);
+  const [updateBoardComment] = useMutation<
+    Pick<IMutation, "updateBoardComment">,
+    IMutationUpdateBoardCommentArgs
+  >(UPDATEBOARDCOMMENT);
 
-  const [createBoardCommentInput, setCreateBoardCommentInput] =
-    useState<ICreateBoardCommentInput>({
-      writer: "",
-      password: "",
-      contents: "",
-      rating: 3,
-    });
+  const [createBoardCommentInput, setCreateBoardCommentInput] = useState<{
+    writer?: string;
+    contents: string;
+    password: string;
+    rating: number;
+  }>({
+    writer: "",
+    password: "",
+    contents: comment?.contents ?? "",
+    rating: comment?.rating ?? 3,
+  });
 
   const onChangeCommentInput = (
     e:
@@ -54,7 +66,6 @@ export default function CommentCreateAndUpdate(
   };
 
   const onClickCreateComment = async (): Promise<void> => {
-    console.log("???");
     if (createBoardCommentInput.writer === "") {
       toast.warning("작성자를 입력해주세요.");
       return;
@@ -93,7 +104,36 @@ export default function CommentCreateAndUpdate(
     }
   };
 
-  const onClickUpdateComment = (): void => {
+  const onClickUpdateComment = async (): Promise<void> => {
+    if (createBoardCommentInput.password === "") {
+      toast.warning("비밀번호를 입력해주세요.");
+      return;
+    }
+    if (createBoardCommentInput.contents === "") {
+      toast.warning("내용을 입력해주세요.");
+      return;
+    }
+    if (createBoardCommentInput.rating === 0) {
+      toast.warning("평점을 입력해주세요.");
+      return;
+    }
+
+    try {
+      await updateBoardComment({
+        variables: {
+          updateBoardCommentInput: {
+            contents: createBoardCommentInput.contents,
+            rating: createBoardCommentInput.rating,
+          },
+          password: createBoardCommentInput.password,
+          boardCommentId: comment?._id ?? "",
+        },
+        // refetchQueries: ["fetchBoardComments"],
+      });
+    } catch (error) {
+      console.log("error : ", error);
+    }
+
     if (onClickIsEdit !== undefined) {
       onClickIsEdit();
     }
@@ -109,8 +149,6 @@ export default function CommentCreateAndUpdate(
           isEdit ?? false ? onClickUpdateComment : onClickCreateComment
         }
         isEdit={isEdit}
-        // onClickIsEdit={onClickIsEdit}
-        comment={comment}
       />
     </>
   );

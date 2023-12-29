@@ -1,4 +1,4 @@
-import { IBoardComment, ICreateBoardCommentInput } from "@/types/graphql/types";
+import { ICreateBoardCommentInput } from "@/types/graphql/types";
 import Image from "next/image";
 import { IconComment } from "../../../../public/assets/icon";
 import * as S from "./CommentCreateAndUpdate.styles";
@@ -14,7 +14,6 @@ interface ICommentCreateAndUpdatePropsType {
 
   isEdit?: boolean;
   // onClickIsEdit?: () => void;
-  comment?: IBoardComment;
 }
 
 export default function CommentCreateAndUpdateUI(
@@ -26,7 +25,6 @@ export default function CommentCreateAndUpdateUI(
     onChangeRate,
     onClickSubmit,
     isEdit,
-    comment,
   } = props;
   return (
     <>
@@ -36,32 +34,36 @@ export default function CommentCreateAndUpdateUI(
           <S.CommentTitle>댓글</S.CommentTitle>
         </S.CommentTitleGroup>
         <S.RowGroup>
-          <S.CommentInput
-            id="writer"
-            type="text"
-            onChange={onChangeCommentInput}
-            value={comment?.writer ?? createBoardCommentInput.writer ?? ""}
-          />
           {isEdit ?? false ? (
             <></>
           ) : (
             <S.CommentInput
-              id="password"
-              type="password"
+              id="writer"
+              type="text"
               onChange={onChangeCommentInput}
-              value={createBoardCommentInput.password ?? ""}
+              value={createBoardCommentInput.writer ?? ""}
+              placeholder="작성자명을 입력해주세요."
             />
           )}
 
+          <S.CommentInput
+            id="password"
+            type="password"
+            onChange={onChangeCommentInput}
+            value={createBoardCommentInput.password ?? ""}
+            placeholder="비밀번호를 입력해주세요."
+          />
+
           <S.CommentRate
             onChange={onChangeRate}
-            value={comment?.rating ?? createBoardCommentInput.rating ?? 3}
+            value={createBoardCommentInput.rating}
           />
         </S.RowGroup>
         <S.CommentTextarea
           id="contents"
           onChange={onChangeCommentInput}
-          value={comment?.contents ?? createBoardCommentInput.contents ?? ""}
+          value={createBoardCommentInput.contents}
+          placeholder="내용을 입력해주세요."
         />
         <S.Border>
           <S.SubmitButton onClick={onClickSubmit}>
