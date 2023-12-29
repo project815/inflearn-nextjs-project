@@ -42,7 +42,10 @@ export default function CommentCreateAndUpdateUI(
             onChange={onChangeCommentInput}
             value={createBoardCommentInput.password ?? ""}
           />
-          <S.CommentRate onChange={onChangeRate} />
+          <S.CommentRate
+            onChange={onChangeRate}
+            value={createBoardCommentInput.rating ?? 3}
+          />
         </S.RowGroup>
         <S.CommentTextarea
           id="contents"

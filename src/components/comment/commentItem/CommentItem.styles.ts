@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Button, Rate } from "antd";
+import { Button, Modal, Rate } from "antd";
 
 export const CommentListWrapper = styled.div`
   display: flex;
@@ -21,7 +21,6 @@ export const RowGroup = styled.div`
 
 export const Name = styled.div`
   color: var(--Black, #000);
-  font-family: Noto Sans CJK KR;
   font-size: 18px;
   font-weight: 700;
   margin-right: 10px;
@@ -65,3 +64,4 @@ export const UpdateButton = styled(Button)`
   align-items: center;
   margin-left: 10px;
 `;
+export const PasswordModal = styled(Modal)``;
