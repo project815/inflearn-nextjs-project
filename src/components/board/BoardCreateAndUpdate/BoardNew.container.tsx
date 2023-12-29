@@ -13,7 +13,7 @@ import { useState } from "react";
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
 import BoardNewUI from "./BoardNew.presenter";
 import { CREATEBOARD, UPDATEBOARD } from "./BoardNew.query";
-import { IBoardWritePropsType } from "./BoardNew.type";
+import type { IBoardWritePropsType } from "./BoardNew.type";
 
 export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
   const { isEdit, defaultValue } = props;

@@ -82,23 +82,23 @@ export const RowGroup = styled.div`
   position: relative;
 `;
 
-export const ContentTextInput = styled.textarea`
-  height: 100%;
-  min-height: 200px;
-  border: 1px solid var(--Gray-4, #bdbdbd);
-  background: var(--White, #fff);
-  text-align: start;
-  resize: none;
+// export const ContentTextInput = styled.`
+//   height: 100%;
+//   min-height: 200px;
+//   border: 1px solid var(--Gray-4, #bdbdbd);
+//   background: var(--White, #fff);
+//   text-align: start;
+//   resize: none;
 
-  padding: 10px;
-  margin-top: 10px;
+//   padding: 10px;
+//   margin-top: 10px;
 
-  ::placeholder {
-    color: var(--Gray-4, #bdbdbd);
-    font-size: 13px;
-    font-weight: 300;
-  }
-`;
+//   ::placeholder {
+//     color: var(--Gray-4, #bdbdbd);
+//     font-size: 13px;
+//     font-weight: 300;
+//   }
+// `;
 
 export const ZipcodeInput = styled.input`
   display: flex;
