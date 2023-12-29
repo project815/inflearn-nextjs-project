@@ -1,82 +1,44 @@
 import { IBoardComment } from "@/types/graphql/types";
 import { getToday } from "@/utility/common";
-import { CheckOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import {
-  IconClear,
-  IconDefaultUser,
-  IconUpdate,
-} from "../../../../public/assets/icon";
+import { IconClear, IconUpdate } from "../../../../public/assets/icon";
+import { ImageDefaultAvator } from "../../../../public/assets/images";
 import * as S from "./CommentItem.styles";
 
 export interface IBoardCommentListUIPropsType {
-  data: IBoardComment;
-  isEdit: boolean;
-  onClickDeleteBoardComment: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onClickUpdateBoardComment: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeModifiedComment: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  comment: IBoardComment;
+  onClickDeleteBoardComment: () => Promise<void>;
   onClickIsEdit: () => void;
-  onChangeModifiedRating: (e: number) => void;
 }
 
 export default function CommentItemUI(
   props: IBoardCommentListUIPropsType
 ): JSX.Element {
-  const {
-    data,
-    isEdit,
-    onClickDeleteBoardComment,
-    // onClickUpdateBoardComment,
-    // onChangePassword,
-    onChangeModifiedComment,
-    onClickIsEdit,
-    onChangeModifiedRating,
-  } = props;
+  const { comment, onClickIsEdit, onClickDeleteBoardComment } = props;
 
   return (
     <>
-      <S.Comment key={data._id}>
-        <S.AvatorImage src={IconDefaultUser} alt="" width={40} />
-
-        <S.CommentGroup>
-          <S.CommentUserInfoAndRateGroup>
-            <S.CommenterWriper>{data.writer}</S.CommenterWriper>
-            <S.CommentRate
-              defaultValue={data.rating}
-              disabled={!isEdit}
-              onChange={onChangeModifiedRating}
-            />
-          </S.CommentUserInfoAndRateGroup>
-          {isEdit ? (
-            <S.CommentModifyInput
-              defaultValue={data.contents}
-              onChange={onChangeModifiedComment}
-            />
-          ) : (
-            <S.CommentContent>{data.contents}</S.CommentContent>
-          )}
-
-          <S.CommentDate>{getToday(String(data.createdAt))}</S.CommentDate>
-        </S.CommentGroup>
-
-        <S.CommentModifyButtonGroup>
-          <S.CommentModifyButton
-            icon={
-              isEdit ? <CheckOutlined /> : <Image src={IconUpdate} alt="" />
-            }
-            type="text"
-            onClick={onClickIsEdit}
-          ></S.CommentModifyButton>
-          <S.CommentModifyButton
-            type="text"
-            id={data._id}
-            onClick={onClickDeleteBoardComment}
-          >
-            <Image alt="" src={IconClear} />
-          </S.CommentModifyButton>
-        </S.CommentModifyButtonGroup>
-      </S.Comment>
+      <S.CommentListWrapper>
+        <S.Avator>
+          <Image src={ImageDefaultAvator} alt="" />
+        </S.Avator>
+        <S.InfoGroup>
+          <S.RowGroup>
+            <S.Name>{comment.writer}</S.Name>
+            <S.CommentRate disabled value={comment.rating} />
+          </S.RowGroup>
+          <S.CommentContent>{comment.contents}</S.CommentContent>
+          <S.CommentDate>{getToday(String(comment.createdAt))}</S.CommentDate>
+        </S.InfoGroup>
+        <S.UpdateButtonGroup>
+          <S.UpdateButton onClick={onClickIsEdit}>
+            <Image src={IconUpdate} alt="" />
+          </S.UpdateButton>
+          <S.UpdateButton onClick={onClickDeleteBoardComment}>
+            <Image src={IconClear} alt="" />
+          </S.UpdateButton>
+        </S.UpdateButtonGroup>
+      </S.CommentListWrapper>
     </>
   );
 }

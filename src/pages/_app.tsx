@@ -4,6 +4,8 @@ import { GlobalStyles } from "@/styles/globalscss";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Global } from "@emotion/react";
 import type { AppProps } from "next/app";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/slick-theme.css";
 import "../styles/slick.css";
 
@@ -19,6 +21,18 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={true}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </>
     </ApolloProvider>
   );

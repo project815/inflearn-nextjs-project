@@ -1,101 +1,64 @@
-// import { IBoardComment } from "@/types/graphql/types";
-// import { useMutation } from "@apollo/client";
-// import { useState } from "react";
-// import CommentItemUI from "./CommentItem.presenter";
+import {
+  IBoardComment,
+  IMutation,
+  IMutationDeleteBoardCommentArgs,
+} from "@/types/graphql/types";
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import CommentCreateAndUpdate from "../CommentCreateAndUpdate/CommentCreateAndUpdate.container";
+import CommentItemUI from "./CommentItem.presenter";
+import { DELETEBOARDCOMMENT } from "./CommentItem.query";
 
-// export interface IBoardCommentListUIPropsType {
-//   data: IBoardComment;
-// }
+export interface IBoardCommentListUIPropsType {
+  comment: IBoardComment;
+}
 
-// export default function CommentItem(
-//   props: IBoardCommentListUIPropsType
-// ): JSX.Element {
-//   const { data } = props;
+export default function CommentItem(
+  props: IBoardCommentListUIPropsType
+): JSX.Element {
+  const { comment } = props;
 
-//   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
-//   const [updateBoardComment] = useMutation(UPDATEBOARDCOMMENT);
-//   const [deleteBoardComment] = useMutation(DELETEBOARDCOMMENT);
+  const onClickIsEdit = (): void => {
+    setIsEdit((prev) => !prev);
+  };
 
-//   const [modifiedComment, setModifiedComment] = useState<string>(data.contents);
-//   const [modifiedRating, setModifiedRating] = useState<number>(data.rating);
-//   const [password, setPassword] = useState<string>("");
+  const [deleteBoardComment] = useMutation<
+    Pick<IMutation, "deleteBoardComment">,
+    IMutationDeleteBoardCommentArgs
+  >(DELETEBOARDCOMMENT);
 
-//   const onClickUpdateBoardComment = async (): Promise<void> => {
-//     try {
-//       await updateBoardComment({
-//         variables: {
-//           updateBoardCommentInput: {
-//             contents: modifiedComment,
-//             rating: modifiedRating,
-//           },
-//           boardCommentId: data._id,
-//           password,
-//         },
-//       });
-//     } catch (err) {
-//       console.log("error : ", err);
-//     }
-//   };
+  const onClickDeleteBoardComment = async (): Promise<void> => {
+    const password = prompt("비밀번호를 입력해주세요.");
+    try {
+      await deleteBoardComment({
+        variables: {
+          password,
+          boardCommentId: comment._id,
+        },
+        refetchQueries: ["fetchBoardComments"],
+      });
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
+  };
 
-//   const onClickDeleteBoardComment = async (
-//     e: React.MouseEvent<HTMLButtonElement>
-//   ): Promise<void> => {
-//     const boardCommentId = e.currentTarget.id;
-
-//     console.log(boardCommentId);
-//     const password = prompt("비밀번호를 입력해주세요.");
-
-//     try {
-//       await deleteBoardComment({
-//         variables: {
-//           password,
-//           boardCommentId,
-//         },
-//         refetchQueries: [FETCHBOARDCOMMENTS],
-//       });
-//     } catch (err) {
-//       if (err instanceof Error) {
-//         alert(err.message);
-//       }
-//       console.log(err);
-//     }
-//   };
-
-//   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-//     setPassword(e.target.value);
-//   };
-
-//   const onChangeModifiedComment = (
-//     e: React.ChangeEvent<HTMLTextAreaElement>
-//   ): void => {
-//     setModifiedComment(e.target.value);
-//   };
-
-//   const onChangeModifiedRating = (e: number): void => {
-//     setModifiedRating(e);
-//   };
-
-//   const onClickIsEdit = (): void => {
-//     setIsEdit(!isEdit);
-
-//     if (isEdit) {
-//       onClickUpdateBoardComment();
-//     }
-//   };
-
-//   return (
-//     <>
-//       <CommentItemUI
-//         data={data}
-//         isEdit={isEdit}
-//         onClickUpdateBoardComment={onClickUpdateBoardComment}
-//         onClickDeleteBoardComment={onClickDeleteBoardComment}
-//         onChangePassword={onChangePassword}
-//         onChangeModifiedComment={onChangeModifiedComment}
-//         onClickIsEdit={onClickIsEdit}
-//         onChangeModifiedRating={onChangeModifiedRating}
-//       />
-//     </>
-//   );
-// }
+  return (
+    <>
+      {isEdit ? (
+        <CommentCreateAndUpdate
+          isEdit={isEdit}
+          onClickIsEdit={onClickIsEdit}
+          comment={comment}
+        />
+      ) : (
+        <CommentItemUI
+          comment={comment}
+          onClickIsEdit={onClickIsEdit}
+          onClickDeleteBoardComment={onClickDeleteBoardComment}
+        />
+      )}
+    </>
+  );
+}
