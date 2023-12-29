@@ -1,5 +1,5 @@
-import * as S from "./BoardNew.style";
-import { IBoardNewUIPropsType } from "./BoardNew.type";
+import * as S from "./BoardCreateAndUpdate.style";
+import { IBoardNewUIPropsType } from "./BoardCreateAndUpdate.type";
 
 export default function BoardNewUI(props: IBoardNewUIPropsType): JSX.Element {
   const {
