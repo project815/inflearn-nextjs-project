@@ -6,6 +6,7 @@ import { FETCHBOARDCOMMENTS } from "./CommentList.query";
 
 export default function CommentList(): JSX.Element {
   const router = useRouter();
+
   const { data: commentList } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs

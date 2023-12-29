@@ -1,92 +1,67 @@
 import styled from "@emotion/styled";
 import { Button, Rate } from "antd";
-import Image from "next/image";
-export const Comment = styled.div`
-  border-bottom: 1px solid #bdbdbd;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-  position: relative;
+
+export const CommentListWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-export const CommentGroup = styled.div`
-  margin-left: 10px;
-  width: 85%;
-  height: 100%;
-`;
-
-export const CommentUserInfoGroup = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 50px;
+  position: relative;
+  border-bottom: 1px solid var(--Gray-3, #e0e0e0);
 `;
 
-export const AvatorImage = styled(Image)`
-  width: 40px;
-  height: 40px;
-`;
-export const CommenterWriper = styled.span`
+export const Avator = styled.div`
   margin-right: 10px;
-  font-size: 16px;
 `;
-export const CommentRate = styled(Rate)`
-  position: relative;
-  top: 2px;
-`;
-export const CommentUserInfoAndRateGroup = styled.div`
+export const RowGroup = styled.div`
   display: flex;
   align-items: center;
-  top: -2px;
-  position: relative;
-`;
-
-export const CommentContent = styled.div`
   margin-top: 5px;
-  margin-bottom: 10px;
-  word-wrap: break-word;
-  color: #4f4f4f;
-  font-weight: 400;
+`;
+
+export const Name = styled.div`
+  color: var(--Black, #000);
+  font-family: Noto Sans CJK KR;
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 10px;
+`;
+
+export const CommentRate = styled(Rate)`
+  margin-bottom: 4px;
+`;
+export const InfoGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+export const CommentContent = styled.div`
+  color: var(--Gray-2, #4f4f4f);
   font-size: 16px;
-  width: 100%;
-`;
-
-export const CommentModifyInput = styled.textarea`
-  display: flex;
-  width: 100%;
-  border: 1px solid var(--Gray-4, #bdbdbd);
-  background: var(--White, #fff);
-  padding: 10px;
+  font-weight: 400;
+  width: 90%;
   margin-top: 10px;
-  height: 100px;
-  resize: none;
-
-  ::placeholder {
-    color: var(--Gray-4, #bdbdbd);
-    font-size: 13px;
-    font-weight: 300;
-  }
 `;
-
 export const CommentDate = styled.div`
-  margin-bottom: 10px;
-  color: #bdbdbd;
+  color: var(--Gray-4, #bdbdbd);
   font-size: 12px;
+  font-weight: 400;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
-
-export const CommentModifyButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
+export const UpdateButtonGroup = styled.div`
   position: absolute;
   top: 0px;
   right: 0px;
+  display: flex;
+  flex-direction: row;
 `;
 
-export const CommentModifyButton = styled(Button)`
-  width: 25px;
-  height: 25px;
+export const UpdateButton = styled(Button)`
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 10px;
 `;
