@@ -7,6 +7,7 @@ export const CommentListWrapper = styled.div`
   width: 80%;
   margin-bottom: 50px;
   position: relative;
+  border-bottom: 1px solid var(--Gray-3, #e0e0e0);
 `;
 
 export const Avator = styled.div`
@@ -46,6 +47,7 @@ export const CommentDate = styled.div`
   font-size: 12px;
   font-weight: 400;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 export const UpdateButtonGroup = styled.div`
   position: absolute;
