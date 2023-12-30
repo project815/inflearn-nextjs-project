@@ -15,7 +15,9 @@ import BoardCreateAndUpdateUI from "./BoardCreateAndUpdate.presenter";
 import { CREATEBOARD, UPDATEBOARD } from "./BoardCreateAndUpdate.query";
 import { IBoardWritePropsType } from "./BoardCreateAndUpdate.type";
 
-export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
+export default function BoardCreateAndUpadate(
+  props: IBoardWritePropsType
+): JSX.Element {
   const { isEdit, defaultValue } = props;
   const { confirm } = Modal;
 
@@ -197,6 +199,8 @@ export default function BoardWrite(props: IBoardWritePropsType): JSX.Element {
         },
       });
     } catch (error) {
+      console.log("??????@@@@@@");
+      console.log(error);
       if (error instanceof Error) alert(error.message);
     }
   };

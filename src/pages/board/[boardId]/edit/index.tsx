@@ -1,4 +1,4 @@
-import BoardWrite from "@/components/board/BoardCreateAndUpdate/BoardCreateAndUpdate.container";
+import BoardCreateAndUpdate from "@/components/board/BoardCreateAndUpdate/BoardCreateAndUpdate.container";
 import { FETCHBOARD } from "@/components/board/BoardCreateAndUpdate/BoardCreateAndUpdate.query";
 import { IQuery, IQueryFetchBoardArgs } from "@/types/graphql/types";
 import { useQuery } from "@apollo/client";
@@ -14,5 +14,10 @@ export default function BoardUpdatePage(): JSX.Element {
   });
   console.log("?? : ", defaultValue);
 
-  return <BoardWrite isEdit={true} defaultValue={defaultValue?.fetchBoard} />;
+  return (
+    <BoardCreateAndUpdate
+      isEdit={true}
+      defaultValue={defaultValue?.fetchBoard}
+    />
+  );
 }
