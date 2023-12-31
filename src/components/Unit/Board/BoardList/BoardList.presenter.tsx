@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { IconBtnBoardNew, IconSearch } from "../../../../public/assets/icon";
+import { IconBtnBoardNew, IconSearch } from "../../../../../public/assets/icon";
 import * as S from "./BoardList.style";
 
-import Pagination from "@/components/units/Pagination/Pagination.container";
+import Pagination from "@/components/Unit/Pagination/Pagination.container";
 import { getToday } from "@/utility/common";
 import "react-datepicker/dist/react-datepicker.css";
 import { IBoardListUIPropsType } from "./BoardList.type";
