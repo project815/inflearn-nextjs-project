@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Layout } from "antd";
-import SideBar from "./\bSideBar";
 import HeaderDefault from "./Header";
+import SideBar from "./SideBar";
 
 interface ILayoutPropsType {
   children: JSX.Element;
@@ -16,9 +16,7 @@ export default function LayoutPage(props: ILayoutPropsType): JSX.Element {
         <div
           style={{
             margin: "16px 16px",
-
             display: "flex",
-            // justifyContent: "end",
           }}
         >
           <Body>{props.children}</Body>
@@ -39,5 +37,4 @@ const Body = styled.div`
   border-radius: 20px;
   width: 100%;
   min-width: 1000px;
-  /* justify-content: center; */
 `;

@@ -31,7 +31,7 @@ function getItem(
 const items: MenuItem[] = [
   getItem("자유게시판", "/board", <PieChartOutlined />),
   getItem("중고마켓", "/usedmarket", <DesktopOutlined />),
-  getItem("맛집 리스트", "/goodstore", <DesktopOutlined />),
+  getItem("맛집 리스트", "/store", <DesktopOutlined />),
   getItem("마이페이지", "/", <UserOutlined />, [
     getItem("마이페이지", "/"),
     getItem("Bill", "4"),
