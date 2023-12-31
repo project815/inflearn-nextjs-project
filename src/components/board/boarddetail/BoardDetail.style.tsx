@@ -7,12 +7,11 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 80%;
   padding: 50px 80px;
-  margin-top: 64px;
   margin-bottom: 100px;
   background: var(--White, #fff);
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  /* box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2); */
 `;
 export const Content = styled.div`
   display: flex;
@@ -65,9 +64,10 @@ export const CreateAt = styled.div`
   font-weight: 400;
 `;
 export const Body = styled.div`
-  height: 80%;
-  padding: 10px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
 `;
 
 export const AddressTooltip = styled(Tooltip)`
@@ -82,9 +82,17 @@ export const AddressTooltip = styled(Tooltip)`
 export const BoardTitle = styled.div`
   font-size: 36px;
   font-weight: 700;
+  width: 100%;
+  text-align: start;
+  margin-left: 10px;
+  margin-bottom: 30px;
+`;
+export const ImageArea = styled.div`
+  max-width: 100%;
+  height: 100%;
 `;
 export const ContnetImage = styled(Image)`
-  width: 100%;
+  width: 700px;
   height: 100%;
   /* position: relative; */
   margin: 20px 0px;
