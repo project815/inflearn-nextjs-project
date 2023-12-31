@@ -31,5 +31,6 @@ module.exports = {
     "@typescript-eslint/no-floating-promises": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
   },
 };

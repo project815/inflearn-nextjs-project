@@ -168,10 +168,19 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
           totalCount={totalCount}
           refetch={refetch}
         />
-        <S.BoardTableButton onClick={onClickMoveToBoardNew}>
-          <Image src={IconBtnBoardNew} alt="" />
-          <S.BoardTableButtonText>게시물 등록하기</S.BoardTableButtonText>
-        </S.BoardTableButton>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            width: "100%",
+            marginTop: "20px",
+          }}
+        >
+          <S.BoardTableButton onClick={onClickMoveToBoardNew}>
+            <Image src={IconBtnBoardNew} alt="" />
+            <S.BoardTableButtonText>게시물 등록하기</S.BoardTableButtonText>
+          </S.BoardTableButton>
+        </div>
       </S.BoardTableGroup>
     </S.Layout>
   );

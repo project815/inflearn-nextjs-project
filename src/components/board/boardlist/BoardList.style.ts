@@ -2,13 +2,8 @@ import styled from "@emotion/styled";
 import { Button } from "antd";
 
 export const Layout = styled.div`
-  min-width: 950px;
-  max-width: 1000px;
-  height: 100%;
   padding: 40px;
-
   margin-bottom: 100px;
-  /* border: 1px solid black; */
 `;
 
 // -베스트 게시글---------------------------------------------------------------
@@ -122,11 +117,9 @@ export const SearchButton = styled.button`
 
 export const BoardTableGroup = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 `;
 
 export const BoardTableHead = styled.thead`
@@ -148,9 +141,6 @@ export const BoardTableBody = styled.tbody`
 `;
 
 export const BoardTableButton = styled(Button)`
-  position: absolute;
-  bottom: -20px;
-  right: 10px;
   background-color: white;
   border: 2px solid #f2f2f2;
   border-radius: 10px;

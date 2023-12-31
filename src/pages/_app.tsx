@@ -1,4 +1,4 @@
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { GlobalStyles } from "@/styles/globalscss";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";

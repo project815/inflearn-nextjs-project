@@ -18,6 +18,8 @@ export default function BoardDetailUI(
 
   return (
     <S.Wrapper>
+      <S.BoardTitle>제목 : {data?.fetchBoard.title}</S.BoardTitle>
+
       <S.Content>
         <S.Header>
           <S.Avatar>
@@ -51,7 +53,6 @@ export default function BoardDetailUI(
           </S.Avatar>
         </S.Header>
         <S.Body>
-          <S.BoardTitle>{data?.fetchBoard.title}</S.BoardTitle>
           <S.ContnetImage src={ImageBoardDetail} alt="" />
           <S.BoardContents>{data?.fetchBoard?.contents}</S.BoardContents>
           <S.BoardVideo>

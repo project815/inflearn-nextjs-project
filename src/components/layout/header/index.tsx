@@ -1,46 +1,31 @@
 import styled from "@emotion/styled";
-import { Button } from "antd";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { IconCodeCampLogo } from "../../../../public/assets/icon";
+import { Button, Layout } from "antd";
 
-export default function Header(): JSX.Element {
-  const router = useRouter();
+const { Header } = Layout;
 
-  const onClickMoveToMainPage = (): void => {
-    router.push(`/board`);
-  };
-
+export default function HeaderDefault(): JSX.Element {
   return (
-    <>
-      <HeaderGroup>
-        <Logo
-          src={IconCodeCampLogo}
-          alt="tmp"
-          onClick={onClickMoveToMainPage}
-        />
-        <ButtonGroup>
-          <LoginButton>로그인</LoginButton>
-          <SignInButton>회원가입</SignInButton>
-        </ButtonGroup>
-      </HeaderGroup>
-    </>
+    <HeaderWrapper>
+      <ButtonGroup>
+        <LoginButton>로그인</LoginButton>
+        <SignInButton>회원가입</SignInButton>
+      </ButtonGroup>
+    </HeaderWrapper>
   );
 }
 
-const Logo = styled(Image)`
-  cursor: pointer;
+const HeaderWrapper = styled(Header)`
+  padding: 10px;
+  background-color: white;
 `;
-
-const HeaderGroup = styled.div`
+const ButtonGroup = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-right: 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
-  height: 120px;
-  width: 900px;
 `;
-
-const ButtonGroup = styled.div``;
 
 const LoginButton = styled(Button)`
   background-color: gray;

@@ -32,11 +32,13 @@ const FooterBackground = styled.div`
   height: 230px;
   background-color: #f2f2f2;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
 `;
 
 const FooterGroup = styled.div`
-  width: 900px;
+  margin: 30px;
+
+  min-width: 900px;
   position: relative;
   display: flex;
   flex-direction: column;

@@ -4,12 +4,13 @@ export const ContentLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+
   padding: 30px;
   /* border: 1px solid black; */
   box-sizing: border-box;
-  width: 70%;
+
   margin-top: 30px;
+  width: 800px;
 `;
 
 export const ContentTitle = styled.h2`

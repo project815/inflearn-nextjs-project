@@ -1,36 +1,43 @@
 import styled from "@emotion/styled";
-import Carousel from "./banner";
-import Footer from "./footer";
-import Header from "./header";
-import Nav from "./nav";
+import { Layout } from "antd";
+import SideBar from "./\bSideBar";
+import HeaderDefault from "./Header";
 
 interface ILayoutPropsType {
   children: JSX.Element;
 }
-export default function Layout(props: ILayoutPropsType): JSX.Element {
+export default function LayoutPage(props: ILayoutPropsType): JSX.Element {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Header></Header>
-      <Carousel></Carousel>
-      <Nav></Nav>
+    <Layout style={{ minHeight: "100vh" }}>
+      <SideBar />
+      <Layout>
+        <HeaderDefault />
 
-      <Body> {props.children}</Body>
-      <Footer></Footer>
-    </div>
+        <div
+          style={{
+            margin: "16px 16px",
+
+            display: "flex",
+            // justifyContent: "end",
+          }}
+        >
+          <Body>{props.children}</Body>
+        </div>
+      </Layout>
+    </Layout>
   );
 }
 
 const Body = styled.div`
-  width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  padding: 24px;
+  min-height: 360px;
+  background-color: white;
+  border-radius: 20px;
+  width: 100%;
+  min-width: 1000px;
   /* justify-content: center; */
 `;
