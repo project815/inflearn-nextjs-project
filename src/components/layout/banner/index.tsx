@@ -14,7 +14,7 @@ const BannerList = [
   { id: 4, src: ImageBanner4 },
 ];
 
-export default function Carousel(): JSX.Element {
+export default function Banner(): JSX.Element {
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <Slider
