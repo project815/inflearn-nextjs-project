@@ -1,5 +1,5 @@
-import BoardCreateAndUpdate from "@/components/board/BoardCreateAndUpdate/BoardCreateAndUpdate.container";
-import { FETCHBOARD } from "@/components/board/BoardCreateAndUpdate/BoardCreateAndUpdate.query";
+import BoardCreateAndUpdate from "@/components/Board/BoardCreateAndUpdate/BoardCreateAndUpdate.container";
+import { FETCHBOARD } from "@/components/Board/BoardCreateAndUpdate/BoardCreateAndUpdate.query";
 import { IQuery, IQueryFetchBoardArgs } from "@/types/graphql/types";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
