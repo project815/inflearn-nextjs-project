@@ -4,81 +4,14 @@ import { Button } from "antd";
 export const Layout = styled.div`
   padding: 40px;
   margin-bottom: 100px;
-`;
-
-// -베스트 게시글---------------------------------------------------------------
-
-export const BestBannerLayOut = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  margin-top: 20px;
-  margin-bottom: 80px;
 `;
 
-export const BestBannerTitle = styled.h2``;
-
-export const BestBannerGroup = styled.span`
-  display: flex;
-  width: 205px;
-  height: 200px;
-  border-radius: 20px;
-  justify-content: start;
-  overflow: hidden;
-  position: relative;
-  flex-direction: column;
-
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
-`;
-
-export const BestBannerInfoGroup = styled.div`
-  padding: 12px;
-  box-sizing: border-box;
-`;
-
-export const BestBannerSubTitle = styled.div`
+export const BoardTitle = styled.div`
   /* margin-top: 5px; */
   font-size: 15px;
   font-weight: bold;
 `;
-
-export const BestBannerUserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-export const BestBannerName = styled.span`
-  font-size: 14px;
-  margin-left: 5px;
-`;
-
-export const BestBannerDate = styled.div`
-  color: #828282;
-  font-size: 10px;
-  margin-top: 4px;
-  opacity: 0.6;
-  left: 3px;
-  position: relative;
-`;
-
-export const BestBannerLikeGroup = styled.div`
-  position: absolute;
-  right: 14px;
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-export const BestBannerLikeCount = styled.div`
-  /* margin-top: px; */
-  font-size: 13px;
-`;
-
-export const Test = styled.div``;
-
 // -입력창---------------------------------------------------------------
 
 export const SearchInputGroup = styled.div`
