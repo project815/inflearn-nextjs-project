@@ -89,8 +89,7 @@ export default function LayoutPage(props: ILayoutPropsType): JSX.Element {
         <div
           style={{
             margin: "16px 16px",
-            width: "100%",
-            minWidth: "1000px",
+
             display: "flex",
             // justifyContent: "end",
           }}
@@ -127,5 +126,7 @@ const Body = styled.div`
   min-height: 360px;
   background-color: white;
   border-radius: 20px;
+  width: 100%;
+  min-width: 1000px;
   /* justify-content: center; */
 `;
