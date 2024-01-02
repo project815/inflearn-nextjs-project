@@ -7,7 +7,7 @@ import {
   ImageFile,
   ImageLike,
   ImageLocation,
-} from "../../../../public/assets/images";
+} from "../../../../../public/assets/images";
 import * as S from "./BoardDetail.style";
 import { IBoardDetailUIPropstype } from "./BoardDetail.type";
 
