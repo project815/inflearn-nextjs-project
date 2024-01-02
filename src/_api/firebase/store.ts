@@ -1,17 +1,22 @@
 import { database } from "@/config/firebase.config";
 import { StoreType } from "@/types/store";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  DocumentData,
+  QuerySnapshot,
+  addDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 const STORECOLLECTION = collection(database, "store");
 
 // 맛집 블로그
 
-export const getStoreList = async (): Promise<any> => {
+export const getStoreList = async (): Promise<
+  QuerySnapshot<DocumentData, DocumentData>
+> => {
   const result = await getDocs(STORECOLLECTION);
-  console.log("result : ", result);
-  result.docs.map((doc) => {
-    return doc.data();
-  });
+  return result;
 };
 
 export const getStore = (): void => {};

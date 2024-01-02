@@ -1,8 +1,10 @@
 import { createStore } from "@/_api/firebase/store";
 import { StoreType } from "@/types/store";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function StoreCreatePage(): JSX.Element {
+  const router = useRouter();
   const [storedata, setStoreData] = useState<StoreType>({
     name: "",
     description: "",
@@ -15,6 +17,9 @@ export default function StoreCreatePage(): JSX.Element {
   };
   const onClickStoreCreate = (): void => {
     createStore(storedata);
+  };
+  const onClickPageMoveToBack = (): void => {
+    router.back();
   };
   return (
     <>
@@ -41,6 +46,7 @@ export default function StoreCreatePage(): JSX.Element {
           <input type="text" />
         </div> */}
         <button onClick={onClickStoreCreate}>등록하기</button>
+        <button onClick={onClickPageMoveToBack}>뒤로가기</button>
       </div>
     </>
   );
