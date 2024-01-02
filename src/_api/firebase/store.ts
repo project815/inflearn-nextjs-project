@@ -1,4 +1,5 @@
 import { database } from "@/config/firebase.config";
+import { StoreType } from "@/types/store";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
 const STORECOLLECTION = collection(database, "store");
@@ -15,8 +16,10 @@ export const getStoreList = async (): Promise<any> => {
 
 export const getStore = (): void => {};
 
-export const createStore = (): void => {
-  addDoc(STORECOLLECTION, { writer: " " });
+export const createStore = async (data: StoreType): Promise<string> => {
+  const result = await addDoc(STORECOLLECTION, data);
+
+  return result.id;
 };
 
 export const updateStore = (): void => {
