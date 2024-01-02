@@ -1,59 +1,11 @@
 import Image from "next/image";
-import {
-  IconBtnBoardNew,
-  IconDefaultUser,
-  IconSearch,
-  IconThumb,
-} from "../../../../public/assets/icon";
+import { IconBtnBoardNew, IconSearch } from "../../../../../public/assets/icon";
 import * as S from "./BoardList.style";
 
-import Pagination from "@/components/units/Pagination/Pagination.container";
+import Pagination from "@/components/Unit/Pagination/Pagination.container";
 import { getToday } from "@/utility/common";
 import "react-datepicker/dist/react-datepicker.css";
 import { IBoardListUIPropsType } from "./BoardList.type";
-
-interface BestBannerType {
-  id: string;
-  image: string;
-  title: string;
-  name: string;
-  date: string;
-  like: number;
-}
-const BANNERLIST: BestBannerType[] = [
-  {
-    id: "1",
-    image: "/assets/images/img_board1.png",
-    title: "게시물 제목입니다.",
-    name: "노원두",
-    date: "2021.02.18",
-    like: 356,
-  },
-  {
-    id: "2",
-    image: "/assets/images/img_board2.png",
-    title: "게시물 제목입니다.",
-    name: "노원두",
-    date: "2021.02.18",
-    like: 356,
-  },
-  {
-    id: "3",
-    image: "/assets/images/img_board3.png",
-    title: "게시물 제목입니다.",
-    name: "노원두",
-    date: "2021.02.18",
-    like: 356,
-  },
-  {
-    id: "4",
-    image: "/assets/images/img_board4.png",
-    title: "게시물 제목입니다.",
-    name: "노원두",
-    date: "2021.02.18",
-    like: 356,
-  },
-];
 
 export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
   const {
@@ -72,35 +24,7 @@ export default function BoardListUI(props: IBoardListUIPropsType): JSX.Element {
 
   return (
     <S.Layout>
-      <S.BestBannerLayOut>
-        <S.BestBannerTitle>베스트 게시글</S.BestBannerTitle>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-            marginTop: "20px",
-          }}
-        >
-          {BANNERLIST.map((i) => (
-            <S.BestBannerGroup key={i.id}>
-              <Image src={i.image} alt="" width={220} height={150} />
-              <S.BestBannerInfoGroup>
-                <S.BestBannerSubTitle>{i.title}</S.BestBannerSubTitle>
-                <S.BestBannerUserInfo>
-                  <Image src={IconDefaultUser} alt="" />
-                  <S.BestBannerName>{i.name}</S.BestBannerName>
-                </S.BestBannerUserInfo>
-                <S.BestBannerDate>Data : {i.date}</S.BestBannerDate>
-              </S.BestBannerInfoGroup>
-              <S.BestBannerLikeGroup style={{}}>
-                <Image src={IconThumb} alt="" width={24} />
-                <S.BestBannerLikeCount>{i.like}</S.BestBannerLikeCount>
-              </S.BestBannerLikeGroup>
-            </S.BestBannerGroup>
-          ))}
-        </div>
-      </S.BestBannerLayOut>
+      <S.BoardTitle>게시글 목록</S.BoardTitle>
 
       <S.SearchInputGroup>
         <Image

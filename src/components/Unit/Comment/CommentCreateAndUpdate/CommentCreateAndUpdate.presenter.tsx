@@ -1,6 +1,6 @@
 import { ICreateBoardCommentInput } from "@/types/graphql/types";
 import Image from "next/image";
-import { IconComment } from "../../../../public/assets/icon";
+import { IconComment } from "../../../../../public/assets/icon";
 import * as S from "./CommentCreateAndUpdate.styles";
 interface ICommentCreateAndUpdatePropsType {
   createBoardCommentInput: ICreateBoardCommentInput;

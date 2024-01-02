@@ -1,8 +1,8 @@
 import { IBoardComment } from "@/types/graphql/types";
 import { getToday } from "@/utility/common";
 import Image from "next/image";
-import { IconClear, IconUpdate } from "../../../../public/assets/icon";
-import { ImageDefaultAvator } from "../../../../public/assets/images";
+import { IconClear, IconUpdate } from "../../../../../public/assets/icon";
+import { ImageDefaultAvator } from "../../../../../public/assets/images";
 import * as S from "./CommentItem.styles";
 
 export interface IBoardCommentListUIPropsType {

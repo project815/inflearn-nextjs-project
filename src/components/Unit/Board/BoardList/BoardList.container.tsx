@@ -59,7 +59,7 @@ export default function BoardList(): JSX.Element {
     await router.push(`/board/${id}`);
   };
   const onClickMoveToBoardNew = async (): Promise<void> => {
-    await router.push("/board/new");
+    await router.push("/board/create");
   };
 
   // 페이지네이션 검색 결과.
