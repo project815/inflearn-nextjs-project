@@ -1,7 +1,7 @@
 import InfiniteScroll from "react-infinite-scroller";
 
 import { IQuery } from "@/types/graphql/types";
-import CommentItem from "./commentItem/CommentItem.container";
+import CommentItem from "../commentItem/CommentItem.container";
 
 interface ICommentListPropsType {
   commentList?: Pick<IQuery, "fetchBoardComments">;
