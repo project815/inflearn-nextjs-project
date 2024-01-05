@@ -3,16 +3,21 @@ import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IMutationUploadFileArgs,
   IUpdateBoardInput,
 } from "@/types/graphql/types";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
 import BoardCreateAndUpdateUI from "./BoardCreateAndUpdate.presenter";
-import { CREATEBOARD, UPDATEBOARD } from "./BoardCreateAndUpdate.query";
+import {
+  CREATEBOARD,
+  UPDATEBOARD,
+  UPLOADFILE,
+} from "./BoardCreateAndUpdate.query";
 import { IBoardWritePropsType } from "./BoardCreateAndUpdate.type";
 
 export default function BoardCreateAndUpadate(
@@ -21,7 +26,26 @@ export default function BoardCreateAndUpadate(
   const { isEdit, defaultValue } = props;
   const { confirm } = Modal;
 
+  const fileRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const isEmailValid = /\S+@\S+\.\S+/;
+  const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  const [createBoardInput, setCreateBoardInput] = useState<ICreateBoardInput>({
+    writer: "",
+    password: "",
+    title: "",
+    contents: "",
+    youtubeUrl: "",
+    boardAddress: {},
+    images: [],
+  });
+
+  const [writerError, setWriterError] = useState<string>("");
+  const [passwordError, setPasswordErorr] = useState<string>("");
+  const [titleError, setTitleError] = useState<string>("");
+  const [contentsError, setContentsError] = useState<string>("");
 
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
@@ -33,34 +57,31 @@ export default function BoardCreateAndUpadate(
     IMutationUpdateBoardArgs
   >(UPDATEBOARD);
 
-  const [createBoardInput, setCreateBoardInput] = useState<ICreateBoardInput>({
-    writer: "",
-    password: "",
-    title: "",
-    contents: "",
-    youtubeUrl: "",
-    boardAddress: {},
-  });
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOADFILE);
 
-  const [writerError, setWriterError] = useState<string>("");
-  const [passwordError, setPasswordErorr] = useState<string>("");
-  const [titleError, setTitleError] = useState<string>("");
-  const [contentsError, setContentsError] = useState<string>("");
-
-  const onChangeBoardAddress = (
+  const onClickFile = (): void => {
+    console.log("click", fileRef.current);
+    fileRef.current?.click();
+  };
+  const onChangeImageFiles = async (
     e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setCreateBoardInput((prev) => {
-      return {
-        ...prev,
-        boardAddress: {
-          ...createBoardInput.boardAddress,
-          addressDetail: e.target.value,
-        },
-      };
-    });
+  ): Promise<void> => {
+    const file = e.target.files?.[0];
+
+    console.log("click2");
+    console.log("file :", file);
+    try {
+      const result = await uploadFile({ variables: { file } });
+      console.log("result : ", result.data?.uploadFile.url);
+    } catch (e) {
+      console.log("error: ", e);
+    }
   };
 
+  // Board 등록 Input
   const onChangeBoardInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -76,11 +97,22 @@ export default function BoardCreateAndUpadate(
   const open = useDaumPostcodePopup(
     "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
   );
-
+  const onChangeBoardAddress = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setCreateBoardInput((prev) => {
+      return {
+        ...prev,
+        boardAddress: {
+          ...createBoardInput.boardAddress,
+          addressDetail: e.target.value,
+        },
+      };
+    });
+  };
   const onClickAddressModal = async (): Promise<void> => {
     await open({ onComplete: handleComplete });
   };
-
   const handleComplete = (data: Address): void => {
     setCreateBoardInput((prev) => {
       return {
@@ -93,9 +125,6 @@ export default function BoardCreateAndUpadate(
       };
     });
   };
-
-  const isEmailValid = /\S+@\S+\.\S+/;
-  const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
   const onCreateBoard = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -226,6 +255,13 @@ export default function BoardCreateAndUpadate(
             createBoardInput.title !== "" &&
             createBoardInput.contents !== "")
         }
+        onClickFile={onClickFile}
+      />
+      <input
+        style={{ display: "none" }}
+        type="file"
+        ref={fileRef}
+        onChange={onChangeImageFiles}
       />
     </>
   );

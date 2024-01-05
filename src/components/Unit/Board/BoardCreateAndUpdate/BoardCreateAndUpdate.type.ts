@@ -22,4 +22,5 @@ export interface IBoardNewUIPropsType {
   onChangeBoardInput: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  onClickFile: () => void;
 }

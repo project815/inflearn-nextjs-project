@@ -18,6 +18,7 @@ export default function BoardCreateAndUpdateUI(
     defaultValue,
     boardAddress,
     onChangeBoardInput,
+    onClickFile,
   } = props;
 
   return (
@@ -109,18 +110,18 @@ export default function BoardCreateAndUpdateUI(
       <S.InputGroup>
         <S.Label>사진첨부</S.Label>
         <S.RowGroup>
-          <S.ImageUploadButton>
+          <S.ImageUploadBox onClick={onClickFile}>
             <div>+</div>
             <div>upload</div>
-          </S.ImageUploadButton>
-          <S.ImageUploadButton>
+          </S.ImageUploadBox>
+          {/* <S.ImageUploadBox onClick={onClickFile}>
             <div>+</div>
             <div>upload</div>
-          </S.ImageUploadButton>
-          <S.ImageUploadButton>
+          </S.ImageUploadBox>
+          <S.ImageUploadBox onClick={onClickFile}>
             <div>+</div>
             <div>upload</div>
-          </S.ImageUploadButton>
+          </S.ImageUploadBox> */}
         </S.RowGroup>
       </S.InputGroup>
       <S.InputGroup>
