@@ -6,11 +6,7 @@ export default function BoardCreateAndUpdateUI(
 ): JSX.Element {
   const {
     isEdit,
-    onChangeWriter,
-    onChangePassword,
-    onChangeTitle,
-    onChangeContents,
-    onChangeYoutubeUrl,
+
     onChangeBoardAddress,
     onClickAddressModal,
     onSubmitBoard,
@@ -21,11 +17,9 @@ export default function BoardCreateAndUpdateUI(
     isActive,
     defaultValue,
     boardAddress,
+    onChangeBoardInput,
   } = props;
 
-  console.log(
-    `${boardAddress?.zipcode} - ${boardAddress?.address} - ${boardAddress?.addressDetail}`
-  );
   return (
     <S.ContentLayout>
       <S.ContentTitle>게시물 {isEdit ? "수정" : "등록"}</S.ContentTitle>
@@ -40,7 +34,8 @@ export default function BoardCreateAndUpdateUI(
             // ?? "" : 타입스크립트 상 null을 넣을 수 없음
             // null이나 undefined면 빈문자열을 넣겠다는 의미, 타입스크립트 상의 요구사항.
             disabled={isEdit}
-            onChange={onChangeWriter}
+            onChange={onChangeBoardInput}
+            id="writer"
           />
 
           <S.ErrorMessage>{writerError}</S.ErrorMessage>
@@ -50,7 +45,8 @@ export default function BoardCreateAndUpdateUI(
           <S.ContentInput
             type="password"
             placeholder="비밀번호을 입력해주세요."
-            onChange={onChangePassword}
+            onChange={onChangeBoardInput}
+            id="password"
           ></S.ContentInput>
           <S.ErrorMessage>{passwordError}</S.ErrorMessage>
         </S.PasswordInputGroup>
@@ -60,7 +56,8 @@ export default function BoardCreateAndUpdateUI(
         <S.ContentInput
           placeholder="제목을 입력해주세요."
           defaultValue={defaultValue?.title}
-          onChange={onChangeTitle}
+          onChange={onChangeBoardInput}
+          id="title"
         ></S.ContentInput>
         <S.ErrorMessage>{titleError}</S.ErrorMessage>
       </S.InputGroup>
@@ -69,7 +66,8 @@ export default function BoardCreateAndUpdateUI(
         <S.ContentTextInput
           placeholder="내용을 입력해주세요."
           defaultValue={defaultValue?.contents}
-          onChange={onChangeContents}
+          onChange={onChangeBoardInput}
+          id="contents"
         ></S.ContentTextInput>
         <S.ErrorMessage>{contentsError}</S.ErrorMessage>
       </S.InputGroup>
@@ -93,12 +91,18 @@ export default function BoardCreateAndUpdateUI(
             defaultValue?.boardAddress?.address ?? boardAddress?.address ?? ""
           )}
         />
-        <S.AddressInput onChange={onChangeBoardAddress} disabled={false} />
+        <S.AddressInput
+          onChange={onChangeBoardAddress}
+          defaultValue={defaultValue?.boardAddress?.addressDetail ?? ""}
+          // value={String(boardAddress?.addressDetail ?? "")}
+          disabled={false}
+        />
       </S.InputGroup>
       <S.InputGroup>
         <S.Label>유튜브</S.Label>
         <S.ContentInput
-          onChange={onChangeYoutubeUrl}
+          id="youtubeUrl"
+          onChange={onChangeBoardInput}
           placeholder="제목을 입력해주세요."
         ></S.ContentInput>
       </S.InputGroup>
