@@ -1,8 +1,14 @@
 import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { GlobalStyles } from "@/styles/globalscss";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  InMemoryCache,
+} from "@apollo/client";
 import { Global } from "@emotion/react";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,10 +16,15 @@ import "../styles/slick-theme.css";
 import "../styles/slick.css";
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
+  const uploadLink: ApolloLink = createUploadLink({
+    uri: "https://backendonline.codebootcamp.co.kr/graphql", // Replace with your GraphQL endpoint
+  });
   const client = new ApolloClient({
-    uri: "https://backendonline.codebootcamp.co.kr/graphql",
+    link: ApolloLink.from([uploadLink]),
+    // uri: "https://backendonline.codebootcamp.co.kr/graphql",
     cache: new InMemoryCache(),
   });
+
   return (
     <ApolloProvider client={client}>
       <>

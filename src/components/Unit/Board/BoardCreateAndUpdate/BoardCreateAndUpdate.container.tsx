@@ -1,18 +1,23 @@
 import {
-  IBoardAddressInput,
+  ICreateBoardInput,
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IMutationUploadFileArgs,
   IUpdateBoardInput,
 } from "@/types/graphql/types";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Address, useDaumPostcodePopup } from "react-daum-postcode";
 import BoardCreateAndUpdateUI from "./BoardCreateAndUpdate.presenter";
-import { CREATEBOARD, UPDATEBOARD } from "./BoardCreateAndUpdate.query";
+import {
+  CREATEBOARD,
+  UPDATEBOARD,
+  UPLOADFILE,
+} from "./BoardCreateAndUpdate.query";
 import { IBoardWritePropsType } from "./BoardCreateAndUpdate.type";
 
 export default function BoardCreateAndUpadate(
@@ -21,7 +26,26 @@ export default function BoardCreateAndUpadate(
   const { isEdit, defaultValue } = props;
   const { confirm } = Modal;
 
+  const fileRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const isEmailValid = /\S+@\S+\.\S+/;
+  const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  const [createBoardInput, setCreateBoardInput] = useState<ICreateBoardInput>({
+    writer: "",
+    password: "",
+    title: "",
+    contents: "",
+    youtubeUrl: "",
+    boardAddress: {},
+    images: [],
+  });
+
+  const [writerError, setWriterError] = useState<string>("");
+  const [passwordError, setPasswordErorr] = useState<string>("");
+  const [titleError, setTitleError] = useState<string>("");
+  const [contentsError, setContentsError] = useState<string>("");
 
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
@@ -33,112 +57,116 @@ export default function BoardCreateAndUpadate(
     IMutationUpdateBoardArgs
   >(UPDATEBOARD);
 
-  const [writer, setWriter] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [contents, setContents] = useState<string>("");
-  const [youtubeUrl, setYouTubeUrl] = useState<string>();
-  const [boardAddress, setBoardAddress] = useState<IBoardAddressInput>({});
-  const [writerError, setWriterError] = useState<string>("");
-  const [passwordError, setPasswordErorr] = useState<string>("");
-  const [titleError, setTitleError] = useState<string>("");
-  const [contentsError, setContentsError] = useState<string>("");
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOADFILE);
 
-  const onChangeWriter = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setWriter(e.target.value);
+  const onClickFile = (): void => {
+    console.log("click", fileRef.current);
+    fileRef.current?.click();
   };
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setPassword(e.target.value);
-  };
-  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value);
+  const onChangeImageFiles = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): Promise<void> => {
+    const file = e.target.files?.[0];
+
+    console.log("click2");
+    console.log("file :", file);
+    try {
+      const result = await uploadFile({ variables: { file } });
+      console.log("result : ", result.data?.uploadFile.url);
+    } catch (e) {
+      console.log("error: ", e);
+    }
   };
 
-  const onChangeContents = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+  // Board 등록 Input
+  const onChangeBoardInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    setContents(e.target.value);
-  };
-  const onChangeYoutubeUrl = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-    setYouTubeUrl(e.target.value);
-  };
-
-  const open = useDaumPostcodePopup(
-    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-  );
-
-  const onClickAddressModal = async (): Promise<void> => {
-    await open({ onComplete: handleComplete });
-  };
-
-  const handleComplete = (data: Address): void => {
-    setBoardAddress({
-      address: data.address,
-      addressDetail: "",
-      zipcode: data.zonecode,
+    setCreateBoardInput((prev) => {
+      return {
+        ...prev,
+        [e.target.id]: e.target.value,
+      };
     });
   };
 
+  // 주소 등록
+  const open = useDaumPostcodePopup(
+    "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+  );
   const onChangeBoardAddress = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setBoardAddress((prev) => ({
-      ...prev,
-      addressDetail: e.target.value,
-    }));
+    setCreateBoardInput((prev) => {
+      return {
+        ...prev,
+        boardAddress: {
+          ...createBoardInput.boardAddress,
+          addressDetail: e.target.value,
+        },
+      };
+    });
   };
-
-  const isEmailValid = /\S+@\S+\.\S+/;
-  const isPasswordValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  const onClickAddressModal = async (): Promise<void> => {
+    await open({ onComplete: handleComplete });
+  };
+  const handleComplete = (data: Address): void => {
+    setCreateBoardInput((prev) => {
+      return {
+        ...prev,
+        boardAddress: {
+          address: data.address,
+          addressDetail: "",
+          zipcode: data.zonecode,
+        },
+      };
+    });
+  };
 
   const onCreateBoard = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     e.preventDefault();
 
-    setWriter(writer ?? "");
     if (
-      writer === "" ||
-      !isEmailValid.test(writer) ||
-      password === "" ||
-      !isPasswordValid.test(password) ||
-      title === "" ||
-      contents === ""
+      createBoardInput.writer === "" ||
+      !isEmailValid.test(String(createBoardInput.writer)) ||
+      createBoardInput.password === "" ||
+      !isPasswordValid.test(String(createBoardInput.password)) ||
+      createBoardInput.title === "" ||
+      createBoardInput.contents === ""
     ) {
-      writer === ""
+      createBoardInput.writer === ""
         ? setWriterError("이름을 입력해주세요")
         : setWriterError("");
 
-      !isEmailValid.test(writer)
+      !isEmailValid.test(String(createBoardInput.writer))
         ? setWriterError("이메일 형식을 확인해주세요")
         : setWriterError("");
-      password === ""
+      createBoardInput.password === ""
         ? setPasswordErorr("비밀번호를 입력해주세요.")
         : setPasswordErorr("");
 
-      !isPasswordValid.test(password)
+      !isPasswordValid.test(String(createBoardInput.password))
         ? setPasswordErorr("비밀번호 형식을 맞춰주세요.")
         : setPasswordErorr("");
-      title === "" ? setTitleError("제목을 입력해주세요.") : setTitleError("");
-      contents === ""
+      createBoardInput.title === ""
+        ? setTitleError("제목을 입력해주세요.")
+        : setTitleError("");
+      createBoardInput.contents === ""
         ? setContentsError("내용을 입력해주새요,")
         : setContentsError("");
 
       return;
     }
-    console.log("??boardAddress :", boardAddress);
+    console.log("??boardAddress :", createBoardInput.boardAddress);
 
     await createBoard({
       variables: {
-        createBoardInput: {
-          writer,
-          password,
-          title,
-          contents,
-          youtubeUrl,
-          boardAddress,
-        },
+        createBoardInput,
       },
     });
 
@@ -158,7 +186,7 @@ export default function BoardCreateAndUpadate(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     e.preventDefault();
-    if (password === "") {
+    if (createBoardInput.password === "") {
       setPasswordErorr("비밀번호를 입력해주세요.");
       return;
     }
@@ -166,14 +194,16 @@ export default function BoardCreateAndUpadate(
     setPasswordErorr("");
 
     const updateBoardInput: IUpdateBoardInput = {};
-    if (title !== "") updateBoardInput.title = title;
-    if (contents !== "") updateBoardInput.contents = contents;
+    if (createBoardInput.title !== "")
+      updateBoardInput.title = createBoardInput.title;
+    if (createBoardInput.contents !== "")
+      updateBoardInput.contents = createBoardInput.contents;
     if (
-      boardAddress.address !== "" ||
-      boardAddress.addressDetail !== "" ||
-      boardAddress.zipcode !== ""
+      createBoardInput.boardAddress?.address !== "" ||
+      createBoardInput.boardAddress.addressDetail !== "" ||
+      createBoardInput.boardAddress.zipcode !== ""
     )
-      updateBoardInput.boardAddress = { ...boardAddress };
+      updateBoardInput.boardAddress = { ...createBoardInput.boardAddress };
 
     try {
       if (typeof router.query.board === "string") {
@@ -183,7 +213,7 @@ export default function BoardCreateAndUpadate(
       const result = await updateBoard({
         variables: {
           boardId: router.query.boardId as string,
-          password,
+          password: createBoardInput.password,
           updateBoardInput,
         },
       });
@@ -199,7 +229,6 @@ export default function BoardCreateAndUpadate(
         },
       });
     } catch (error) {
-      console.log("??????@@@@@@");
       console.log(error);
       if (error instanceof Error) alert(error.message);
     }
@@ -210,12 +239,8 @@ export default function BoardCreateAndUpadate(
       <BoardCreateAndUpdateUI
         isEdit={isEdit}
         defaultValue={defaultValue}
-        boardAddress={boardAddress}
-        onChangeWriter={onChangeWriter}
-        onChangePassword={onChangePassword}
-        onChangeTitle={onChangeTitle}
-        onChangeContents={onChangeContents}
-        onChangeYoutubeUrl={onChangeYoutubeUrl}
+        boardAddress={createBoardInput.boardAddress}
+        onChangeBoardInput={onChangeBoardInput}
         onChangeBoardAddress={onChangeBoardAddress}
         onClickAddressModal={onClickAddressModal}
         writerError={writerError}
@@ -225,8 +250,18 @@ export default function BoardCreateAndUpadate(
         onSubmitBoard={isEdit ? onUpdateBoard : onCreateBoard}
         isActive={
           isEdit ||
-          (writer !== "" && password !== "" && title !== "" && contents !== "")
+          (createBoardInput.writer !== "" &&
+            createBoardInput.password !== "" &&
+            createBoardInput.title !== "" &&
+            createBoardInput.contents !== "")
         }
+        onClickFile={onClickFile}
+      />
+      <input
+        style={{ display: "none" }}
+        type="file"
+        ref={fileRef}
+        onChange={onChangeImageFiles}
       />
     </>
   );

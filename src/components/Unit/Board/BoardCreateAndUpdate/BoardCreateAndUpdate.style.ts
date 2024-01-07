@@ -126,7 +126,7 @@ export const ZipcodeButton = styled.button`
   margin-left: 10px;
 `;
 
-export const ImageUploadButton = styled.button`
+export const ImageUploadBox = styled.div`
   width: 70px;
   height: 70px;
   display: flex;
@@ -134,6 +134,8 @@ export const ImageUploadButton = styled.button`
   align-items: center;
   margin-right: 15px;
   margin-top: 10px;
+  background-color: gray;
+  cursor: pointer;
 `;
 
 export const AddressInput = styled.input`

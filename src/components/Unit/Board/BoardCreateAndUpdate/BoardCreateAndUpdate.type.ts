@@ -1,4 +1,4 @@
-import { IBoard, IBoardAddressInput } from "@/types/graphql/types";
+import { IBoard, IBoardAddressInput, InputMaybe } from "@/types/graphql/types";
 
 export interface IBoardWritePropsType {
   isEdit: boolean;
@@ -8,12 +8,8 @@ export interface IBoardWritePropsType {
 export interface IBoardNewUIPropsType {
   isEdit: boolean;
   defaultValue?: IBoard;
-  boardAddress?: IBoardAddressInput;
-  onChangeWriter: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onChangeYoutubeUrl: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  boardAddress?: InputMaybe<IBoardAddressInput> | undefined;
+
   onClickAddressModal: any;
   onChangeBoardAddress: (data: any) => void;
   writerError: string;
@@ -23,4 +19,8 @@ export interface IBoardNewUIPropsType {
   onSubmitBoard: any;
   //  React.MouseEvent<HTMLButtonElement, MouseEvent>;
   isActive: boolean;
+  onChangeBoardInput: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  onClickFile: () => void;
 }

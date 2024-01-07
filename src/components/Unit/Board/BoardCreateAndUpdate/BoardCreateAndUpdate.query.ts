@@ -45,3 +45,12 @@ export const UPDATEBOARD = gql`
     }
   }
 `;
+
+export const UPLOADFILE = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      _id
+      url
+    }
+  }
+`;
